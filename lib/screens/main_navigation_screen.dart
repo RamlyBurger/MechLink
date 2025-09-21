@@ -261,7 +261,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
             right: 0,
             child: Container(
               height: 75,
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 5),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -305,7 +305,6 @@ class CustomBottomNavigationBar extends StatelessWidget {
     return GestureDetector(
       onTap: () => onTap(index),
       child: Container(
-        width: 70,
         height: 60,
         padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 4),
         child: Column(
