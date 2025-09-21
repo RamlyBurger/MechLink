@@ -4,12 +4,16 @@ import 'package:mechlink/firebase_options.dart';
 import 'package:mechlink/screens/splash_screen.dart';
 import 'package:mechlink/screens/login_screen.dart';
 import 'package:mechlink/screens/dashboard_screen.dart';
+import 'package:mechlink/services/fcm_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Initialize Firebase
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  // Setup FCM background message handling
+  await FCMService.setupBackgroundMessageHandling();
 
   runApp(const MechLinkApp());
 }
@@ -41,6 +45,14 @@ class MechLinkApp extends StatelessWidget {
       routes: {
         '/login': (context) => const LoginScreen(),
         '/dashboard': (context) => const DashboardScreen(),
+      },
+
+      builder: (context, child) {
+        final mediaQuery = MediaQuery.of(context);
+        return MediaQuery(
+          data: mediaQuery.copyWith(textScaleFactor: 1.0),
+          child: child!,
+        );
       },
     );
   }

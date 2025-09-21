@@ -126,9 +126,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
       ) {
         if (recordingData != null) {
           // A recording was started or updated
-          print(
-            'Real-time recording update detected: ${recordingData['taskId']}',
-          );
+          // print('Real-time recording update detected: ${recordingData['taskId']}',);
 
           // Check if we need to initialize the global recording state
           if (_globalRecordingService.currentRecordingTask == null) {

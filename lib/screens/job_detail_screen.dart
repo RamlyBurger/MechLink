@@ -513,7 +513,7 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
                               ),
                             ),
                             Text(
-                              'RM ${_jobDetails!['estimatedCost'].toStringAsFixed(2)}',
+                              '\$${_jobDetails!['estimatedCost'].toStringAsFixed(2)}',
                               style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w600,
@@ -928,6 +928,96 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
             const SizedBox(height: 20),
           ],
 
+          // Assigned Parts Section
+          if (_jobDetails!['parts'] != null &&
+              (_jobDetails!['parts'] as List).isNotEmpty) ...[
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.1),
+                    spreadRadius: 1,
+                    blurRadius: 6,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: Colors.blue.shade50,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Icon(
+                          Icons.build_circle,
+                          color: Colors.blue.shade600,
+                          size: 24,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      const Text(
+                        'Assigned Parts',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black87,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  ...(_jobDetails!['parts'] as List).asMap().entries.map((
+                    entry,
+                  ) {
+                    int index = entry.key;
+                    String part = entry.value.toString();
+                    bool isLast =
+                        index == (_jobDetails!['parts'] as List).length - 1;
+
+                    return Column(
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.only(top: 4),
+                              width: 6,
+                              height: 6,
+                              decoration: BoxDecoration(
+                                color: Colors.blue.shade400,
+                                shape: BoxShape.circle,
+                              ),
+                            ),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Text(
+                                part,
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.black87,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        if (!isLast) const SizedBox(height: 8),
+                      ],
+                    );
+                  }).toList(),
+                ],
+              ),
+            ),
+            const SizedBox(height: 20),
+          ],
+
           // Navigation Buttons
           Column(
             children: [
@@ -1163,7 +1253,10 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
         // Show Digital Sign Off button when tasks completed but not signed off
         return FloatingActionButton.extended(
           onPressed: () => _navigateToDigitalSignOff(),
-          icon: const Icon(Icons.draw),
+          icon: const Icon(
+            Icons.draw,
+            color: Colors.white, // 👈 make the icon white
+          ),
           label: const Text(
             'Digital Sign Off',
             style: TextStyle(color: Colors.white),

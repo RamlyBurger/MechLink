@@ -104,29 +104,21 @@ class GlobalRecordingService {
         _currentRecordingTask?.status == TaskStatus.inProgress;
   }
 
-  /// Get device ID for FCM notifications
-  Future<String> _getDeviceId() async {
+  /// Get FCM token for notifications
+  Future<String?> _getFCMToken() async {
     try {
-      // Get device ID from AuthService (generated during login)
-      String? deviceId = await _authService.getCurrentDeviceId();
+      // Get FCM token from AuthService
+      String? fcmToken = await _authService.getCurrentFCMToken();
 
-      if (deviceId != null) {
-        return deviceId;
+      if (fcmToken != null && fcmToken.isNotEmpty) {
+        return fcmToken;
       }
 
-      // Fallback: generate temporary device ID if not found
-      final currentMechanicId = _authService.currentMechanicId;
-      final timestamp = DateTime.now().millisecondsSinceEpoch;
-      final fallbackId =
-          'device_temp_${currentMechanicId ?? 'unknown'}_$timestamp';
-
-      print('Using fallback device ID: $fallbackId');
-      return fallbackId;
+      print('Warning: No valid FCM token available for notifications');
+      return null;
     } catch (e) {
-      print('Error getting device ID: $e');
-      // Final fallback device ID
-      final timestamp = DateTime.now().millisecondsSinceEpoch;
-      return 'device_error_$timestamp';
+      print('Error getting FCM token: $e');
+      return null;
     }
   }
 
@@ -141,8 +133,8 @@ class GlobalRecordingService {
       // Initialize database if not already done
       _initDatabase();
 
-      // Get device ID for notifications (placeholder for now)
-      String deviceId = await _getDeviceId();
+      // Get FCM token for notifications
+      String? fcmToken = await _getFCMToken();
 
       final recordingData = {
         'taskId': taskId,
@@ -150,7 +142,9 @@ class GlobalRecordingService {
         'duration':
             initialDuration, // Start with provided initial duration (0 for new, existing time for resume)
         'status': 'running', // running or paused
-        'deviceId': deviceId, // Device ID for FCM notifications
+        'deviceId':
+            fcmToken ??
+            'no_token', // FCM token for notifications (fallback if null)
         'isNotified':
             false, // Whether estimated time notification has been sent
       };

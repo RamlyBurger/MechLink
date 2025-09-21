@@ -21,8 +21,8 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
     super.initState();
     // Set the default credentials
-    _emailController.text = '';
-    _passwordController.text = '';
+    _emailController.text = 'lownl-jm22@student.tarc.edu.my';
+    _passwordController.text = 'Burger@123';
   }
 
   void _showForgotPasswordDialog() {

@@ -56,7 +56,7 @@ class _NotificationsScreenState extends State<NotificationsScreen>
     try {
       await _notificationService.loadNotifications();
       setState(() {
-        _notifications = _notificationService.notifications;
+        _notifications = List.from(_notificationService.notifications);
       });
     } catch (e) {
       print('Error loading notifications: $e');
@@ -70,10 +70,9 @@ class _NotificationsScreenState extends State<NotificationsScreen>
       notificationId,
     );
     if (success) {
+      // Reload notifications from service to get updated list
       setState(() {
-        _notifications.removeWhere(
-          (notification) => notification.id == notificationId,
-        );
+        _notifications = List.from(_notificationService.notifications);
       });
       if (mounted) {
         ScaffoldMessenger.of(
@@ -114,7 +113,7 @@ class _NotificationsScreenState extends State<NotificationsScreen>
       final success = await _notificationService.clearAllNotifications();
       if (success) {
         setState(() {
-          _notifications.clear();
+          _notifications = List.from(_notificationService.notifications);
         });
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(

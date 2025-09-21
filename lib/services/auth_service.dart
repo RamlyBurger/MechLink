@@ -1,9 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:bcrypt/bcrypt.dart';
-import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
-import 'dart:math';
+import 'fcm_service.dart';
 
 class AuthService {
   // Private constructor
@@ -16,6 +15,7 @@ class AuthService {
   factory AuthService() => _instance;
 
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FCMService _fcmService = FCMService();
   String? _currentMechanicId;
   Map<String, dynamic>? _currentMechanic;
 
@@ -65,13 +65,11 @@ class AuthService {
       _currentMechanicId = mechanicData['id'];
       _currentMechanic = mechanicData;
 
-      // Generate and store device ID for this login session
-      await _generateDeviceId();
+      // Initialize FCM and generate token for this login session
+      await _initializeFCM();
 
       // Save login state to SharedPreferences for persistence
-      debugPrint('🔐 About to save login state...');
       await _saveLoginState(mechanicData);
-      debugPrint('🔐 Login state save completed');
 
       return mechanicData;
     } catch (e) {
@@ -95,69 +93,63 @@ class AuthService {
     return BCrypt.hashpw(password, salt);
   }
 
-  // Generate and store device ID for current user
-  Future<void> _generateDeviceId() async {
+  // Initialize FCM service and generate token for current user
+  Future<void> _initializeFCM() async {
     try {
       if (_currentMechanicId == null) return;
 
-      final prefs = await SharedPreferences.getInstance();
-      final deviceIdKey = 'device_id_$_currentMechanicId';
+      // Initialize FCM service
+      await _fcmService.initialize();
 
-      // Generate new unique device ID for this login session
-      final random = Random();
-      final timestamp = DateTime.now().millisecondsSinceEpoch;
-      final randomSuffix = random.nextInt(999999).toString().padLeft(6, '0');
-
-      String deviceId =
-          'device_${_currentMechanicId}_${timestamp}_$randomSuffix';
-
-      // Store device ID
-      await prefs.setString(deviceIdKey, deviceId);
-
-      debugPrint(
-        'Generated device ID for mechanic $_currentMechanicId: $deviceId',
+      // Get FCM token for this mechanic
+      String? fcmToken = await _fcmService.getTokenForMechanic(
+        _currentMechanicId!,
       );
+
+      if (fcmToken != null) {
+        print(
+          'FCM token generated for mechanic $_currentMechanicId: $fcmToken',
+        );
+      } else {
+        print('Failed to generate FCM token for mechanic $_currentMechanicId');
+      }
     } catch (e) {
-      debugPrint('Error generating device ID: $e');
+      print('FCM initialization error: $e');
     }
   }
 
-  // Get current device ID
-  Future<String?> getCurrentDeviceId() async {
+  // Get current FCM token (replaces device ID)
+  Future<String?> getCurrentFCMToken() async {
     try {
       if (_currentMechanicId == null) return null;
 
-      final prefs = await SharedPreferences.getInstance();
-      final deviceIdKey = 'device_id_$_currentMechanicId';
-
-      return prefs.getString(deviceIdKey);
+      return await _fcmService.getTokenForMechanic(_currentMechanicId!);
     } catch (e) {
-      debugPrint('Error getting device ID: $e');
+      print('Error getting FCM token: $e');
       return null;
     }
+  }
+
+  // Get current device ID (deprecated - use getCurrentFCMToken instead)
+  @deprecated
+  Future<String?> getCurrentDeviceId() async {
+    // For backward compatibility, return FCM token
+    return await getCurrentFCMToken();
   }
 
   // Verify current password for password change
   Future<bool> verifyCurrentPassword(String currentPassword) async {
     if (_currentMechanic == null) {
-      debugPrint('❌ No current mechanic data available');
       return false;
     }
 
     final storedHash = _currentMechanic!['passwordHash'] ?? '';
-    debugPrint('🔐 Verifying password for user: ${_currentMechanic!['email']}');
-    debugPrint('🔐 Stored hash exists: ${storedHash.isNotEmpty}');
-    debugPrint('🔐 Stored hash length: ${storedHash.length}');
-    debugPrint('🔐 Input password length: ${currentPassword.length}');
 
     if (storedHash.isEmpty) {
-      debugPrint('❌ No password hash stored for user');
       return false;
     }
 
-    final result = _verifyPassword(currentPassword, storedHash);
-    debugPrint('🔐 Bcrypt verification result: $result');
-    return result;
+    return _verifyPassword(currentPassword, storedHash);
   }
 
   // Update password with new hash
@@ -206,12 +198,8 @@ class AuthService {
         json.encode(serializableData),
       );
       await prefs.setBool('is_logged_in', true);
-
-      debugPrint('💾 Login state saved for mechanic: ${mechanicData['id']}');
-      debugPrint('💾 Saved data keys: ${prefs.getKeys()}');
-      debugPrint('💾 is_logged_in: ${prefs.getBool('is_logged_in')}');
     } catch (e) {
-      debugPrint('❌ Error saving login state: $e');
+      // Silent fail - login state saving is not critical for immediate functionality
     }
   }
 
@@ -220,22 +208,14 @@ class AuthService {
     try {
       final prefs = await SharedPreferences.getInstance();
 
-      debugPrint('🔄 Attempting to restore login state...');
-      debugPrint('🔄 Available keys: ${prefs.getKeys()}');
-
       final isLoggedIn = prefs.getBool('is_logged_in') ?? false;
-      debugPrint('🔄 is_logged_in flag: $isLoggedIn');
 
       if (!isLoggedIn) {
-        debugPrint('🔄 User not marked as logged in');
         return false;
       }
 
       final mechanicId = prefs.getString('logged_in_mechanic_id');
       final mechanicDataString = prefs.getString('logged_in_mechanic_data');
-
-      debugPrint('🔄 mechanicId: $mechanicId');
-      debugPrint('🔄 mechanicDataString exists: ${mechanicDataString != null}');
 
       if (mechanicId != null && mechanicDataString != null) {
         _currentMechanicId = mechanicId;
@@ -250,19 +230,16 @@ class AuthService {
             try {
               decodedData[field] = DateTime.parse(decodedData[field]);
             } catch (e) {
-              debugPrint('⚠️ Could not parse timestamp for field $field: $e');
+              // Silent fail for timestamp parsing
             }
           }
         }
 
         _currentMechanic = decodedData;
-        debugPrint('✅ Login state restored for mechanic: $mechanicId');
         return true;
-      } else {
-        debugPrint('❌ Missing mechanic data in SharedPreferences');
       }
     } catch (e) {
-      debugPrint('❌ Error restoring login state: $e');
+      // Silent fail - will show login screen
     }
     return false;
   }
@@ -276,18 +253,14 @@ class AuthService {
       await prefs.remove('logged_in_mechanic_data');
       await prefs.setBool('is_logged_in', false);
 
-      // Clear device ID
-      if (_currentMechanicId != null) {
-        await prefs.remove('device_id_$_currentMechanicId');
-      }
+      // Clear FCM token
+      await _fcmService.clearToken();
 
       // Clear memory state
       _currentMechanicId = null;
       _currentMechanic = null;
-
-      debugPrint('User logged out successfully');
     } catch (e) {
-      debugPrint('Error during logout: $e');
+      // Silent fail
     }
   }
 
