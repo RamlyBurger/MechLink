@@ -50,48 +50,48 @@ class _TasksScreenState extends State<TasksScreen> {
       ),
       body: _isLoading
           ? const Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CircularProgressIndicator(),
-            SizedBox(height: 16),
-            Text('Loading tasks...'),
-          ],
-        ),
-      )
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircularProgressIndicator(),
+                  SizedBox(height: 16),
+                  Text('Loading tasks...'),
+                ],
+              ),
+            )
           : _tasks.isEmpty
           ? const Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.task_alt, size: 64, color: Colors.grey),
-            SizedBox(height: 16),
-            Text(
-              'No tasks available for this job',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-            ),
-            SizedBox(height: 8),
-            Text(
-              'Tasks will appear here once they are created',
-              style: TextStyle(color: Colors.grey),
-            ),
-          ],
-        ),
-      )
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.task_alt, size: 64, color: Colors.grey),
+                  SizedBox(height: 16),
+                  Text(
+                    'No tasks available for this job',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    'Tasks will appear here once they are created',
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                ],
+              ),
+            )
           : RefreshIndicator(
-        onRefresh: _loadTasks,
-        child: ListView.builder(
-          padding: const EdgeInsets.all(16),
-          itemCount: _tasks.length,
-          itemBuilder: (context, index) {
-            final task = _tasks[index];
-            return _buildTaskCard(
-              task,
-              index + 1,
-            ); // Pass task number (1-based)
-          },
-        ),
-      ),
+              onRefresh: _loadTasks,
+              child: ListView.builder(
+                padding: const EdgeInsets.all(16),
+                itemCount: _tasks.length,
+                itemBuilder: (context, index) {
+                  final task = _tasks[index];
+                  return _buildTaskCard(
+                    task,
+                    index + 1,
+                  ); // Pass task number (1-based)
+                },
+              ),
+            ),
     );
   }
 
@@ -150,7 +150,7 @@ class _TasksScreenState extends State<TasksScreen> {
                     width: 32,
                     height: 32,
                     decoration: BoxDecoration(
-                      color: statusColor.withOpacity(0.1),
+                      color: statusColor.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(16),
                       border: Border.all(color: statusColor, width: 2),
                     ),
@@ -183,7 +183,7 @@ class _TasksScreenState extends State<TasksScreen> {
                       vertical: 4,
                     ),
                     decoration: BoxDecoration(
-                      color: priorityColor.withOpacity(0.1),
+                      color: priorityColor.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(color: priorityColor),
                     ),
@@ -221,7 +221,7 @@ class _TasksScreenState extends State<TasksScreen> {
                       vertical: 4,
                     ),
                     decoration: BoxDecoration(
-                      color: statusColor.withOpacity(0.1),
+                      color: statusColor.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Text(
@@ -350,7 +350,9 @@ class _TasksScreenState extends State<TasksScreen> {
     String? jobStatus = await _tasksService.getJobStatus(widget.jobId);
 
     // Prevent navigation if job status is assigned, cancelled, or accepted
-    if (jobStatus == 'assigned' || jobStatus == 'cancelled' || jobStatus == 'accepted') {
+    if (jobStatus == 'assigned' ||
+        jobStatus == 'cancelled' ||
+        jobStatus == 'accepted') {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(

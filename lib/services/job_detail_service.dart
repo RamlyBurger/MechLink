@@ -43,14 +43,17 @@ class JobDetailService {
 
       // Get tasks for this job
       List<Map<String, dynamic>> tasks = await getTasksByJobId(jobId);
-      
+
       // Check if all tasks are completed
-      bool allTasksCompleted = tasks.isNotEmpty && 
+      bool allTasksCompleted =
+          tasks.isNotEmpty &&
           tasks.every((task) => task['status'] == 'completed');
 
       // Get task counts
       int totalTasks = tasks.length;
-      int completedTasks = tasks.where((task) => task['status'] == 'completed').length;
+      int completedTasks = tasks
+          .where((task) => task['status'] == 'completed')
+          .length;
 
       // Compile complete job details
       return {
@@ -91,7 +94,7 @@ class JobDetailService {
 
       Map<String, dynamic> jobData = jobDoc.data() as Map<String, dynamic>;
       jobData['documentId'] = jobDoc.id;
-      
+
       return jobData;
     } catch (e) {
       print('Error getting job by ID: $e');
@@ -103,9 +106,12 @@ class JobDetailService {
   Future<bool> acceptJob(String jobId, String mechanicId) async {
     try {
       // First check if job is in assigned status
-      DocumentSnapshot jobDoc = await _firestore.collection('jobs').doc(jobId).get();
+      DocumentSnapshot jobDoc = await _firestore
+          .collection('jobs')
+          .doc(jobId)
+          .get();
       if (!jobDoc.exists) return false;
-      
+
       Map<String, dynamic> jobData = jobDoc.data() as Map<String, dynamic>;
       if (jobData['status'] != 'assigned') {
         print('Job is not in assigned status, cannot accept');
@@ -159,8 +165,6 @@ class JobDetailService {
       return false;
     }
   }
-
-
 
   /// Reject/Cancel a job and cancel all its tasks
   Future<bool> rejectJob(String jobId) async {
@@ -219,9 +223,15 @@ class JobDetailService {
   }
 
   /// Validate if status change is allowed
-  Future<Map<String, dynamic>> validateStatusChange(String jobId, String newStatus) async {
+  Future<Map<String, dynamic>> validateStatusChange(
+    String jobId,
+    String newStatus,
+  ) async {
     try {
-      DocumentSnapshot jobDoc = await _firestore.collection('jobs').doc(jobId).get();
+      DocumentSnapshot jobDoc = await _firestore
+          .collection('jobs')
+          .doc(jobId)
+          .get();
       if (!jobDoc.exists) {
         return {'allowed': false, 'reason': 'Job not found'};
       }
@@ -242,7 +252,7 @@ class JobDetailService {
       if (!allowedTransitions[currentStatus]!.contains(newStatus)) {
         return {
           'allowed': false,
-          'reason': 'Cannot change status from $currentStatus to $newStatus'
+          'reason': 'Cannot change status from $currentStatus to $newStatus',
         };
       }
 
@@ -252,7 +262,24 @@ class JobDetailService {
         if (!allTasksCompleted) {
           return {
             'allowed': false,
-            'reason': 'All tasks must be completed before marking job as completed'
+            'reason':
+                'All tasks must be completed before marking job as completed',
+          };
+        }
+
+        // Check if digital sign-off exists
+        if (jobData['digitalSignOff'] == null) {
+          return {
+            'allowed': false,
+            'reason': 'Digital sign-off is required before completing the job',
+          };
+        }
+
+        // Check if customer rating exists
+        if (jobData['customerRating'] == null) {
+          return {
+            'allowed': false,
+            'reason': 'Customer rating is required before completing the job',
           };
         }
       }
@@ -280,9 +307,10 @@ class JobDetailService {
         return null;
       }
 
-      Map<String, dynamic> customerData = customerDoc.data() as Map<String, dynamic>;
+      Map<String, dynamic> customerData =
+          customerDoc.data() as Map<String, dynamic>;
       customerData['documentId'] = customerDoc.id;
-      
+
       return customerData;
     } catch (e) {
       print('Error getting customer by ID: $e');
@@ -306,9 +334,10 @@ class JobDetailService {
         return null;
       }
 
-      Map<String, dynamic> vehicleData = vehicleDoc.data() as Map<String, dynamic>;
+      Map<String, dynamic> vehicleData =
+          vehicleDoc.data() as Map<String, dynamic>;
       vehicleData['documentId'] = vehicleDoc.id;
-      
+
       return vehicleData;
     } catch (e) {
       print('Error getting vehicle by ID: $e');
@@ -332,9 +361,10 @@ class JobDetailService {
         return null;
       }
 
-      Map<String, dynamic> equipmentData = equipmentDoc.data() as Map<String, dynamic>;
+      Map<String, dynamic> equipmentData =
+          equipmentDoc.data() as Map<String, dynamic>;
       equipmentData['documentId'] = equipmentDoc.id;
-      
+
       return equipmentData;
     } catch (e) {
       print('Error getting equipment by ID: $e');
@@ -355,13 +385,15 @@ class JobDetailService {
           .get();
 
       List<Map<String, dynamic>> tasks = taskSnapshot.docs
-          .map((doc) => {
-                'documentId': doc.id,
-                'id': doc.id, // Ensure id field is present
-                ...doc.data() as Map<String, dynamic>,
-              })
+          .map(
+            (doc) => {
+              'documentId': doc.id,
+              'id': doc.id, // Ensure id field is present
+              ...doc.data() as Map<String, dynamic>,
+            },
+          )
           .toList();
-      
+
       // Sort by order if available, otherwise by creation time
       tasks.sort((a, b) {
         int orderA = a['order'] ?? 999;
@@ -375,7 +407,7 @@ class JobDetailService {
         }
         return 0;
       });
-      
+
       return tasks;
     } catch (e) {
       print('Error getting tasks for job: $e');
@@ -387,15 +419,23 @@ class JobDetailService {
   Future<Map<String, dynamic>> getTaskStatistics(String jobId) async {
     try {
       List<Map<String, dynamic>> tasks = await getTasksByJobId(jobId);
-      
+
       int totalTasks = tasks.length;
-      int completedTasks = tasks.where((task) => task['status'] == 'completed').length;
-      int inProgressTasks = tasks.where((task) => task['status'] == 'inProgress').length;
-      int pendingTasks = tasks.where((task) => task['status'] == 'pending').length;
-      
-      double completionPercentage = totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
+      int completedTasks = tasks
+          .where((task) => task['status'] == 'completed')
+          .length;
+      int inProgressTasks = tasks
+          .where((task) => task['status'] == 'inProgress')
+          .length;
+      int pendingTasks = tasks
+          .where((task) => task['status'] == 'pending')
+          .length;
+
+      double completionPercentage = totalTasks > 0
+          ? (completedTasks / totalTasks) * 100
+          : 0;
       bool allTasksCompleted = totalTasks > 0 && completedTasks == totalTasks;
-      
+
       return {
         'totalTasks': totalTasks,
         'completedTasks': completedTasks,
@@ -459,13 +499,15 @@ class JobDetailService {
           .get();
 
       List<Map<String, dynamic>> notes = notesSnapshot.docs
-          .map((doc) => {
-                'documentId': doc.id,
-                'id': doc.id, // Ensure id field is present
-                ...doc.data() as Map<String, dynamic>,
-              })
+          .map(
+            (doc) => {
+              'documentId': doc.id,
+              'id': doc.id, // Ensure id field is present
+              ...doc.data() as Map<String, dynamic>,
+            },
+          )
           .toList();
-      
+
       // Sort by creation time (newest first)
       notes.sort((a, b) {
         if (a['createdAt'] != null && b['createdAt'] != null) {
@@ -473,16 +515,19 @@ class JobDetailService {
         }
         return 0;
       });
-      
+
       return notes;
     } catch (e) {
       print('Error getting job notes: $e');
       return [];
     }
   }
-  
+
   /// Get notes for a specific task
-  Future<List<Map<String, dynamic>>> getTaskNotes(String jobId, String taskId) async {
+  Future<List<Map<String, dynamic>>> getTaskNotes(
+    String jobId,
+    String taskId,
+  ) async {
     try {
       QuerySnapshot notesSnapshot = await _firestore
           .collection('notes')
@@ -491,13 +536,15 @@ class JobDetailService {
           .get();
 
       List<Map<String, dynamic>> notes = notesSnapshot.docs
-          .map((doc) => {
-                'documentId': doc.id,
-                'id': doc.id,
-                ...doc.data() as Map<String, dynamic>,
-              })
+          .map(
+            (doc) => {
+              'documentId': doc.id,
+              'id': doc.id,
+              ...doc.data() as Map<String, dynamic>,
+            },
+          )
           .toList();
-      
+
       // Sort by creation time (newest first)
       notes.sort((a, b) {
         if (a['createdAt'] != null && b['createdAt'] != null) {
@@ -505,7 +552,7 @@ class JobDetailService {
         }
         return 0;
       });
-      
+
       return notes;
     } catch (e) {
       print('Error getting task notes: $e');
@@ -534,7 +581,9 @@ class JobDetailService {
   // ============================================================================
 
   /// Get service history for a vehicle
-  Future<List<Map<String, dynamic>>> getVehicleServiceHistory(String vehicleId) async {
+  Future<List<Map<String, dynamic>>> getVehicleServiceHistory(
+    String vehicleId,
+  ) async {
     try {
       QuerySnapshot jobsSnapshot = await _firestore
           .collection('jobs')
@@ -544,10 +593,12 @@ class JobDetailService {
           .get();
 
       return jobsSnapshot.docs
-          .map((doc) => {
-                'documentId': doc.id,
-                ...doc.data() as Map<String, dynamic>,
-              })
+          .map(
+            (doc) => {
+              'documentId': doc.id,
+              ...doc.data() as Map<String, dynamic>,
+            },
+          )
           .toList();
     } catch (e) {
       print('Error getting vehicle service history: $e');
@@ -556,7 +607,9 @@ class JobDetailService {
   }
 
   /// Get service history for equipment
-  Future<List<Map<String, dynamic>>> getEquipmentServiceHistory(String equipmentId) async {
+  Future<List<Map<String, dynamic>>> getEquipmentServiceHistory(
+    String equipmentId,
+  ) async {
     try {
       QuerySnapshot jobsSnapshot = await _firestore
           .collection('jobs')
@@ -566,10 +619,12 @@ class JobDetailService {
           .get();
 
       return jobsSnapshot.docs
-          .map((doc) => {
-                'documentId': doc.id,
-                ...doc.data() as Map<String, dynamic>,
-              })
+          .map(
+            (doc) => {
+              'documentId': doc.id,
+              ...doc.data() as Map<String, dynamic>,
+            },
+          )
           .toList();
     } catch (e) {
       print('Error getting equipment service history: $e');
@@ -588,6 +643,34 @@ class JobDetailService {
       return true;
     } catch (e) {
       print('Error saving digital sign off: $e');
+      return false;
+    }
+  }
+
+  /// Save digital sign off with customer rating and feedback
+  Future<bool> saveDigitalSignOffWithRating(
+    String jobId,
+    String base64Signature,
+    double customerRating,
+    String customerFeedback,
+  ) async {
+    try {
+      Map<String, dynamic> updateData = {
+        'digitalSignOff': base64Signature,
+        'digitalSignOffAt': DateTime.now().toIso8601String(),
+        'customerRating': customerRating,
+        'updatedAt': DateTime.now().toIso8601String(),
+      };
+
+      // Only add feedback if it's not empty
+      if (customerFeedback.isNotEmpty) {
+        updateData['customerFeedback'] = customerFeedback;
+      }
+
+      await _firestore.collection('jobs').doc(jobId).update(updateData);
+      return true;
+    } catch (e) {
+      print('Error saving digital sign off with rating: $e');
       return false;
     }
   }

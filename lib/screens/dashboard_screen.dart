@@ -481,7 +481,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                 Expanded(
                   child: _buildCostCard(
                     'Estimated Cost',
-                    '\$${(costData['totalEstimatedCost'] ?? 0).toStringAsFixed(0)}',
+                    'RM ${(costData['totalEstimatedCost'] ?? 0).toStringAsFixed(0)}',
                     Colors.blue,
                   ),
                 ),
@@ -489,7 +489,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                 Expanded(
                   child: _buildCostCard(
                     'Actual Cost',
-                    '\$${(costData['totalActualCost'] ?? 0).toStringAsFixed(0)}',
+                    'RM ${(costData['totalActualCost'] ?? 0).toStringAsFixed(0)}',
                     Colors.orange,
                   ),
                 ),
@@ -501,7 +501,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                 Expanded(
                   child: _buildCostCard(
                     'Variance',
-                    '\$${(costData['costVariance'] ?? 0).toStringAsFixed(0)}',
+                    'RM ${(costData['costVariance'] ?? 0).toStringAsFixed(0)}',
                     (costData['costVariance'] ?? 0) > 0
                         ? Colors.red
                         : Colors.green,
@@ -511,7 +511,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                 Expanded(
                   child: _buildCostCard(
                     'Avg Job Cost',
-                    '\$${(costData['averageJobCost'] ?? 0).toStringAsFixed(0)}',
+                    'RM ${(costData['averageJobCost'] ?? 0).toStringAsFixed(0)}',
                     Colors.purple,
                   ),
                 ),
@@ -973,7 +973,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                             decoration: BoxDecoration(
                               color: _getStatusColor(
                                 job['status'],
-                              ).withOpacity(0.8),
+                              ).withValues(alpha: 0.8),
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Center(

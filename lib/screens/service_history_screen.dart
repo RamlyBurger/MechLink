@@ -96,7 +96,7 @@ class _ServiceHistoryScreenState extends State<ServiceHistoryScreen> {
           // App Bar with Vehicle Info
           SliverAppBar(
             expandedHeight:
-            320, // Increased from 280 to accommodate asset attributes
+                320, // Increased from 280 to accommodate asset attributes
             pinned: true,
             backgroundColor: const Color(0xFF5B5BF7),
             foregroundColor: Colors.white,
@@ -125,7 +125,7 @@ class _ServiceHistoryScreenState extends State<ServiceHistoryScreen> {
                                 width: 60,
                                 height: 60,
                                 decoration: BoxDecoration(
-                                  color: Colors.white.withOpacity(0.2),
+                                  color: Colors.white.withValues(alpha: 0.2),
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                                 child: _buildAssetImage(),
@@ -246,7 +246,7 @@ class _ServiceHistoryScreenState extends State<ServiceHistoryScreen> {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.2),
+        color: Colors.white.withValues(alpha: 0.2),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
@@ -264,7 +264,7 @@ class _ServiceHistoryScreenState extends State<ServiceHistoryScreen> {
           Text(
             title,
             style: TextStyle(
-              color: Colors.white.withOpacity(0.9),
+              color: Colors.white.withValues(alpha: 0.9),
               fontSize: 12,
             ),
           ),
@@ -285,7 +285,7 @@ class _ServiceHistoryScreenState extends State<ServiceHistoryScreen> {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
@@ -557,9 +557,9 @@ class _ServiceHistoryScreenState extends State<ServiceHistoryScreen> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: color.withOpacity(0.3)),
+        border: Border.all(color: color.withValues(alpha: 0.3)),
       ),
       child: Text(
         displayText,
@@ -655,37 +655,58 @@ class _ServiceHistoryScreenState extends State<ServiceHistoryScreen> {
       return [
         Text(
           'Serial: ${_equipmentDetails!['serialNumber'] ?? 'N/A'}',
-          style: TextStyle(fontSize: 14, color: Colors.white.withOpacity(0.9)),
+          style: TextStyle(
+            fontSize: 14,
+            color: Colors.white.withValues(alpha: 0.9),
+          ),
         ),
         Text(
           'Category: ${_equipmentDetails!['category'] ?? 'N/A'}',
-          style: TextStyle(fontSize: 14, color: Colors.white.withOpacity(0.9)),
+          style: TextStyle(
+            fontSize: 14,
+            color: Colors.white.withValues(alpha: 0.9),
+          ),
         ),
         Text(
           'Condition: ${_equipmentDetails!['condition'] ?? 'N/A'}',
-          style: TextStyle(fontSize: 14, color: Colors.white.withOpacity(0.9)),
+          style: TextStyle(
+            fontSize: 14,
+            color: Colors.white.withValues(alpha: 0.9),
+          ),
         ),
       ];
     } else if (_vehicleDetails != null) {
       return [
         Text(
           'VIN: ${_vehicleDetails!['vin'] ?? 'N/A'}',
-          style: TextStyle(fontSize: 14, color: Colors.white.withOpacity(0.9)),
+          style: TextStyle(
+            fontSize: 14,
+            color: Colors.white.withValues(alpha: 0.9),
+          ),
         ),
         Text(
           'License: ${_vehicleDetails!['licensePlate'] ?? 'N/A'}',
-          style: TextStyle(fontSize: 14, color: Colors.white.withOpacity(0.9)),
+          style: TextStyle(
+            fontSize: 14,
+            color: Colors.white.withValues(alpha: 0.9),
+          ),
         ),
         Text(
           'Mileage: ${_vehicleDetails!['mileage'] ?? 'N/A'}',
-          style: TextStyle(fontSize: 14, color: Colors.white.withOpacity(0.9)),
+          style: TextStyle(
+            fontSize: 14,
+            color: Colors.white.withValues(alpha: 0.9),
+          ),
         ),
       ];
     } else {
       return [
         Text(
           'Asset information not available',
-          style: TextStyle(fontSize: 14, color: Colors.white.withOpacity(0.7)),
+          style: TextStyle(
+            fontSize: 14,
+            color: Colors.white.withValues(alpha: 0.7),
+          ),
         ),
       ];
     }

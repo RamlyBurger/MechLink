@@ -1244,39 +1244,6 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
       );
     }
 
-    if (allTasksCompleted &&
-        (_jobDetails!['status'] == 'accepted' ||
-            _jobDetails!['status'] == 'inProgress')) {
-      final hasDigitalSignOff = _jobDetails!['digitalSignOff'] != null;
-
-      if (!hasDigitalSignOff) {
-        // Show Digital Sign Off button when tasks completed but not signed off
-        return FloatingActionButton.extended(
-          onPressed: () => _navigateToDigitalSignOff(),
-          icon: const Icon(
-            Icons.draw,
-            color: Colors.white, // 👈 make the icon white
-          ),
-          label: const Text(
-            'Digital Sign Off',
-            style: TextStyle(color: Colors.white),
-          ),
-          backgroundColor: Colors.orange,
-        );
-      } else {
-        // Show Complete Job button when signed off
-        return FloatingActionButton.extended(
-          onPressed: () => _navigateToSignOff(),
-          icon: const Icon(Icons.done_all, color: Colors.white),
-          label: const Text(
-            'Complete Job',
-            style: TextStyle(color: Colors.white),
-          ),
-          backgroundColor: Colors.blue,
-        );
-      }
-    }
-
     return null;
   }
 
@@ -1332,9 +1299,29 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
         break;
 
       case 'inProgress':
-        // Show Complete (if all tasks done) and Put on Hold buttons
+        // Show Complete (if all requirements met) and Put on Hold buttons
+        final bool allTasksCompleted = _areAllTasksCompleted();
+        final bool hasDigitalSignOff = _jobDetails!['digitalSignOff'] != null;
+        final bool hasCustomerRating = _jobDetails!['customerRating'] != null;
+        final bool canComplete =
+            allTasksCompleted && hasDigitalSignOff && hasCustomerRating;
+
         buttons.addAll([
-          if (_areAllTasksCompleted())
+          if (allTasksCompleted && !canComplete)
+            ElevatedButton.icon(
+              onPressed: () => _navigateToDigitalSignOff(),
+              icon: const Icon(Icons.draw, size: 16),
+              label: Text(hasDigitalSignOff ? 'Add Rating' : 'Sign Off'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.orange.shade600,
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 8,
+                ),
+              ),
+            ),
+          if (canComplete)
             ElevatedButton.icon(
               onPressed: () => _changeJobStatus('completed'),
               icon: const Icon(Icons.done_all, size: 16),
@@ -1348,7 +1335,7 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
                 ),
               ),
             ),
-          if (_areAllTasksCompleted()) const SizedBox(width: 8),
+          if (allTasksCompleted) const SizedBox(width: 8),
           ElevatedButton.icon(
             onPressed: () => _changeJobStatus('onHold'),
             icon: const Icon(Icons.pause, size: 16),
@@ -1625,18 +1612,6 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
     _loadJobDetails();
   }
 
-  void _navigateToSignOff() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => Scaffold(
-          appBar: AppBar(title: const Text("Sign Off")),
-          body: const Center(child: Text("Sign off feature coming soon...")),
-        ),
-      ),
-    );
-  }
-
   Widget _buildDigitalSignOffSection() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -1676,6 +1651,13 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
                       color: Colors.green,
                     ),
                   ),
+                  const Spacer(),
+                  if (_jobDetails!['status'] != 'completed')
+                    TextButton.icon(
+                      onPressed: _navigateToDigitalSignOff,
+                      icon: const Icon(Icons.edit, size: 16),
+                      label: const Text('Edit'),
+                    ),
                 ],
               ),
               const SizedBox(height: 12),
@@ -1719,6 +1701,76 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
                 ),
               ),
               const SizedBox(height: 12),
+
+              // Customer Rating Section
+              if (_jobDetails!['customerRating'] != null) ...[
+                Row(
+                  children: [
+                    Icon(
+                      Icons.star_rate,
+                      color: Colors.amber.shade600,
+                      size: 20,
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      'Customer Rating: ${_jobDetails!['customerRating']}/5',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  children: List.generate(5, (index) {
+                    final rating = (_jobDetails!['customerRating'] as num)
+                        .toDouble();
+                    return Icon(
+                      index < rating ? Icons.star : Icons.star_border,
+                      color: Colors.amber.shade600,
+                      size: 20,
+                    );
+                  }),
+                ),
+                if (_jobDetails!['customerFeedback'] != null &&
+                    (_jobDetails!['customerFeedback'] as String)
+                        .isNotEmpty) ...[
+                  const SizedBox(height: 8),
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade50,
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: Colors.grey.shade200),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Customer Feedback:',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            color: Colors.grey.shade700,
+                            fontSize: 12,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          _jobDetails!['customerFeedback'],
+                          style: TextStyle(
+                            color: Colors.grey.shade800,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+                const SizedBox(height: 12),
+              ],
+
               if (_jobDetails!['digitalSignOffAt'] != null)
                 Text(
                   'Signed off on: ${DateTimeHelper.formatDateWithTime(_jobDetails!['digitalSignOffAt'])}',

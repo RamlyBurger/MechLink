@@ -49,14 +49,19 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
     }
 
     try {
-      final noteDetails = await _noteDetailService.getNoteWithDetails(widget.noteId);
-      
+      final noteDetails = await _noteDetailService.getNoteWithDetails(
+        widget.noteId,
+      );
+
       if (noteDetails != null) {
         final jobId = noteDetails['jobId'] as String?;
         List<Map<String, dynamic>> relatedNotes = [];
-        
+
         if (jobId != null) {
-          relatedNotes = await _noteDetailService.getRelatedNotes(jobId, widget.noteId);
+          relatedNotes = await _noteDetailService.getRelatedNotes(
+            jobId,
+            widget.noteId,
+          );
         }
 
         if (mounted) {
@@ -69,18 +74,18 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
       } else {
         if (mounted) {
           setState(() => _isLoading = false);
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Note not found')),
-          );
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(const SnackBar(content: Text('Note not found')));
           Navigator.pop(context);
         }
       }
     } catch (e) {
       if (mounted) {
         setState(() => _isLoading = false);
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error loading note: $e')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Error loading note: $e')));
       }
     }
   }
@@ -105,9 +110,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
           backgroundColor: Colors.orange.shade600,
           foregroundColor: Colors.white,
         ),
-        body: const Center(
-          child: Text('Note not found'),
-        ),
+        body: const Center(child: Text('Note not found')),
       );
     }
 
@@ -117,10 +120,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
         backgroundColor: Colors.orange.shade600,
         foregroundColor: Colors.white,
         actions: [
-          IconButton(
-            icon: const Icon(Icons.edit),
-            onPressed: _editNote,
-          ),
+          IconButton(icon: const Icon(Icons.edit), onPressed: _editNote),
           PopupMenuButton<String>(
             onSelected: _handleMenuAction,
             itemBuilder: (context) => _buildPopupMenuItems(),
@@ -155,9 +155,9 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
   List<PopupMenuEntry<String>> _buildPopupMenuItems() {
     final noteType = _noteDetails!['noteType'] ?? 'problem';
     final currentStatus = _noteDetails!['status'] ?? 'pending';
-    
+
     List<PopupMenuEntry<String>> items = [];
-    
+
     // Add status change options based on note type
     if (noteType == 'request') {
       if (currentStatus != 'pending') {
@@ -219,7 +219,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
         );
       }
     }
-    
+
     // Add delete option
     items.add(
       const PopupMenuItem(
@@ -233,7 +233,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
         ),
       ),
     );
-    
+
     return items;
   }
 
@@ -257,7 +257,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
             child: Icon(
               Icons.note_outlined,
               size: 80,
-              color: Colors.white.withOpacity(0.7),
+              color: Colors.white.withValues(alpha: 0.7),
             ),
           ),
         ),
@@ -280,8 +280,10 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
             },
             itemBuilder: (context, index) {
               final photoString = photos[index];
-              final isUrl = photoString.startsWith('http://') || photoString.startsWith('https://');
-              
+              final isUrl =
+                  photoString.startsWith('http://') ||
+                  photoString.startsWith('https://');
+
               return Container(
                 decoration: BoxDecoration(color: Colors.grey.shade200),
                 child: isUrl
@@ -296,7 +298,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
                             child: CircularProgressIndicator(
                               value: loadingProgress.expectedTotalBytes != null
                                   ? loadingProgress.cumulativeBytesLoaded /
-                                      loadingProgress.expectedTotalBytes!
+                                        loadingProgress.expectedTotalBytes!
                                   : null,
                             ),
                           );
@@ -379,7 +381,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
                       shape: BoxShape.circle,
                       color: _currentPhotoIndex == entry.key
                           ? Colors.white
-                          : Colors.white.withOpacity(0.5),
+                          : Colors.white.withValues(alpha: 0.5),
                     ),
                   );
                 }).toList(),
@@ -394,7 +396,11 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
               bottom: 0,
               child: Center(
                 child: IconButton(
-                  icon: const Icon(Icons.chevron_left, color: Colors.white, size: 32),
+                  icon: const Icon(
+                    Icons.chevron_left,
+                    color: Colors.white,
+                    size: 32,
+                  ),
                   onPressed: _currentPhotoIndex > 0
                       ? () {
                           _photoPageController.previousPage(
@@ -412,7 +418,11 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
               bottom: 0,
               child: Center(
                 child: IconButton(
-                  icon: const Icon(Icons.chevron_right, color: Colors.white, size: 32),
+                  icon: const Icon(
+                    Icons.chevron_right,
+                    color: Colors.white,
+                    size: 32,
+                  ),
                   onPressed: _currentPhotoIndex < photos.length - 1
                       ? () {
                           _photoPageController.nextPage(
@@ -458,50 +468,55 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
         const SizedBox(height: 16),
 
         // Job Information
-        if (job != null) ...
-        [
+        if (job != null) ...[
           _buildInfoCard(
             title: 'Job',
             content: job['title'] ?? 'Untitled Job',
             subtitle: job['description'],
             icon: Icons.work_outline,
-            onViewMore: () => _navigateToJobDetail(job['documentId'] ?? job['id']),
+            onViewMore: () =>
+                _navigateToJobDetail(job['documentId'] ?? job['id']),
           ),
           const SizedBox(height: 16),
         ],
 
         // Customer Information
-        if (customer != null) ...
-        [
+        if (customer != null) ...[
           _buildInfoCard(
             title: 'Customer',
             content: customer['name'] ?? 'Unknown Customer',
             subtitle: customer['email'] ?? customer['phone'],
             icon: Icons.person_outline,
-            onViewMore: () => _navigateToCustomerDetail(customer['documentId'] ?? customer['id']),
+            onViewMore: () => _navigateToCustomerDetail(
+              customer['documentId'] ?? customer['id'],
+            ),
           ),
           const SizedBox(height: 16),
         ],
 
         // Vehicle/Equipment Information
-        if (vehicle != null) ...
-        [
+        if (vehicle != null) ...[
           _buildInfoCard(
             title: 'Vehicle',
-            content: '${vehicle['make'] ?? ''} ${vehicle['model'] ?? ''}'.trim(),
+            content: '${vehicle['make'] ?? ''} ${vehicle['model'] ?? ''}'
+                .trim(),
             subtitle: 'License: ${vehicle['licensePlate'] ?? 'N/A'}',
             icon: Icons.directions_car_outlined,
-            onViewMore: () => _navigateToServiceHistory(vehicle['documentId'] ?? vehicle['id']),
+            onViewMore: () => _navigateToServiceHistory(
+              vehicle['documentId'] ?? vehicle['id'],
+            ),
           ),
           const SizedBox(height: 16),
-        ] else if (equipment != null) ...
-        [
+        ] else if (equipment != null) ...[
           _buildInfoCard(
             title: 'Equipment',
-            content: '${equipment['make'] ?? ''} ${equipment['model'] ?? ''}'.trim(),
+            content: '${equipment['make'] ?? ''} ${equipment['model'] ?? ''}'
+                .trim(),
             subtitle: 'Serial: ${equipment['serialNumber'] ?? 'N/A'}',
             icon: Icons.build_outlined,
-            onViewMore: () => _navigateToServiceHistory(equipment['documentId'] ?? equipment['id']),
+            onViewMore: () => _navigateToServiceHistory(
+              equipment['documentId'] ?? equipment['id'],
+            ),
           ),
           const SizedBox(height: 16),
         ],
@@ -512,7 +527,9 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
             Expanded(
               child: _buildInfoCard(
                 title: 'Created',
-                content: DateTimeHelper.formatDateWithTime(_noteDetails!['createdAt']),
+                content: DateTimeHelper.formatDateWithTime(
+                  _noteDetails!['createdAt'],
+                ),
                 icon: Icons.access_time,
                 compact: true,
               ),
@@ -521,7 +538,9 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
             Expanded(
               child: _buildInfoCard(
                 title: 'Updated',
-                content: DateTimeHelper.formatDateWithTime(_noteDetails!['updatedAt']),
+                content: DateTimeHelper.formatDateWithTime(
+                  _noteDetails!['updatedAt'],
+                ),
                 icon: Icons.update,
                 compact: true,
               ),
@@ -538,10 +557,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
       children: [
         const Text(
           'Related Notes',
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 12),
         ListView.builder(
@@ -556,7 +572,9 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
                 leading: CircleAvatar(
                   backgroundColor: _getNoteTypeColor(note['noteType']),
                   child: Icon(
-                    note['noteType'] == 'problem' ? Icons.error_outline : Icons.help_outline,
+                    note['noteType'] == 'problem'
+                        ? Icons.error_outline
+                        : Icons.help_outline,
                     color: Colors.white,
                     size: 20,
                   ),
@@ -572,16 +590,14 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
                 ),
                 trailing: Text(
                   DateTimeHelper.formatDateWithTime(note['createdAt']),
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey.shade600,
-                  ),
+                  style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
                 ),
                 onTap: () {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => NoteDetailScreen(noteId: note['id']),
+                      builder: (context) =>
+                          NoteDetailScreen(noteId: note['id']),
                     ),
                   );
                 },
@@ -691,11 +707,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(
-            icon,
-            color: Colors.orange.shade600,
-            size: compact ? 20 : 24,
-          ),
+          Icon(icon, color: Colors.orange.shade600, size: compact ? 20 : 24),
           const SizedBox(width: 12),
           Expanded(
             child: Column(
@@ -796,7 +808,10 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
 
   Future<void> _updateNoteStatus(String status) async {
     try {
-      final success = await _noteDetailService.updateNoteStatus(widget.noteId, status);
+      final success = await _noteDetailService.updateNoteStatus(
+        widget.noteId,
+        status,
+      );
       if (success) {
         setState(() {
           _noteDetails!['status'] = status;
@@ -817,10 +832,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Error: $e'),
-          backgroundColor: Colors.red,
-        ),
+        SnackBar(content: Text('Error: $e'), backgroundColor: Colors.red),
       );
     }
   }
@@ -830,7 +842,9 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Delete Note'),
-        content: const Text('Are you sure you want to delete this note? This action cannot be undone.'),
+        content: const Text(
+          'Are you sure you want to delete this note? This action cannot be undone.',
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
@@ -866,10 +880,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
         }
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Error: $e'),
-            backgroundColor: Colors.red,
-          ),
+          SnackBar(content: Text('Error: $e'), backgroundColor: Colors.red),
         );
       }
     }
@@ -878,9 +889,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
   Future<void> _navigateToJobDetail(String jobId) async {
     Navigator.push(
       context,
-      MaterialPageRoute(
-        builder: (context) => JobDetailScreen(jobId: jobId),
-      ),
+      MaterialPageRoute(builder: (context) => JobDetailScreen(jobId: jobId)),
     );
   }
 

@@ -20,7 +20,7 @@ class _JobsScreenState extends State<JobsScreen> {
   List<Map<String, dynamic>> _jobs = [];
   bool _isLoading = true;
   bool _showDetailedInfo = false;
-  bool _isListView = true;
+  bool _isListView = false;
 
   // Filter options
   String _selectedStatus = 'all';
@@ -350,7 +350,7 @@ class _JobsScreenState extends State<JobsScreen> {
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
+                      color: Colors.black.withValues(alpha: 0.1),
                       blurRadius: 20,
                       offset: const Offset(0, 10),
                     ),
@@ -533,7 +533,7 @@ class _JobsScreenState extends State<JobsScreen> {
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
+                      color: Colors.black.withValues(alpha: 0.1),
                       blurRadius: 20,
                       offset: const Offset(0, 10),
                     ),
@@ -769,62 +769,67 @@ class _JobsScreenState extends State<JobsScreen> {
 
   Widget _buildActionButtons() {
     return Container(
-      padding: const EdgeInsets.fromLTRB(16.0, 4.0, 16.0, 8.0),
+      padding: const EdgeInsets.fromLTRB(8.0, 2.0, 16.0, 8.0),
       child: Row(
         children: [
-          Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Colors.blue.shade400, Colors.blue.shade600],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-              borderRadius: BorderRadius.circular(12),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.blue.withOpacity(0.3),
-                  blurRadius: 8,
-                  offset: const Offset(0, 4),
+          Transform.scale(
+            scale: 0.8,
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [Colors.blue.shade400, Colors.blue.shade600],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
                 ),
-              ],
-            ),
-            child: IconButton(
-              onPressed: _showFilterDialog,
-              icon: const Icon(
-                Icons.filter_list,
-                color: Colors.white,
-                size: 16,
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.blue.withValues(alpha: 0.3),
+                    blurRadius: 8,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
               ),
-              tooltip: 'Filter',
-              padding: const EdgeInsets.all(8),
-              constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
+              child: IconButton(
+                onPressed: _showFilterDialog,
+                icon: const Icon(
+                  Icons.filter_list,
+                  color: Colors.white,
+                  size: 16,
+                ),
+                tooltip: 'Filter',
+                padding: const EdgeInsets.all(8),
+                constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
+              ),
             ),
           ),
-          const SizedBox(width: 8),
 
           // Sort button
-          Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Colors.purple.shade400, Colors.purple.shade600],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-              borderRadius: BorderRadius.circular(12),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.purple.withOpacity(0.3),
-                  blurRadius: 8,
-                  offset: const Offset(0, 4),
+          Transform.scale(
+            scale: 0.8,
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [Colors.purple.shade400, Colors.purple.shade600],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
                 ),
-              ],
-            ),
-            child: IconButton(
-              onPressed: _showSortDialog,
-              icon: const Icon(Icons.sort, color: Colors.white, size: 16),
-              tooltip: 'Sort',
-              padding: const EdgeInsets.all(8),
-              constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.purple.withValues(alpha: 0.3),
+                    blurRadius: 8,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: IconButton(
+                onPressed: _showSortDialog,
+                icon: const Icon(Icons.sort, color: Colors.white, size: 16),
+                tooltip: 'Sort',
+                padding: const EdgeInsets.all(8),
+                constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
+              ),
             ),
           ),
 
@@ -832,104 +837,111 @@ class _JobsScreenState extends State<JobsScreen> {
           const Spacer(),
 
           // Details toggle button
-          Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: _showDetailedInfo
-                    ? [Colors.orange.shade400, Colors.orange.shade600]
-                    : [Colors.grey.shade400, Colors.grey.shade600],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-              borderRadius: BorderRadius.circular(12),
-              boxShadow: [
-                BoxShadow(
-                  color: (_showDetailedInfo ? Colors.orange : Colors.grey)
-                      .withOpacity(0.3),
-                  blurRadius: 8,
-                  offset: const Offset(0, 4),
+          Transform.scale(
+            scale: 0.8,
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: _showDetailedInfo
+                      ? [Colors.orange.shade400, Colors.orange.shade600]
+                      : [Colors.grey.shade400, Colors.grey.shade600],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
                 ),
-              ],
-            ),
-            child: IconButton(
-              onPressed: _toggleDetailedInfo,
-              icon: Icon(
-                _showDetailedInfo ? Icons.visibility_off : Icons.visibility,
-                color: Colors.white,
-                size: 16,
-              ),
-              tooltip: _showDetailedInfo ? 'Hide Details' : 'Show Details',
-              padding: const EdgeInsets.all(8),
-              constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
-            ),
-          ),
-          const SizedBox(width: 8),
-          // View toggle button
-          Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Colors.deepPurple.shade400,
-                  Colors.deepPurple.shade600,
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: [
+                  BoxShadow(
+                    color: (_showDetailedInfo ? Colors.orange : Colors.grey)
+                        .withValues(alpha: 0.3),
+                    blurRadius: 8,
+                    offset: const Offset(0, 4),
+                  ),
                 ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
               ),
-              borderRadius: BorderRadius.circular(12),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.deepPurple.withOpacity(0.3),
-                  blurRadius: 8,
-                  offset: const Offset(0, 4),
+              child: IconButton(
+                onPressed: _toggleDetailedInfo,
+                icon: Icon(
+                  _showDetailedInfo ? Icons.visibility_off : Icons.visibility,
+                  color: Colors.white,
+                  size: 16,
                 ),
-              ],
-            ),
-            child: IconButton(
-              onPressed: _toggleView,
-              icon: Icon(
-                _isListView ? Icons.grid_view : Icons.list,
-                color: Colors.white,
-                size: 16, // shrink icon itself
+                tooltip: _showDetailedInfo ? 'Hide Details' : 'Show Details',
+                padding: const EdgeInsets.all(8),
+                constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
               ),
-              tooltip: _isListView ? 'Grid View' : 'List View',
-              padding: EdgeInsets.all(8), // reduce touch padding
-              constraints: BoxConstraints(
-                minWidth: 32,
-                minHeight: 32,
-              ), // shrink button size
             ),
           ),
-          const SizedBox(width: 8),
-          // Refresh button
-          Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Colors.teal.shade400, Colors.teal.shade600],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-              borderRadius: BorderRadius.circular(12),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.teal.withOpacity(0.3),
-                  blurRadius: 8,
-                  offset: const Offset(0, 4),
+          // View toggle button
+          Transform.scale(
+            scale: 0.8,
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Colors.deepPurple.shade400,
+                    Colors.deepPurple.shade600,
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
                 ),
-              ],
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.deepPurple.withValues(alpha: 0.3),
+                    blurRadius: 8,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: IconButton(
+                onPressed: _toggleView,
+                icon: Icon(
+                  _isListView ? Icons.grid_view : Icons.list,
+                  color: Colors.white,
+                  size: 16, // shrink icon itself
+                ),
+                tooltip: _isListView ? 'Grid View' : 'List View',
+                padding: EdgeInsets.all(8), // reduce touch padding
+                constraints: BoxConstraints(
+                  minWidth: 32,
+                  minHeight: 32,
+                ), // shrink button size
+              ),
             ),
-            child: IconButton(
-              onPressed: _loadJobs,
-              icon: const Icon(
-                Icons.refresh,
-                color: Colors.white,
-                size: 16,
-              ), // smaller icon
-              tooltip: 'Refresh',
-              padding: const EdgeInsets.all(8), // shrink padding
-              constraints: const BoxConstraints(
-                minWidth: 32,
-                minHeight: 32,
-              ), // shrink button size
+          ),
+          // Refresh button
+          Transform.scale(
+            scale: 0.8,
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [Colors.teal.shade400, Colors.teal.shade600],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.teal.withValues(alpha: 0.3),
+                    blurRadius: 8,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: IconButton(
+                onPressed: _loadJobs,
+                icon: const Icon(
+                  Icons.refresh,
+                  color: Colors.white,
+                  size: 16,
+                ), // smaller icon
+                tooltip: 'Refresh',
+                padding: const EdgeInsets.all(8), // shrink padding
+                constraints: const BoxConstraints(
+                  minWidth: 32,
+                  minHeight: 32,
+                ), // shrink button size
+              ),
             ),
           ),
         ],
@@ -1209,7 +1221,7 @@ class _JobsScreenState extends State<JobsScreen> {
         height: 80,
         width: double.infinity,
         decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.2),
+          color: Colors.white.withValues(alpha: 0.2),
           borderRadius: BorderRadius.circular(12),
         ),
         child: Icon(
@@ -1237,7 +1249,7 @@ class _JobsScreenState extends State<JobsScreen> {
             height: 100,
             errorBuilder: (context, error, stackTrace) => Container(
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.1),
+                color: Colors.white.withValues(alpha: 0.1),
                 borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(16),
                   topRight: Radius.circular(16),
@@ -1281,7 +1293,7 @@ class _JobsScreenState extends State<JobsScreen> {
                   fit: BoxFit.cover, // Cover entire area
                   errorBuilder: (context, error, stackTrace) => Container(
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.2),
+                      color: Colors.white.withValues(alpha: 0.2),
                       borderRadius: i == 0
                           ? const BorderRadius.only(
                               topLeft: Radius.circular(16),
@@ -1308,7 +1320,7 @@ class _JobsScreenState extends State<JobsScreen> {
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                 decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.7),
+                  color: Colors.black.withValues(alpha: 0.7),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Text(
@@ -1358,7 +1370,7 @@ class _JobsScreenState extends State<JobsScreen> {
               ),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
+                  color: Colors.black.withValues(alpha: 0.1),
                   blurRadius: 8,
                   offset: const Offset(0, 2),
                 ),
@@ -1413,7 +1425,7 @@ class _JobsScreenState extends State<JobsScreen> {
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
+                    color: Colors.black.withValues(alpha: 0.1),
                     blurRadius: 8,
                     offset: const Offset(0, 4),
                   ),
@@ -1579,7 +1591,7 @@ class _JobsScreenState extends State<JobsScreen> {
                         decoration: BoxDecoration(
                           color: _getStatusColor(
                             job['status'],
-                          ).withOpacity(0.1),
+                          ).withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(8),
                           border: Border.all(
                             color: _getStatusColor(job['status']),
@@ -1608,7 +1620,7 @@ class _JobsScreenState extends State<JobsScreen> {
                         child: Container(
                           padding: const EdgeInsets.all(6),
                           decoration: BoxDecoration(
-                            color: Colors.indigo.withOpacity(0.1),
+                            color: Colors.indigo.withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Icon(
@@ -1625,7 +1637,7 @@ class _JobsScreenState extends State<JobsScreen> {
                         child: Container(
                           padding: const EdgeInsets.all(6),
                           decoration: BoxDecoration(
-                            color: priorityColor.withOpacity(0.1),
+                            color: priorityColor.withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Icon(
@@ -1692,7 +1704,7 @@ class _JobsScreenState extends State<JobsScreen> {
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [priorityColor, priorityColor.withOpacity(0.8)],
+          colors: [priorityColor, priorityColor.withValues(alpha: 0.8)],
         ),
       ),
       child: Center(
@@ -1769,7 +1781,7 @@ class _JobsScreenState extends State<JobsScreen> {
 
     return Chip(
       label: Text(displayText, style: const TextStyle(fontSize: 12)),
-      backgroundColor: color.withOpacity(0.2),
+      backgroundColor: color.withValues(alpha: 0.2),
       side: BorderSide(color: color),
     );
   }
@@ -1805,7 +1817,7 @@ class _JobsScreenState extends State<JobsScreen> {
 
     return Chip(
       label: Text(displayText, style: const TextStyle(fontSize: 12)),
-      backgroundColor: color.withOpacity(0.2),
+      backgroundColor: color.withValues(alpha: 0.2),
       side: BorderSide(color: color),
     );
   }
@@ -1852,7 +1864,7 @@ class _JobsScreenState extends State<JobsScreen> {
               border: Border.all(color: Colors.grey.shade300, width: 1.5),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.05),
+                  color: Colors.black.withValues(alpha: 0.05),
                   blurRadius: 10,
                   offset: const Offset(0, 2),
                 ),
@@ -1884,13 +1896,13 @@ class _JobsScreenState extends State<JobsScreen> {
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.05),
+                          color: Colors.black.withValues(alpha: 0.05),
                           blurRadius: 10,
                           offset: const Offset(0, 2),
                         ),
                         if (hasFocus)
                           BoxShadow(
-                            color: Colors.blue.withOpacity(0.2),
+                            color: Colors.blue.withValues(alpha: 0.2),
                             blurRadius: 15,
                             offset: const Offset(0, 0),
                           ),
@@ -1925,6 +1937,10 @@ class _JobsScreenState extends State<JobsScreen> {
                               )
                             : null,
                         border: InputBorder.none,
+                        isDense: true,
+                        contentPadding: const EdgeInsets.symmetric(
+                          vertical: 12,
+                        ),
                       ),
                       style: const TextStyle(fontSize: 14),
                       onChanged: (value) => _applyFilters(),

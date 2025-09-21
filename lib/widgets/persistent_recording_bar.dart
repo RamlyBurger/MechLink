@@ -28,14 +28,14 @@ class _PersistentRecordingBarState extends State<PersistentRecordingBar>
   Duration _currentDuration = Duration.zero;
   bool _isRecording = false;
   bool _isPaused = false;
-  
+
   StreamSubscription? _durationSubscription;
   StreamSubscription? _recordingStateSubscription;
   StreamSubscription? _pauseStateSubscription;
-  
+
   late AnimationController _pulseController;
   late Animation<double> _pulseAnimation;
-  
+
   Timer? _durationTimer;
 
   @override
@@ -52,7 +52,7 @@ class _PersistentRecordingBarState extends State<PersistentRecordingBar>
       duration: const Duration(milliseconds: 1000),
       vsync: this,
     );
-    
+
     _pulseAnimation = Tween<double>(begin: 1.0, end: 1.2).animate(
       CurvedAnimation(parent: _pulseController, curve: Curves.easeInOut),
     );
@@ -66,27 +66,31 @@ class _PersistentRecordingBarState extends State<PersistentRecordingBar>
         });
       }
     });
-    
-    _recordingStateSubscription = _recordingService.recordingStateStream.listen((isRecording) {
-      if (mounted) {
-        setState(() {
-          _isRecording = isRecording;
-        });
-        
-        if (isRecording && !_isPaused) {
-          _pulseController.repeat(reverse: true);
-        } else {
-          _pulseController.stop();
+
+    _recordingStateSubscription = _recordingService.recordingStateStream.listen(
+      (isRecording) {
+        if (mounted) {
+          setState(() {
+            _isRecording = isRecording;
+          });
+
+          if (isRecording && !_isPaused) {
+            _pulseController.repeat(reverse: true);
+          } else {
+            _pulseController.stop();
+          }
         }
-      }
-    });
-    
-    _pauseStateSubscription = _recordingService.pauseStateStream.listen((isPaused) {
+      },
+    );
+
+    _pauseStateSubscription = _recordingService.pauseStateStream.listen((
+      isPaused,
+    ) {
       if (mounted) {
         setState(() {
           _isPaused = isPaused;
         });
-        
+
         if (isPaused) {
           _pulseController.stop();
         } else if (_isRecording) {
@@ -98,18 +102,24 @@ class _PersistentRecordingBarState extends State<PersistentRecordingBar>
 
   Future<void> _initializeState() async {
     // Initialize the recording state for the persistent bar
-    _currentDuration = await _recordingService.getCurrentDuration(widget.recordingTask);
-    _isRecording = await _recordingService.isTaskCurrentlyRecording(widget.recordingTask);
-    
+    _currentDuration = await _recordingService.getCurrentDuration(
+      widget.recordingTask,
+    );
+    _isRecording = await _recordingService.isTaskCurrentlyRecording(
+      widget.recordingTask,
+    );
+
     // Get actual pause state from database instead of relying on potentially uninitialized service state
     // This ensures we get the correct pause state even if TaskRecordingService hasn't been initialized yet
     final globalRecordingService = GlobalRecordingService();
     final authService = AuthService();
     final mechanicId = authService.currentMechanicId;
-    
+
     if (mechanicId != null) {
-      final activeRecording = await globalRecordingService.getActiveRecordingForMechanic(mechanicId);
-      if (activeRecording != null && activeRecording['taskId'] == widget.recordingTask.id) {
+      final activeRecording = await globalRecordingService
+          .getActiveRecordingForMechanic(mechanicId);
+      if (activeRecording != null &&
+          activeRecording['taskId'] == widget.recordingTask.id) {
         final statusFromDB = activeRecording['status'] as String? ?? 'running';
         _isPaused = statusFromDB == 'paused';
       } else {
@@ -118,22 +128,24 @@ class _PersistentRecordingBarState extends State<PersistentRecordingBar>
     } else {
       _isPaused = false;
     }
-    
+
     // Start animation if recording
     if (_isRecording && !_isPaused) {
       _pulseController.repeat(reverse: true);
     }
-    
+
     // Update the UI
     if (mounted) {
       setState(() {});
     }
   }
-  
+
   void _startDurationTimer() {
     _durationTimer = Timer.periodic(const Duration(seconds: 1), (timer) async {
       if (_isRecording && !_isPaused) {
-        final duration = await _recordingService.getCurrentDuration(widget.recordingTask);
+        final duration = await _recordingService.getCurrentDuration(
+          widget.recordingTask,
+        );
         if (mounted) {
           setState(() {
             _currentDuration = duration;
@@ -164,7 +176,9 @@ class _PersistentRecordingBarState extends State<PersistentRecordingBar>
   }
 
   Future<void> _stopRecording() async {
-    final success = await _recordingService.finishRecording(widget.recordingTask.id);
+    final success = await _recordingService.finishRecording(
+      widget.recordingTask.id,
+    );
     if (success && widget.onDismiss != null) {
       widget.onDismiss!();
     }
@@ -186,7 +200,7 @@ class _PersistentRecordingBarState extends State<PersistentRecordingBar>
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.2),
+            color: Colors.black.withValues(alpha: 0.2),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -217,9 +231,9 @@ class _PersistentRecordingBarState extends State<PersistentRecordingBar>
                     );
                   },
                 ),
-                
+
                 const SizedBox(width: 12),
-                
+
                 // Task info
                 Expanded(
                   child: Column(
@@ -237,7 +251,9 @@ class _PersistentRecordingBarState extends State<PersistentRecordingBar>
                         overflow: TextOverflow.ellipsis,
                       ),
                       Text(
-                        _recordingService.formatDurationWithHours(_currentDuration),
+                        _recordingService.formatDurationWithHours(
+                          _currentDuration,
+                        ),
                         style: const TextStyle(
                           color: Colors.white70,
                           fontSize: 12,
@@ -247,7 +263,7 @@ class _PersistentRecordingBarState extends State<PersistentRecordingBar>
                     ],
                   ),
                 ),
-                
+
                 // Control buttons
                 Row(
                   mainAxisSize: MainAxisSize.min,
@@ -266,7 +282,7 @@ class _PersistentRecordingBarState extends State<PersistentRecordingBar>
                       ),
                       padding: EdgeInsets.zero,
                     ),
-                    
+
                     // Stop button
                     IconButton(
                       onPressed: _stopRecording,

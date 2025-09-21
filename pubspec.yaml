@@ -64,6 +64,7 @@ dependencies:
   fl_chart: ^0.68.0
   syncfusion_flutter_charts: ^26.2.14
   table_calendar: ^3.1.2
+  flutter_launcher_icons: ^0.14.1
 
 dev_dependencies:
   flutter_test:
@@ -88,7 +89,6 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - lib/firestore-collections-data/
     - assets/
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -116,3 +116,8 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/mechlink.png"

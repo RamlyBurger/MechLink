@@ -1020,7 +1020,7 @@ class _ChatsScreenState extends State<ChatsScreen>
                 border: Border.all(color: Colors.grey.shade300),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
+                    color: Colors.black.withValues(alpha: 0.05),
                     blurRadius: 8,
                     offset: const Offset(0, 2),
                   ),
@@ -1101,7 +1101,7 @@ class _ChatsScreenState extends State<ChatsScreen>
                       border: Border.all(color: Colors.grey.shade300),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.05),
+                          color: Colors.black.withValues(alpha: 0.05),
                           blurRadius: 8,
                           offset: const Offset(0, 2),
                         ),
@@ -1200,7 +1200,7 @@ class _ChatsScreenState extends State<ChatsScreen>
                       shape: BoxShape.circle,
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.blue.withOpacity(0.3),
+                          color: Colors.blue.withValues(alpha: 0.3),
                           blurRadius: 8,
                           offset: const Offset(0, 2),
                         ),
@@ -1256,7 +1256,7 @@ class _ChatsScreenState extends State<ChatsScreen>
         return GestureDetector(
           onTap: _hideSidebar,
           child: Container(
-            color: Colors.black.withOpacity(_fadeAnimation.value),
+            color: Colors.black.withValues(alpha: _fadeAnimation.value),
             child: Row(
               children: [
                 // Animated sidebar panel

@@ -199,7 +199,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
             borderRadius: BorderRadius.circular(50),
             boxShadow: [
               BoxShadow(
-                color: const Color(0xFF613EEA).withOpacity(0.5),
+                color: const Color(0xFF613EEA).withValues(alpha: 0.5),
                 blurRadius: 12,
                 offset: const Offset(0, 4),
               ),

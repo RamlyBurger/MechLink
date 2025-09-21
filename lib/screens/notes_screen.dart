@@ -27,36 +27,12 @@ class _NotesScreenState extends State<NotesScreen> {
 
   // Quick filter options
   final List<Map<String, dynamic>> _quickFilters = [
-    {
-      'label': 'All Notes',
-      'noteType': 'all',
-      'status': 'all',
-    },
-    {
-      'label': 'Problems',
-      'noteType': 'problem',
-      'status': 'all',
-    },
-    {
-      'label': 'Requests',
-      'noteType': 'request',
-      'status': 'all',
-    },
-    {
-      'label': 'Solved',
-      'noteType': 'all',
-      'status': 'solved',
-    },
-    {
-      'label': 'Pending',
-      'noteType': 'all',
-      'status': 'pending',
-    },
-    {
-      'label': 'Accepted',
-      'noteType': 'all',
-      'status': 'accepted',
-    },
+    {'label': 'All Notes', 'noteType': 'all', 'status': 'all'},
+    {'label': 'Problems', 'noteType': 'problem', 'status': 'all'},
+    {'label': 'Requests', 'noteType': 'request', 'status': 'all'},
+    {'label': 'Solved', 'noteType': 'all', 'status': 'solved'},
+    {'label': 'Pending', 'noteType': 'all', 'status': 'pending'},
+    {'label': 'Accepted', 'noteType': 'all', 'status': 'accepted'},
   ];
   int _selectedQuickFilter = 0;
 
@@ -77,7 +53,7 @@ class _NotesScreenState extends State<NotesScreen> {
     setState(() => _isLoading = true);
     try {
       List<Map<String, dynamic>> notes;
-      
+
       if (widget.jobId != null) {
         // Get notes for specific job
         notes = await _noteService.getNotesByJobId(widget.jobId!);
@@ -92,10 +68,10 @@ class _NotesScreenState extends State<NotesScreen> {
           });
           return;
         }
-        
+
         // Get all notes first
         final allNotes = await _noteService.getAllNotes();
-        
+
         // Filter notes by checking if their job's mechanicId matches current mechanic
         notes = [];
         for (final note in allNotes) {
@@ -103,7 +79,8 @@ class _NotesScreenState extends State<NotesScreen> {
           if (jobId != null) {
             // Get the job for this note
             final jobStatus = await _noteService.getJobByIdForNote(jobId);
-            if (jobStatus != null && jobStatus['mechanicId'] == currentMechanicId) {
+            if (jobStatus != null &&
+                jobStatus['mechanicId'] == currentMechanicId) {
               notes.add(note);
             }
           }
@@ -128,27 +105,30 @@ class _NotesScreenState extends State<NotesScreen> {
   void _filterNotes() {
     final query = _searchController.text.toLowerCase();
     final selectedFilter = _quickFilters[_selectedQuickFilter];
-    
+
     setState(() {
       _filteredNotes = _notes.where((note) {
         // Apply search query filter
         final title = (note['name'] ?? '').toString().toLowerCase();
         final content = (note['description'] ?? '').toString().toLowerCase();
         final noteType = (note['noteType'] ?? '').toString().toLowerCase();
-        final matchesSearch = query.isEmpty || 
+        final matchesSearch =
+            query.isEmpty ||
             title.contains(query) ||
             content.contains(query) ||
             noteType.contains(query);
-        
+
         // Apply quick filter
         final noteTypeFilter = selectedFilter['noteType'] as String;
         final statusFilter = selectedFilter['status'] as String;
-        
-        final matchesNoteType = noteTypeFilter == 'all' || 
+
+        final matchesNoteType =
+            noteTypeFilter == 'all' ||
             (note['noteType'] ?? '').toString().toLowerCase() == noteTypeFilter;
-        final matchesStatus = statusFilter == 'all' || 
+        final matchesStatus =
+            statusFilter == 'all' ||
             (note['status'] ?? '').toString().toLowerCase() == statusFilter;
-        
+
         return matchesSearch && matchesNoteType && matchesStatus;
       }).toList();
     });
@@ -166,9 +146,15 @@ class _NotesScreenState extends State<NotesScreen> {
     setState(() {
       _filteredNotes.sort((a, b) {
         if (_sortNewestFirst) {
-          return _compareTimestamps(b['createdAt'], a['createdAt']); // Newest first
+          return _compareTimestamps(
+            b['createdAt'],
+            a['createdAt'],
+          ); // Newest first
         } else {
-          return _compareTimestamps(a['createdAt'], b['createdAt']); // Oldest first
+          return _compareTimestamps(
+            a['createdAt'],
+            b['createdAt'],
+          ); // Oldest first
         }
       });
     });
@@ -241,12 +227,17 @@ class _NotesScreenState extends State<NotesScreen> {
                 borderRadius: BorderRadius.circular(20),
                 onTap: _toggleSort,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 6,
+                  ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Icon(
-                        _sortNewestFirst ? Icons.arrow_downward : Icons.arrow_upward,
+                        _sortNewestFirst
+                            ? Icons.arrow_downward
+                            : Icons.arrow_upward,
                         size: 16,
                         color: Colors.grey.shade700,
                       ),
@@ -314,7 +305,9 @@ class _NotesScreenState extends State<NotesScreen> {
                             filter['label'],
                             style: TextStyle(
                               fontSize: 12,
-                              color: isSelected ? Colors.white : Colors.grey.shade700,
+                              color: isSelected
+                                  ? Colors.white
+                                  : Colors.grey.shade700,
                             ),
                           ),
                           selected: isSelected,
@@ -360,10 +353,7 @@ class _NotesScreenState extends State<NotesScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: _createNewNote,
         backgroundColor: Colors.orange.shade600,
-        child: const Icon(
-          Icons.add,
-          color: Colors.white,
-        ),
+        child: const Icon(Icons.add, color: Colors.white),
       ),
     );
   }
@@ -383,9 +373,7 @@ class _NotesScreenState extends State<NotesScreen> {
     final result = await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => NoteEditScreen(
-          jobId: widget.jobId!,
-        ),
+        builder: (context) => NoteEditScreen(jobId: widget.jobId!),
       ),
     );
 
@@ -433,124 +421,134 @@ class _NotesScreenState extends State<NotesScreen> {
       child: Card(
         elevation: 2,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Photo section
-          Container(
-            height: 100,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: Colors.grey.shade200,
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(12),
-                topRight: Radius.circular(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Photo section
+            Container(
+              height: 80,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.grey.shade200,
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(12),
+                  topRight: Radius.circular(12),
+                ),
+              ),
+              child: photos.isNotEmpty
+                  ? ClipRRect(
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(12),
+                        topRight: Radius.circular(12),
+                      ),
+                      child: _buildPhotoWidget(photos.first.toString()),
+                    )
+                  : _buildPhotoPlaceholder(),
+            ),
+
+            // Content section
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(12),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Title
+                    Text(
+                      note['name'] ?? 'Untitled Note',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const SizedBox(height: 4),
+
+                    // Content preview
+                    Text(
+                      note['description'] ?? 'No description',
+                      style: TextStyle(
+                        color: Colors.grey.shade600,
+                        fontSize: 12,
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+
+                    const Spacer(),
+
+                    // Note type and status chips
+                    Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 6,
+                            vertical: 2,
+                          ),
+                          decoration: BoxDecoration(
+                            color: _getNoteTypeColor(
+                              noteType,
+                            ).withValues(alpha: 0.1),
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(
+                              color: _getNoteTypeColor(noteType),
+                              width: 1,
+                            ),
+                          ),
+                          child: Text(
+                            noteType.toUpperCase(),
+                            style: TextStyle(
+                              color: _getNoteTypeColor(noteType),
+                              fontSize: 8,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 4),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 6,
+                            vertical: 2,
+                          ),
+                          decoration: BoxDecoration(
+                            color: _getStatusColor(
+                              status,
+                            ).withValues(alpha: 0.1),
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(
+                              color: _getStatusColor(status),
+                              width: 1,
+                            ),
+                          ),
+                          child: Text(
+                            status.toUpperCase(),
+                            style: TextStyle(
+                              color: _getStatusColor(status),
+                              fontSize: 8,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    const SizedBox(height: 4),
+
+                    // Date
+                    Text(
+                      DateTimeHelper.formatDateWithTime(note['createdAt']),
+                      style: TextStyle(
+                        color: Colors.grey.shade500,
+                        fontSize: 10,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-            child: photos.isNotEmpty
-                ? ClipRRect(
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(12),
-                      topRight: Radius.circular(12),
-                    ),
-                    child: _buildPhotoWidget(photos.first.toString()),
-                  )
-                : _buildPhotoPlaceholder(),
-          ),
-
-          // Content section
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(12),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Title
-                  Text(
-                    note['name'] ?? 'Untitled Note',
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
-                    ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const SizedBox(height: 4),
-
-                  // Content preview
-                  Text(
-                    note['description'] ?? 'No description',
-                    style: TextStyle(color: Colors.grey.shade600, fontSize: 12),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-
-                  const Spacer(),
-
-                  // Note type and status chips
-                  Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 6,
-                          vertical: 2,
-                        ),
-                        decoration: BoxDecoration(
-                          color: _getNoteTypeColor(noteType).withOpacity(0.1),
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(
-                            color: _getNoteTypeColor(noteType),
-                            width: 1,
-                          ),
-                        ),
-                        child: Text(
-                          noteType.toUpperCase(),
-                          style: TextStyle(
-                            color: _getNoteTypeColor(noteType),
-                            fontSize: 8,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 4),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 6,
-                          vertical: 2,
-                        ),
-                        decoration: BoxDecoration(
-                          color: _getStatusColor(status).withOpacity(0.1),
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(
-                            color: _getStatusColor(status),
-                            width: 1,
-                          ),
-                        ),
-                        child: Text(
-                          status.toUpperCase(),
-                          style: TextStyle(
-                            color: _getStatusColor(status),
-                            fontSize: 8,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  const SizedBox(height: 4),
-
-                  // Date
-                  Text(
-                    DateTimeHelper.formatDateWithTime(note['createdAt']),
-                    style: TextStyle(color: Colors.grey.shade500, fontSize: 10),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
+          ],
+        ),
       ),
     );
   }
@@ -559,9 +557,8 @@ class _NotesScreenState extends State<NotesScreen> {
     final result = await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => NoteDetailScreen(
-          noteId: note['id'] ?? note['documentId'] ?? '',
-        ),
+        builder: (context) =>
+            NoteDetailScreen(noteId: note['id'] ?? note['documentId'] ?? ''),
       ),
     );
 
@@ -572,8 +569,9 @@ class _NotesScreenState extends State<NotesScreen> {
   }
 
   Widget _buildPhotoWidget(String photoString) {
-    final isUrl = photoString.startsWith('http://') || photoString.startsWith('https://');
-    
+    final isUrl =
+        photoString.startsWith('http://') || photoString.startsWith('https://');
+
     if (isUrl) {
       return Image.network(
         photoString,
@@ -593,7 +591,8 @@ class _NotesScreenState extends State<NotesScreen> {
           fit: BoxFit.cover,
           width: double.infinity,
           height: double.infinity,
-          errorBuilder: (context, error, stackTrace) => _buildPhotoPlaceholder(),
+          errorBuilder: (context, error, stackTrace) =>
+              _buildPhotoPlaceholder(),
         );
       } catch (e) {
         return _buildPhotoPlaceholder();

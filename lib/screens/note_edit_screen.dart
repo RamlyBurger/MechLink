@@ -427,7 +427,7 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
                     ),
                     decoration: BoxDecoration(
                       color: isSelected
-                          ? status['color'].withOpacity(0.1)
+                          ? status['color'].withValues(alpha: 0.1)
                           : Colors.white,
                       borderRadius: BorderRadius.circular(8),
                       border: Border.all(
@@ -674,7 +674,7 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
             child: Container(
               padding: const EdgeInsets.all(4),
               decoration: BoxDecoration(
-                color: Colors.red.withOpacity(0.8),
+                color: Colors.red.withValues(alpha: 0.8),
                 shape: BoxShape.circle,
               ),
               child: const Icon(Icons.close, color: Colors.white, size: 16),

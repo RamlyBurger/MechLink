@@ -264,7 +264,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                 height: 60,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Colors.white.withOpacity(0.1),
+                  color: Colors.white.withValues(alpha: 0.1),
                 ),
               ),
             ),
@@ -276,7 +276,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                 height: 40,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  color: Colors.white.withOpacity(0.08),
+                  color: Colors.white.withValues(alpha: 0.08),
                 ),
               ),
             ),
@@ -288,7 +288,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                 height: 30,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Colors.white.withOpacity(0.12),
+                  color: Colors.white.withValues(alpha: 0.12),
                 ),
               ),
             ),
@@ -349,7 +349,7 @@ class _ProfileScreenState extends State<ProfileScreen>
             border: Border.all(color: Colors.white, width: 4),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.2),
+                color: Colors.black.withValues(alpha: 0.2),
                 blurRadius: 10,
                 offset: const Offset(0, 4),
               ),
@@ -378,7 +378,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                 border: Border.all(color: Colors.white, width: 2),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.2),
+                    color: Colors.black.withValues(alpha: 0.2),
                     blurRadius: 4,
                     offset: const Offset(0, 2),
                   ),
@@ -432,7 +432,7 @@ class _ProfileScreenState extends State<ProfileScreen>
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
@@ -446,7 +446,7 @@ class _ProfileScreenState extends State<ProfileScreen>
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF3B82F6).withOpacity(0.1),
+                  color: const Color(0xFF3B82F6).withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Icon(icon, color: const Color(0xFF3B82F6), size: 20),
@@ -644,12 +644,12 @@ class _ProfileScreenState extends State<ProfileScreen>
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
           color: isDestructive
-              ? Colors.red.withOpacity(0.05)
+              ? Colors.red.withValues(alpha: 0.05)
               : const Color(0xFFF8FAFC),
           borderRadius: BorderRadius.circular(8),
           border: Border.all(
             color: isDestructive
-                ? Colors.red.withOpacity(0.2)
+                ? Colors.red.withValues(alpha: 0.2)
                 : const Color(0xFFE2E8F0),
           ),
         ),

@@ -173,7 +173,7 @@ class _ChatsHistoryScreenState extends State<ChatsHistoryScreen> {
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.08),
+            color: Colors.black.withValues(alpha: 0.08),
             blurRadius: 20,
             offset: const Offset(0, 4),
           ),
@@ -276,7 +276,7 @@ class _ChatsHistoryScreenState extends State<ChatsHistoryScreen> {
                           boxShadow: isSelected
                               ? [
                                   BoxShadow(
-                                    color: Colors.blue.withOpacity(0.1),
+                                    color: Colors.blue.withValues(alpha: 0.1),
                                     blurRadius: 8,
                                     offset: const Offset(0, 2),
                                   ),

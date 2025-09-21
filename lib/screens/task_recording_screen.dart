@@ -805,14 +805,14 @@ class _TaskRecordingScreenState extends State<TaskRecordingScreen>
                 _currentTask!.description,
                 style: const TextStyle(
                   color: Colors.white70,
-                  fontSize: 16,
-                  height: 1.4,
+                  fontSize: 14,
+                  height: 1,
                 ),
                 textAlign: TextAlign.center,
               ),
             ),
 
-          const SizedBox(height: 40),
+          const SizedBox(height: 20),
 
           // Recording Visualization
           AnimatedBuilder(
@@ -847,7 +847,7 @@ class _TaskRecordingScreenState extends State<TaskRecordingScreen>
                                   BoxShadow(
                                     color: const Color(
                                       0xFF5B5BF7,
-                                    ).withOpacity(0.3),
+                                    ).withValues(alpha: 0.3),
                                     blurRadius: 20,
                                     spreadRadius: 5,
                                   ),
@@ -871,7 +871,7 @@ class _TaskRecordingScreenState extends State<TaskRecordingScreen>
             },
           ),
 
-          const SizedBox(height: 30),
+          const SizedBox(height: 20),
 
           // Timer Display
           Text(
@@ -946,7 +946,7 @@ class _TaskRecordingScreenState extends State<TaskRecordingScreen>
         children: [
           // Navigation and main control row
           Padding(
-            padding: const EdgeInsets.only(bottom: 30),
+            padding: const EdgeInsets.only(bottom: 15),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -979,7 +979,7 @@ class _TaskRecordingScreenState extends State<TaskRecordingScreen>
                             ),
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.blue.withOpacity(0.3),
+                                color: Colors.blue.withValues(alpha: 0.3),
                                 blurRadius: 15,
                                 spreadRadius: 2,
                               ),
@@ -1007,7 +1007,7 @@ class _TaskRecordingScreenState extends State<TaskRecordingScreen>
                             ),
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.red.withOpacity(0.3),
+                                color: Colors.red.withValues(alpha: 0.3),
                                 blurRadius: 15,
                                 spreadRadius: 2,
                               ),
@@ -1040,7 +1040,9 @@ class _TaskRecordingScreenState extends State<TaskRecordingScreen>
                         ),
                         boxShadow: [
                           BoxShadow(
-                            color: const Color(0xFF5B5BF7).withOpacity(0.3),
+                            color: const Color(
+                              0xFF5B5BF7,
+                            ).withValues(alpha: 0.3),
                             blurRadius: 15,
                             spreadRadius: 2,
                           ),

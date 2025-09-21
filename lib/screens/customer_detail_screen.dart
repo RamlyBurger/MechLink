@@ -160,7 +160,9 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen>
                           children: [
                             CircleAvatar(
                               radius: 30,
-                              backgroundColor: Colors.white.withOpacity(0.2),
+                              backgroundColor: Colors.white.withValues(
+                                alpha: 0.2,
+                              ),
                               backgroundImage:
                                   _customerDetails!['avatar'] != null
                                   ? NetworkImage(_customerDetails!['avatar'])
@@ -197,7 +199,9 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen>
                                     'Customer since ${DateTimeHelper.formatJoinDate(_customerDetails!['createdAt'])}',
                                     style: TextStyle(
                                       fontSize: 14,
-                                      color: Colors.white.withOpacity(0.8),
+                                      color: Colors.white.withValues(
+                                        alpha: 0.8,
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -263,7 +267,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen>
             'Total Jobs',
             '${_stats['totalJobs'] ?? 0}',
             Icons.work_outline,
-            Colors.white.withOpacity(0.9),
+            Colors.white.withValues(alpha: 0.9),
           ),
         ),
         const SizedBox(width: 12),
@@ -272,7 +276,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen>
             'Total Spent',
             'RM ${(_stats['totalSpent'] ?? 0.0).toStringAsFixed(0)}',
             Icons.account_balance,
-            Colors.white.withOpacity(0.9),
+            Colors.white.withValues(alpha: 0.9),
           ),
         ),
         const SizedBox(width: 12),
@@ -283,7 +287,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen>
                 ? '${(_stats['averageRating'] ?? 0.0).toStringAsFixed(1)}★'
                 : 'N/A',
             Icons.star_outline,
-            Colors.white.withOpacity(0.9),
+            Colors.white.withValues(alpha: 0.9),
           ),
         ),
       ],
@@ -299,9 +303,9 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen>
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.2),
+        color: Colors.white.withValues(alpha: 0.2),
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Colors.white.withOpacity(0.3)),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.3)),
       ),
       child: Column(
         children: [
@@ -444,7 +448,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen>
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
+              color: Colors.black.withValues(alpha: 0.05),
               blurRadius: 10,
               offset: const Offset(0, 2),
             ),
@@ -570,7 +574,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen>
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
@@ -584,7 +588,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen>
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF5B5BF7).withOpacity(0.1),
+                  color: const Color(0xFF5B5BF7).withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Icon(icon, color: const Color(0xFF5B5BF7), size: 20),
@@ -651,9 +655,9 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen>
             child: Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: Colors.grey.withOpacity(0.1),
+                color: Colors.grey.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: Colors.grey.withOpacity(0.3)),
+                border: Border.all(color: Colors.grey.withValues(alpha: 0.3)),
               ),
               child: Icon(
                 Icons.content_copy,
@@ -670,10 +674,10 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen>
             child: Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: const Color(0xFF5B5BF7).withOpacity(0.1),
+                color: const Color(0xFF5B5BF7).withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(8),
                 border: Border.all(
-                  color: const Color(0xFF5B5BF7).withOpacity(0.3),
+                  color: const Color(0xFF5B5BF7).withValues(alpha: 0.3),
                 ),
               ),
               child: Icon(launchIcon, color: const Color(0xFF5B5BF7), size: 16),
@@ -851,7 +855,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen>
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
+              color: Colors.black.withValues(alpha: 0.05),
               blurRadius: 10,
               offset: const Offset(0, 2),
             ),
@@ -1002,7 +1006,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen>
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
@@ -1047,7 +1051,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen>
                     Container(
                       padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
-                        color: Colors.green.withOpacity(0.1),
+                        color: Colors.green.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Icon(
@@ -1113,7 +1117,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen>
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
@@ -1158,7 +1162,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen>
                     Container(
                       padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
-                        color: Colors.orange.withOpacity(0.1),
+                        color: Colors.orange.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Icon(
@@ -1266,9 +1270,9 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen>
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: color.withOpacity(0.3)),
+        border: Border.all(color: color.withValues(alpha: 0.3)),
       ),
       child: Text(
         displayStatus.toUpperCase(),

@@ -22,17 +22,19 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> _checkAuthenticationState() async {
     // Add a small delay to show the splash screen briefly
     await Future.delayed(const Duration(milliseconds: 1500));
-    
+
     try {
       // Try to restore existing login state
       final isLoggedIn = await _authService.restoreLoginState();
-      
+
       if (mounted) {
         if (isLoggedIn) {
           // User is already logged in, navigate to main screen
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => const MainNavigationScreen()),
+            MaterialPageRoute(
+              builder: (context) => const MainNavigationScreen(),
+            ),
           );
         } else {
           // User is not logged in, navigate to login screen
@@ -70,7 +72,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 borderRadius: BorderRadius.circular(30),
                 boxShadow: [
                   BoxShadow(
-                    color: const Color(0xFF5B5BF7).withOpacity(0.3),
+                    color: const Color(0xFF5B5BF7).withValues(alpha: 0.3),
                     blurRadius: 20,
                     offset: const Offset(0, 10),
                   ),
