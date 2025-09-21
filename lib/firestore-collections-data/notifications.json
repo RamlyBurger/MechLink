@@ -1,0 +1,56 @@
+{
+    "notifications": {
+        "mechanic_001": [
+            {
+                "id": "notif_001",
+                "mechanicId": "mechanic_001",
+                "title": "Brake system inspection assigned",
+                "message": "A new job for brake system inspection has been assigned.",
+                "created": "2023-09-10T09:00:00Z"
+            },
+            {
+                "id": "notif_002",
+                "mechanicId": "mechanic_001",
+                "title": "Salary Credited",
+                "message": "Your monthly salary of 4500.00 has been credited.",
+                "created": "2023-09-01T08:00:00Z"
+            }
+        ],
+        "mechanic_002": [
+            {
+                "id": "notif_003",
+                "mechanicId": "mechanic_002",
+                "title": "Hydraulics repair scheduled",
+                "message": "You have a scheduled repair for a hydraulic pump.",
+                "created": "2023-09-11T14:00:00Z"
+            }
+        ],
+        "mechanic_003": [
+            {
+                "id": "notif_004",
+                "mechanicId": "mechanic_003",
+                "title": "Team meeting",
+                "message": "Management meeting scheduled at 10:00 AM tomorrow.",
+                "created": "2023-09-10T17:00:00Z"
+            }
+        ],
+        "mechanic_004": [
+            {
+                "id": "notif_005",
+                "mechanicId": "mechanic_004",
+                "title": "System update required",
+                "message": "Diagnostic software update available, please install.",
+                "created": "2023-09-08T16:00:00Z"
+            }
+        ],
+        "mechanic_005": [
+            {
+                "id": "notif_006",
+                "mechanicId": "mechanic_005",
+                "title": "Electrical diagnostics request",
+                "message": "New request for vehicle electrical diagnostics.",
+                "created": "2023-09-12T11:00:00Z"
+            }
+        ]
+    }
+}

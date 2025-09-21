@@ -1,0 +1,404 @@
+{
+    "equipment": {
+        "equipment_001": {
+            "id": "equipment_001",
+            "customerId": "customer_005",
+            "name": "Excavator",
+            "model": "PC210LC-11",
+            "manufacturer": "Komatsu",
+            "serialNumber": "K21234567890",
+            "year": 2023,
+            "category": "Heavy Machinery",
+            "condition": "Excellent",
+            "photos": [
+                "https://image.made-in-china.com/2f0j00TtVUiJSavsrg/21-Tons-21t-21-Ton-21t-PC210-PC210LC-Crawler-Excavator.webp"
+            ],
+            "createdAt": "2023-05-12T11:00:00Z",
+            "updatedAt": "2023-09-13T14:30:00Z"
+        },
+        "equipment_002": {
+            "id": "equipment_002",
+            "customerId": "customer_005",
+            "name": "Wheeled Loader",
+            "model": "WA200-8",
+            "manufacturer": "Komatsu",
+            "serialNumber": "WA20987654",
+            "year": 2023,
+            "category": "Heavy Machinery",
+            "condition": "Good",
+            "photos": [
+                "https://img.directindustry.com/images_di/photo-mg/20180-13171882.webp"
+            ],
+            "createdAt": "2023-05-12T11:30:00Z",
+            "updatedAt": "2023-09-13T14:35:00Z"
+        },
+        "equipment_003": {
+            "id": "equipment_003",
+            "customerId": "customer_009",
+            "name": "Mining Dump Truck",
+            "model": "HD785-8",
+            "manufacturer": "Komatsu",
+            "serialNumber": "HD78512345",
+            "year": 2024,
+            "category": "Heavy Machinery",
+            "condition": "Excellent",
+            "photos": [
+                "https://s3.us-east-1.amazonaws.com/s3.ai.fuelcellsworks.com/komatsu-begins-proof-of-concept-tests-for-world-s-first-hydrogen-powered-large-dump-truck-2025-02-24T12%3A52%3A53-05%3A00-image.webp"
+            ],
+            "createdAt": "2023-08-05T09:00:00Z",
+            "updatedAt": "2023-09-14T16:15:00Z"
+        },
+        "equipment_004": {
+            "id": "equipment_004",
+            "customerId": "customer_009",
+            "name": "Crawler Dozer",
+            "model": "D85EX-18",
+            "manufacturer": "Komatsu",
+            "serialNumber": "D85567890",
+            "year": 2024,
+            "category": "Heavy Machinery",
+            "condition": "Excellent",
+            "photos": [
+                "https://www.mta.pt/wp-content/uploads/2021/09/MTA-D65EX_WX_PX-18.webp"
+            ],
+            "createdAt": "2023-08-05T09:15:00Z",
+            "updatedAt": "2023-09-14T16:20:00Z"
+        },
+        "equipment_005": {
+            "id": "equipment_005",
+            "customerId": "customer_007",
+            "name": "Mobile Crane",
+            "model": "LTM 1100-4.2",
+            "manufacturer": "Liebherr",
+            "serialNumber": "LB11234567",
+            "year": 2023,
+            "category": "Heavy Machinery",
+            "condition": "Good",
+            "photos": [
+                "https://www.gygerlevage.ch/wp-content/uploads/2023/01/Liebherr_LTM_1100-4.2_2.jpeg-1.webp"
+            ],
+            "createdAt": "2023-07-01T08:30:00Z",
+            "updatedAt": "2023-09-14T09:45:00Z"
+        },
+        "equipment_006": {
+            "id": "equipment_006",
+            "customerId": "customer_001",
+            "name": "Skid Steer Loader",
+            "model": "SSL5-2",
+            "manufacturer": "Caterpillar",
+            "serialNumber": "CAT98765432",
+            "year": 2023,
+            "category": "Construction Equipment",
+            "condition": "Good",
+            "photos": [
+                "https://image.made-in-china.com/2f0j00StFciYvyrElw/-700-.webp"
+            ],
+            "createdAt": "2023-01-15T08:00:00Z",
+            "updatedAt": "2023-09-14T15:30:00Z"
+        },
+        "equipment_007": {
+            "id": "equipment_007",
+            "customerId": "customer_001",
+            "name": "Concrete Mixer",
+            "model": "CM3.5-H",
+            "manufacturer": "SANY",
+            "serialNumber": "SY34567890",
+            "year": 2023,
+            "category": "Construction Equipment",
+            "condition": "Good",
+            "photos": [
+                "https://image.made-in-china.com/202f0j00cdCiRAjgLDzk/6-5cum-Self-Loader-Mixer-Truck-Mobile-6-5cbm-Self-Loading-Bucket-Truck.webp"
+            ],
+            "createdAt": "2023-01-15T08:15:00Z",
+            "updatedAt": "2023-09-14T15:35:00Z"
+        },
+        "equipment_008": {
+            "id": "equipment_008",
+            "customerId": "customer_003",
+            "name": "Generator Set",
+            "model": "C175-20",
+            "manufacturer": "Caterpillar",
+            "serialNumber": "CATG123456",
+            "year": 2024,
+            "category": "Power Equipment",
+            "condition": "Excellent",
+            "photos": [
+                "https://production-pon-power-concrete.s3.eu-central-1.amazonaws.com/7317/3978/6313/CM20190605-85513-ad823.webp"
+            ],
+            "createdAt": "2023-03-10T09:15:00Z",
+            "updatedAt": "2023-09-14T10:20:00Z"
+        },
+        "equipment_009": {
+            "id": "equipment_009",
+            "customerId": "customer_003",
+            "name": "Air Compressor",
+            "model": "GA110+",
+            "manufacturer": "Atlas Copco",
+            "serialNumber": "AC87654321",
+            "year": 2024,
+            "category": "Power Equipment",
+            "condition": "Excellent",
+            "photos": [
+                "https://img.directindustry.com/images_di/photo-mg/233720-16195625.webp"
+            ],
+            "createdAt": "2023-03-10T09:30:00Z",
+            "updatedAt": "2023-09-14T10:25:00Z"
+        },
+        "equipment_010": {
+            "id": "equipment_010",
+            "customerId": "customer_002",
+            "name": "Forklift",
+            "model": "FD25T-17",
+            "manufacturer": "Komatsu",
+            "serialNumber": "KF12345678",
+            "year": 2023,
+            "category": "Material Handling",
+            "condition": "Good",
+            "photos": [
+                "https://d9z1tpn605xsl.cloudfront.net/uploads/gallery/image/40812351/Cover_20250527_144846.webp"
+            ],
+            "createdAt": "2023-02-20T10:30:00Z",
+            "updatedAt": "2023-09-13T16:45:00Z"
+        },
+        "equipment_011": {
+            "id": "equipment_011",
+            "customerId": "customer_004",
+            "name": "Scissor Lift",
+            "model": "GS-1932",
+            "manufacturer": "Genie",
+            "serialNumber": "GN98765432",
+            "year": 2023,
+            "category": "Access Equipment",
+            "condition": "Good",
+            "photos": [
+                "https://biberger.de/cdn/shop/files/20829_2.webp"
+            ],
+            "createdAt": "2023-04-05T14:20:00Z",
+            "updatedAt": "2023-09-10T09:15:00Z"
+        },
+        "equipment_012": {
+            "id": "equipment_012",
+            "customerId": "customer_006",
+            "name": "Boom Lift",
+            "model": "S-65 XC",
+            "manufacturer": "Genie",
+            "serialNumber": "GN12345678",
+            "year": 2024,
+            "category": "Access Equipment",
+            "condition": "Excellent",
+            "photos": [
+                "https://www.workplatformltd.co.uk/cached-img/containers/assets/product-images/genie-telescoping-boom-lift-s65xc/5d14c4e3-831d-4afc-8dfe-cd64122b56dd-1-min.png/8ce294e2e52d27598d036523909e55f1/5d14c4e3-831d-4afc-8dfe-cd64122b56dd-1-min.webp"
+            ],
+            "createdAt": "2023-06-18T13:45:00Z",
+            "updatedAt": "2023-09-12T11:30:00Z"
+        },
+        "equipment_013": {
+            "id": "equipment_013",
+            "customerId": "customer_008",
+            "name": "Pallet Jack",
+            "model": "HPT25",
+            "manufacturer": "Toyota",
+            "serialNumber": "TY23456789",
+            "year": 2023,
+            "category": "Material Handling",
+            "condition": "Good",
+            "photos": [
+                "https://image.made-in-china.com/202f0j00yZjtDLFnKdbA/Hand-Pallet-Truck-with-Reasonable-Price-HPT-25-.webp"
+            ],
+            "createdAt": "2023-07-15T15:20:00Z",
+            "updatedAt": "2023-09-11T13:40:00Z"
+        },
+        "equipment_014": {
+            "id": "equipment_014",
+            "customerId": "customer_010",
+            "name": "Portable Generator",
+            "model": "EU7000iS",
+            "manufacturer": "Honda",
+            "serialNumber": "HG87654321",
+            "year": 2024,
+            "category": "Power Equipment",
+            "condition": "Excellent",
+            "photos": [
+                "https://cdn.mckibbenmotorsports.com/images/cdn/9QbCNKZBi4.webp"
+            ],
+            "createdAt": "2023-08-20T11:30:00Z",
+            "updatedAt": "2023-09-10T15:20:00Z"
+        },
+        "equipment_015": {
+            "id": "equipment_015",
+            "customerId": "customer_005",
+            "name": "Backhoe Loader",
+            "model": "3CX",
+            "manufacturer": "JCB",
+            "serialNumber": "JB34567890",
+            "year": 2023,
+            "category": "Construction Equipment",
+            "condition": "Good",
+            "photos": [
+                "https://image.made-in-china.com/2f0j00gHhqVZmMLspl/Used-Backhoe-Loader-Jcb-3cx-Used-Jcb-Backhoe-Loader-3cx-Jcb-4cx-Cheap-Price.webp"
+            ],
+            "createdAt": "2023-05-12T11:45:00Z",
+            "updatedAt": "2023-09-13T14:40:00Z"
+        },
+        "equipment_016": {
+            "id": "equipment_016",
+            "customerId": "customer_009",
+            "name": "Rock Breaker",
+            "model": "HB2500",
+            "manufacturer": "Atlas Copco",
+            "serialNumber": "AC45678901",
+            "year": 2024,
+            "category": "Mining Equipment",
+            "condition": "Excellent",
+            "photos": [
+                "https://image.made-in-china.com/2f0j00JMUbksFIPjoS/Atlas-Copco-Hb2000-Hb2200-Hb2500-Hb3100-Hbc6000-Hydraulic-Hammer-Rock-Breaker-Chisel-for-Excavator.webp"
+            ],
+            "createdAt": "2023-08-05T09:30:00Z",
+            "updatedAt": "2023-09-14T16:25:00Z"
+        },
+        "equipment_017": {
+            "id": "equipment_017",
+            "customerId": "customer_007",
+            "name": "Road Roller",
+            "model": "BW211D-40",
+            "manufacturer": "BOMAG",
+            "serialNumber": "BG12345678",
+            "year": 2023,
+            "category": "Construction Equipment",
+            "condition": "Good",
+            "photos": [
+                "https://i0.wp.com/daws.co.zw/wp-content/uploads/2022/06/2017-BW211D-40-Bomag.webp"
+            ],
+            "createdAt": "2023-07-01T08:45:00Z",
+            "updatedAt": "2023-09-14T09:50:00Z"
+        },
+        "equipment_018": {
+            "id": "equipment_018",
+            "customerId": "customer_001",
+            "name": "Mini Excavator",
+            "model": "SK35SR-6",
+            "manufacturer": "Kobelco",
+            "serialNumber": "KB98765432",
+            "year": 2024,
+            "category": "Construction Equipment",
+            "condition": "Excellent",
+            "photos": [
+                "https://image.comacpro.com/origin/may-xuc-mini-kobelco-sk-35-sr-6-2017-4TBg.webp"
+            ],
+            "createdAt": "2023-01-15T08:30:00Z",
+            "updatedAt": "2023-09-14T15:40:00Z"
+        },
+        "equipment_019": {
+            "id": "equipment_019",
+            "customerId": "customer_003",
+            "name": "Telescopic Handler",
+            "model": "TH514D",
+            "manufacturer": "Caterpillar",
+            "serialNumber": "CAT34567890",
+            "year": 2024,
+            "category": "Material Handling",
+            "condition": "Excellent",
+            "photos": [
+                "https://www.foleyinc.com/wp-content/uploads/2025/02/CM20160819-28288-46983.jpeg.webp"
+            ],
+            "createdAt": "2023-03-10T09:45:00Z",
+            "updatedAt": "2023-09-14T10:30:00Z"
+        },
+        "equipment_020": {
+            "id": "equipment_020",
+            "customerId": "customer_002",
+            "name": "Electric Stacker",
+            "model": "EJC216",
+            "manufacturer": "Jungheinrich",
+            "serialNumber": "JH87654321",
+            "year": 2023,
+            "category": "Material Handling",
+            "condition": "Good",
+            "photos": [
+                "https://bf-logistic.ua/assets/images/products/2030/webp_480x360/1024x64233_4835341-1.webp"
+            ],
+            "createdAt": "2023-02-20T10:45:00Z",
+            "updatedAt": "2023-09-13T16:50:00Z"
+        },
+        "equipment_021": {
+            "id": "equipment_021",
+            "customerId": "customer_004",
+            "name": "Portable Air Compressor",
+            "model": "XATS 138",
+            "manufacturer": "Atlas Copco",
+            "serialNumber": "AC23456789",
+            "year": 2024,
+            "category": "Power Equipment",
+            "condition": "Excellent",
+            "photos": [
+                "https://www.romec.no/uploads/GS4A8erO/697x0_652x0/XATS138packmobiledieselaircompressorhardhatcanopy-Forweb__msi___jpeg.webp"
+            ],
+            "createdAt": "2023-04-05T14:35:00Z",
+            "updatedAt": "2023-09-10T09:20:00Z"
+        },
+        "equipment_022": {
+            "id": "equipment_022",
+            "customerId": "customer_006",
+            "name": "Spider Lift",
+            "model": "FS370",
+            "manufacturer": "Platform Basket",
+            "serialNumber": "PB12345678",
+            "year": 2024,
+            "category": "Access Equipment",
+            "condition": "Excellent",
+            "photos": [
+                "https://5.imimg.com/data5/SELLER/Default/2024/5/417795958/SS/TI/QM/3400409/articulating-boom-lift-vs-telescopic-boom-lift-500x500.webp"
+            ],
+            "createdAt": "2023-06-18T14:00:00Z",
+            "updatedAt": "2023-09-12T11:35:00Z"
+        },
+        "equipment_023": {
+            "id": "equipment_023",
+            "customerId": "customer_008",
+            "name": "Reach Truck",
+            "model": "RRE160H",
+            "manufacturer": "Toyota",
+            "serialNumber": "TY45678901",
+            "year": 2023,
+            "category": "Material Handling",
+            "condition": "Good",
+            "photos": [
+                "https://toyotamaterialhandling-international.com/storage/4077C7E4DF033A0982C9C9489DA96AB51DF6B65E88EC5847C12D506CDF89E9E2/7d02ee4170e94dad9533dea38648ae45/webp/media/b9240a45ebdf44f5a64c28c4ec2faa88/Toyota%20BT%20Reflex%20RRE160H_line-up%207676.webp"
+            ],
+            "createdAt": "2023-07-15T15:35:00Z",
+            "updatedAt": "2023-09-11T13:45:00Z"
+        },
+        "equipment_024": {
+            "id": "equipment_024",
+            "customerId": "customer_010",
+            "name": "Welding Generator",
+            "model": "DGW500DM",
+            "manufacturer": "DENYO",
+            "serialNumber": "DN98765432",
+            "year": 2024,
+            "category": "Power Equipment",
+            "condition": "Excellent",
+            "photos": [
+                "https://tienda.trenta.mx/cdn/shop/files/T-Renta-Soldadoras-DGW500DM-01.webp"
+            ],
+            "createdAt": "2023-08-20T11:45:00Z",
+            "updatedAt": "2023-09-10T15:25:00Z"
+        },
+        "equipment_025": {
+            "id": "equipment_025",
+            "customerId": "customer_005",
+            "name": "Tower Crane",
+            "model": "21LC750",
+            "manufacturer": "Linden Comansa",
+            "serialNumber": "LC34567890",
+            "year": 2024,
+            "category": "Heavy Machinery",
+            "condition": "Excellent",
+            "photos": [
+                "https://dzwignice.info/img/7252/5114dcd401e7dd343d337dc76bed969b/1920x1200.webp"
+            ],
+            "createdAt": "2023-05-12T12:00:00Z",
+            "updatedAt": "2023-09-13T14:45:00Z"
+        }
+    }
+}

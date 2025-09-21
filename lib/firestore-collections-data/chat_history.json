@@ -1,0 +1,143 @@
+{
+  "chat_history": {
+    "chat_001": {
+      "id": "chat_001",
+      "mechanicId": "mechanic_001",
+      "title": "ABS Issue on 2024 Camry",
+      "createdAt": "2023-09-10T08:30:00Z",
+      "updatedAt": "2023-09-14T15:45:00Z"
+    },
+    "chat_002": {
+      "id": "chat_002",
+      "mechanicId": "mechanic_001",
+      "title": "Fuel System Issue on 2019 Jetta",
+      "createdAt": "2023-09-11T14:20:00Z",
+      "updatedAt": "2023-09-11T16:30:00Z"
+    },
+    "chat_003": {
+      "id": "chat_003",
+      "mechanicId": "mechanic_001",
+      "title": "Brake Pedal Spongy on 2024 Camry",
+      "createdAt": "2023-09-12T09:15:00Z",
+      "updatedAt": "2023-09-12T11:45:00Z"
+    },
+    "chat_004": {
+      "id": "chat_004",
+      "mechanicId": "mechanic_001",
+      "title": "Electrical Issues on 2023 Tesla Model 3",
+      "createdAt": "2023-09-13T16:00:00Z",
+      "updatedAt": "2023-09-13T17:20:00Z"
+    },
+    "chat_005": {
+      "id": "chat_005",
+      "mechanicId": "mechanic_002",
+      "title": "Suspension Noise on 2020 Jeep Wrangler",
+      "createdAt": "2023-09-12T10:15:00Z",
+      "updatedAt": "2023-09-14T16:20:00Z"
+    },
+    "chat_006": {
+      "id": "chat_006",
+      "mechanicId": "mechanic_002",
+      "title": "ABS Issue on 2024 Camry",
+      "createdAt": "2023-09-10T13:45:00Z",
+      "updatedAt": "2023-09-10T15:30:00Z"
+    },
+    "chat_007": {
+      "id": "chat_007",
+      "mechanicId": "mechanic_002",
+      "title": "Electrical Issue on 2023 Tesla Model 3",
+      "createdAt": "2023-09-11T08:00:00Z",
+      "updatedAt": "2023-09-11T10:15:00Z"
+    },
+    "chat_008": {
+      "id": "chat_008",
+      "mechanicId": "mechanic_002",
+      "title": "AC Issue on 2018 BMW 3 Series",
+      "createdAt": "2023-09-14T07:30:00Z",
+      "updatedAt": "2023-09-14T09:45:00Z"
+    },
+    "chat_009": {
+      "id": "chat_009",
+      "mechanicId": "mechanic_003",
+      "title": "Electrical Issue on 2023 Tesla Model 3",
+      "createdAt": "2023-09-13T14:00:00Z",
+      "updatedAt": "2023-09-14T14:30:00Z"
+    },
+    "chat_010": {
+      "id": "chat_010",
+      "mechanicId": "mechanic_003",
+      "title": "Electrical Issue on 2023 Tesla Model 3",
+      "createdAt": "2023-09-09T11:20:00Z",
+      "updatedAt": "2023-09-09T13:45:00Z"
+    },
+    "chat_011": {
+      "id": "chat_011",
+      "mechanicId": "mechanic_003",
+      "title": "Brake Pedal Spongy on 2024 Camry",
+      "createdAt": "2023-09-12T15:30:00Z",
+      "updatedAt": "2023-09-12T17:00:00Z"
+    },
+    "chat_012": {
+      "id": "chat_012",
+      "mechanicId": "mechanic_003",
+      "createdAt": "2023-09-14T10:45:00Z",
+      "updatedAt": "2023-09-14T12:30:00Z"
+    },
+    "chat_013": {
+      "id": "chat_013",
+      "mechanicId": "mechanic_004",
+      "title": "Overheating Issue on 2019 Honda Civic",
+      "createdAt": "2023-09-14T09:00:00Z",
+      "updatedAt": "2023-09-14T17:00:00Z"
+    },
+    "chat_014": {
+      "id": "chat_014",
+      "mechanicId": "mechanic_004",
+      "title": "Overheating Issue on 2019 Honda Civic",
+      "createdAt": "2023-09-11T12:30:00Z",
+      "updatedAt": "2023-09-11T14:15:00Z"
+    },
+    "chat_015": {
+      "id": "chat_015",
+      "mechanicId": "mechanic_004",
+      "title": "Misfire Issue on 2017 Subaru Outback",
+      "createdAt": "2023-09-10T16:45:00Z",
+      "updatedAt": "2023-09-10T18:20:00Z"
+    },
+    "chat_016": {
+      "id": "chat_016",
+      "mechanicId": "mechanic_004",
+      "title": "Slipping Transmission on 2021 Ford F-150",
+      "createdAt": "2023-09-13T08:15:00Z",
+      "updatedAt": "2023-09-13T10:30:00Z"
+    },
+    "chat_017": {
+      "id": "chat_017",
+      "mechanicId": "mechanic_005",
+      "title": "Check Engine Light on 2020 Chevy Malibu",
+      "createdAt": "2023-09-12T11:00:00Z",
+      "updatedAt": "2023-09-12T13:45:00Z"
+    },
+    "chat_018": {
+      "id": "chat_018",
+      "mechanicId": "mechanic_005",
+      "title": "Fuel System Issue on 2019 Jetta",
+      "createdAt": "2023-09-13T09:30:00Z",
+      "updatedAt": "2023-09-13T11:15:00Z"
+    },
+    "chat_019": {
+      "id": "chat_019",
+      "mechanicId": "mechanic_005",
+      "title": "Timing Issue on 2017 Subaru Outback",
+      "createdAt": "2023-09-14T14:20:00Z",
+      "updatedAt": "2023-09-14T16:45:00Z"
+    },
+    "chat_020": {
+      "id": "chat_020",
+      "mechanicId": "mechanic_005",
+      "title": "Suspension Noise on 2020 Jeep Wrangler",
+      "createdAt": "2023-09-10T10:00:00Z",
+      "updatedAt": "2023-09-10T12:30:00Z"
+    }
+  }
+}

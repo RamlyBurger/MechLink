@@ -1,0 +1,1197 @@
+{
+    "chat_messages": {
+        "msg_001_001": {
+            "id": "msg_001_001",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_001",
+            "createdAt": "2023-09-10T08:00:00Z",
+            "content": "Alright bot, got a 2024 Camry in bay 3 with the ABS warning light illuminated. Customer reports a spongy brake pedal. Let's start with that ABS system.",
+            "type": "text"
+        },
+        "msg_001_002": {
+            "id": "msg_001_002",
+            "sender": "bot",
+            "chatHistoryId": "chat_001",
+            "createdAt": "2023-09-10T08:02:00Z",
+            "content": "Okay, Alex. ABS light and spongy pedal on a 2024 Camry. Have you pulled any DTCs (Diagnostic Trouble Codes) yet? If so, please provide them.",
+            "type": "text"
+        },
+        "msg_001_003": {
+            "id": "msg_001_003",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_001",
+            "createdAt": "2023-09-10T08:04:00Z",
+            "content": "Yeah, pulled codes C0200 and C1201. C0200 is for Right Front Wheel Speed Sensor Circuit Malfunction and C1201 is Engine Control System Malfunction.",
+            "type": "text"
+        },
+        "msg_001_004": {
+            "id": "msg_001_004",
+            "sender": "bot",
+            "chatHistoryId": "chat_001",
+            "createdAt": "2023-09-10T08:06:00Z",
+            "content": "Understood. C0200 points directly to the Right Front Wheel Speed Sensor circuit. Before replacing the sensor, have you checked the sensor wiring harness for any visible damage or corrosion? Also, what are the freeze frame data associated with the C1201 code?",
+            "type": "text"
+        },
+        "msg_001_005": {
+            "id": "msg_001_005",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_001",
+            "createdAt": "2023-09-10T08:08:00Z",
+            "content": "Visually inspected the wiring, looks okay. Freeze frame data for C1201 shows the engine speed around 750 RPM at the time the code was thrown, and the brake switch was engaged. Speed sensor reading was 0.",
+            "type": "text"
+        },
+        "msg_001_006": {
+            "id": "msg_001_006",
+            "sender": "bot",
+            "chatHistoryId": "chat_001",
+            "createdAt": "2023-09-10T08:10:00Z",
+            "content": "Given the freeze frame data and the C0200 code, the 0 speed reading from the right front sensor when the brake switch was engaged is highly suspect. Have you performed a resistance test on the sensor itself, and a continuity test on the wiring harness back to the ABS control module? What are the results?",
+            "type": "text"
+        },
+        "msg_001_007": {
+            "id": "msg_001_007",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_001",
+            "createdAt": "2023-09-10T08:12:00Z",
+            "content": "Okay, just finished those tests. Sensor resistance is out of spec, showing an open circuit. Wiring harness continuity is good.",
+            "type": "text"
+        },
+        "msg_001_008": {
+            "id": "msg_001_008",
+            "sender": "bot",
+            "chatHistoryId": "chat_001",
+            "createdAt": "2023-09-10T08:14:00Z",
+            "content": "Based on the diagnostic results - open circuit on the wheel speed sensor and good continuity in the wiring harness - replacing the Right Front Wheel Speed Sensor is the recommended next step. Clear the DTCs after replacement and perform a road test to confirm proper ABS functionality and brake pedal feel. Do you agree?",
+            "type": "text"
+        },
+        "msg_002_001": {
+            "id": "msg_002_001",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_002",
+            "createdAt": "2023-09-10T08:16:00Z",
+            "content": "Hey AI, I've got a 2019 VW Jetta, hard starting, strong fuel smell, and really poor acceleration. I suspect a fuel system issue. Any ideas where to start?",
+            "type": "text"
+        },
+        "msg_002_002": {
+            "id": "msg_002_002",
+            "sender": "bot",
+            "chatHistoryId": "chat_002",
+            "createdAt": "2023-09-10T08:18:00Z",
+            "content": "Okay, Alex. Fuel system issue on a 2019 Jetta. To narrow it down, have you checked the fuel pressure at the fuel rail? Also, can you specify when the fuel smell is most noticeable \u2013 cold start, running, or after shutdown?",
+            "type": "text"
+        },
+        "msg_002_003": {
+            "id": "msg_002_003",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_002",
+            "createdAt": "2023-09-10T08:20:00Z",
+            "content": "Fuel pressure is low, around 30 PSI at idle. Smell is definitely strongest on cold start, almost disappears when the engine warms up... relatively. I'm thinking maybe a leaking injector or fuel pressure regulator?",
+            "type": "text"
+        },
+        "msg_002_004": {
+            "id": "msg_002_004",
+            "sender": "bot",
+            "chatHistoryId": "chat_002",
+            "createdAt": "2023-09-10T08:22:00Z",
+            "content": "Low fuel pressure and cold start fuel smell point towards a possible injector leak or a faulty fuel pump check valve. Since the smell diminishes when warm, an injector leak is more likely. Have you visually inspected the injectors for any obvious signs of leakage around the seals?",
+            "type": "text"
+        },
+        "msg_002_005": {
+            "id": "msg_002_005",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_002",
+            "createdAt": "2023-09-10T08:24:00Z",
+            "content": "Haven't pulled them yet, but I did a quick visual with a mirror, didn't see anything obvious. I'm thinking of doing a leak-down test on the injectors to confirm. Does the Jetta have a fuel rail pressure sensor I can check for plausible readings?",
+            "type": "text"
+        },
+        "msg_002_006": {
+            "id": "msg_002_006",
+            "sender": "bot",
+            "chatHistoryId": "chat_002",
+            "createdAt": "2023-09-10T08:26:00Z",
+            "content": "Yes, the 2019 Jetta utilizes a fuel rail pressure sensor. The reading at 30 PSI should trigger a DTC. Have you scanned for any fuel pressure related diagnostic trouble codes? Also, a leak-down test on the injectors is a good next step to pinpoint the culprit.",
+            "type": "text"
+        },
+        "msg_002_007": {
+            "id": "msg_002_007",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_002",
+            "createdAt": "2023-09-10T08:28:00Z",
+            "content": "Yeah, I pulled a P0087 - Fuel Rail/System Pressure - Too Low. I'll proceed with the injector leak-down test. Thanks, AI, that confirms my suspicions and points me in the right direction!",
+            "type": "text"
+        },
+        "msg_002_008": {
+            "id": "msg_002_008",
+            "sender": "bot",
+            "chatHistoryId": "chat_002",
+            "createdAt": "2023-09-10T08:30:00Z",
+            "content": "Excellent. P0087 confirms the low pressure. Remember to depressurize the fuel system before removing the injectors. Good luck, Alex! Let me know what you find after the leak-down test.",
+            "type": "text"
+        },
+        "msg_003_001": {
+            "id": "msg_003_001",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_003",
+            "createdAt": "2023-09-10T08:32:00Z",
+            "content": "Alright, I've got a 2024 Camry here with an ABS warning light. Customer states the brake pedal feels spongy. I've done a quick visual, and everything seems connected, but the light's still on.",
+            "type": "text"
+        },
+        "msg_003_002": {
+            "id": "msg_003_002",
+            "sender": "bot",
+            "chatHistoryId": "chat_003",
+            "createdAt": "2023-09-10T08:34:00Z",
+            "content": "Okay, Alex. I've accessed the vehicle data. Spongy pedal and ABS light suggests a potential hydraulic or sensor issue. Have you scanned the ABS module for diagnostic trouble codes (DTCs)? If so, can you provide the codes?",
+            "type": "text"
+        },
+        "msg_003_003": {
+            "id": "msg_003_003",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_003",
+            "createdAt": "2023-09-10T08:36:00Z",
+            "content": "Yep, scanned it. I'm getting a C0200 - Right Front Wheel Speed Sensor Circuit. Also getting a C1414 - Actuator Solenoid Valve Relay Circuit.",
+            "type": "text"
+        },
+        "msg_003_004": {
+            "id": "msg_003_004",
+            "sender": "bot",
+            "chatHistoryId": "chat_003",
+            "createdAt": "2023-09-10T08:38:00Z",
+            "content": "C0200 points to a problem with the right front wheel speed sensor circuit. C1414 indicates a potential issue with the ABS actuator solenoid valve relay circuit. Let's start with the simpler issue first. Can you confirm the resistance reading of the right front wheel speed sensor? Compare it to the left front for a baseline.",
+            "type": "text"
+        },
+        "msg_003_005": {
+            "id": "msg_003_005",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_003",
+            "createdAt": "2023-09-10T08:40:00Z",
+            "content": "Just checked the resistance. Right front is showing open circuit. Left front is around 1.2k ohms.",
+            "type": "text"
+        },
+        "msg_003_006": {
+            "id": "msg_003_006",
+            "sender": "bot",
+            "chatHistoryId": "chat_003",
+            "createdAt": "2023-09-10T08:42:00Z",
+            "content": "Open circuit on the right front sensor confirms a faulty sensor or wiring. Inspect the wiring harness and connector for damage. If the wiring is intact, replace the right front wheel speed sensor. After replacement, clear the DTCs and road test the vehicle. Does the C1414 code clear as well? If not, we will address it separately. ",
+            "type": "text"
+        },
+        "msg_003_007": {
+            "id": "msg_003_007",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_003",
+            "createdAt": "2023-09-10T08:44:00Z",
+            "content": "Alright, replaced the sensor, cleared the codes. Road tested and the ABS light is gone and the spongy pedal feels normal now. The C1414 code also cleared. Thanks for the assist!",
+            "type": "text"
+        },
+        "msg_003_008": {
+            "id": "msg_003_008",
+            "sender": "bot",
+            "chatHistoryId": "chat_003",
+            "createdAt": "2023-09-10T08:46:00Z",
+            "content": "Excellent. The initial sensor fault likely affected the ABS actuator solenoid valve relay circuit, causing the secondary code. Glad to hear it's resolved! Is there anything else I can assist you with today?",
+            "type": "text"
+        },
+        "msg_004_001": {
+            "id": "msg_004_001",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_004",
+            "createdAt": "2023-09-10T08:48:00Z",
+            "content": "Alright, I've got a 2023 Tesla Model 3 with some pretty significant electrical issues. Dash is lit up like a Christmas tree, and the customer's reporting rapid battery drain even when parked. Scan tool is throwing a bunch of codes, but they're all over the place \u2013 BCM, BMS, even some CAN communication errors. Where do I start?",
+            "type": "text"
+        },
+        "msg_004_002": {
+            "id": "msg_004_002",
+            "sender": "bot",
+            "chatHistoryId": "chat_004",
+            "createdAt": "2023-09-10T08:50:00Z",
+            "content": "Acknowledged. Given the widespread nature of the errors and the battery drain, it's likely a central system failure or a major parasitic draw. Please provide the specific DTC (Diagnostic Trouble Codes) retrieved by your scan tool. Prioritize codes related to the Battery Management System (BMS), Body Control Module (BCM), and CAN bus communication.",
+            "type": "text"
+        },
+        "msg_004_003": {
+            "id": "msg_004_003",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_004",
+            "createdAt": "2023-09-10T08:52:00Z",
+            "content": "Okay, here are the main codes: BCM_a001 (High Voltage System Interlock Circuit Open), BMS_w165 (Cell Voltage Deviation Excessive), and U0100 (Lost Communication with ECM/PCM 'A'). The U0100 is the most common one I'm seeing repeat across multiple modules.",
+            "type": "text"
+        },
+        "msg_004_004": {
+            "id": "msg_004_004",
+            "sender": "bot",
+            "chatHistoryId": "chat_004",
+            "createdAt": "2023-09-10T08:54:00Z",
+            "content": "Thank you. The U0100 across multiple modules points towards a CAN bus issue disrupting communication. The BCM_a001 code suggests a potential high voltage system safety issue, possibly contributing to the battery drain. Before proceeding, can you confirm if the 12V auxiliary battery is healthy and properly charging? A failing 12V can cause all sorts of phantom issues on Teslas.",
+            "type": "text"
+        },
+        "msg_004_005": {
+            "id": "msg_004_005",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_004",
+            "createdAt": "2023-09-10T08:56:00Z",
+            "content": "Good point. Just checked the 12V. It's showing a resting voltage of 11.8V and failing the load test. Looks like it's definitely weak.",
+            "type": "text"
+        },
+        "msg_004_006": {
+            "id": "msg_004_006",
+            "sender": "bot",
+            "chatHistoryId": "chat_004",
+            "createdAt": "2023-09-10T08:58:00Z",
+            "content": "Okay, given the weak 12V battery and the CAN communication errors, I recommend replacing the 12V battery first. A failing 12V can disrupt the entire vehicle's communication network and trigger false error codes. Clear all DTCs after replacement and re-scan. If the CAN communication errors persist, we can then investigate the CAN bus system integrity using an oscilloscope and CAN analyzer tool to look for shorts, opens, or terminating resistor issues. Do you agree?",
+            "type": "text"
+        },
+        "msg_004_007": {
+            "id": "msg_004_007",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_004",
+            "createdAt": "2023-09-10T09:00:00Z",
+            "content": "Sounds like a solid first step. Replacing the 12V now. I'll let you know what the results are after I clear the codes and rescan. Thanks.",
+            "type": "text"
+        },
+        "msg_005_001": {
+            "id": "msg_005_001",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_005",
+            "createdAt": "2023-09-10T09:02:00Z",
+            "content": "Hey Bot, I've got a 2020 Jeep Wrangler with a suspension issue. Customer reports a clunking noise over bumps and the vehicle is pulling slightly to the right.",
+            "type": "text"
+        },
+        "msg_005_002": {
+            "id": "msg_005_002",
+            "sender": "bot",
+            "chatHistoryId": "chat_005",
+            "createdAt": "2023-09-10T09:04:00Z",
+            "content": "Okay, Sarah. Thanks for the details. First, have you performed a visual inspection of the suspension components? Specifically, check the ball joints, tie rod ends, sway bar links, and control arm bushings for any signs of wear, play, or damage. Also, note the condition of the shocks and springs.",
+            "type": "text"
+        },
+        "msg_005_003": {
+            "id": "msg_005_003",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_005",
+            "createdAt": "2023-09-10T09:06:00Z",
+            "content": "Yep, visual inspection completed. The front sway bar links look pretty worn, and I'm seeing some cracking in the lower control arm bushings on the right side. The shocks seem okay visually, no obvious leaks.",
+            "type": "text"
+        },
+        "msg_005_004": {
+            "id": "msg_005_004",
+            "sender": "bot",
+            "chatHistoryId": "chat_005",
+            "createdAt": "2023-09-10T09:08:00Z",
+            "content": "Alright. Given the sway bar link wear and control arm bushing cracks, the clunking and pull could certainly be related. To further diagnose the pull to the right, have you checked the front end alignment, and specifically the caster angle? Incorrect caster can cause a vehicle to pull.",
+            "type": "text"
+        },
+        "msg_005_005": {
+            "id": "msg_005_005",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_005",
+            "createdAt": "2023-09-10T09:10:00Z",
+            "content": "Haven't put it on the alignment rack yet. Planning to address the worn components first. I was thinking of replacing both front sway bar links and both lower control arms to ensure everything is tight. Think that\u2019s a good starting point before diving into alignment?",
+            "type": "text"
+        },
+        "msg_005_006": {
+            "id": "msg_005_006",
+            "sender": "bot",
+            "chatHistoryId": "chat_005",
+            "createdAt": "2023-09-10T09:12:00Z",
+            "content": "Yes, replacing the worn sway bar links and control arms is a logical first step. That addresses the observed damage and likely contributes to the clunking. After replacement, perform a thorough front-end alignment. Be sure to check for any other bent components after the alignment adjustment that might cause further issue after alignment. Let me know the alignment readings after the adjustments.",
+            "type": "text"
+        },
+        "msg_005_007": {
+            "id": "msg_005_007",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_005",
+            "createdAt": "2023-09-10T09:14:00Z",
+            "content": "Sounds good. I'll replace the parts, perform the alignment, and let you know the readings. Thanks for the assistance!",
+            "type": "text"
+        },
+        "msg_005_008": {
+            "id": "msg_005_008",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_005",
+            "createdAt": "2023-09-10T09:16:00Z",
+            "content": "Here's a photo of the issue",
+            "type": "image",
+            "base64Image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=="
+        },
+        "msg_006_001": {
+            "id": "msg_006_001",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_006",
+            "createdAt": "2023-09-10T09:18:00Z",
+            "content": "Hey, I have a 2024 Toyota Camry here with the ABS warning light on. The customer also reports a spongy brake pedal feel.",
+            "type": "text"
+        },
+        "msg_006_002": {
+            "id": "msg_006_002",
+            "sender": "bot",
+            "chatHistoryId": "chat_006",
+            "createdAt": "2023-09-10T09:20:00Z",
+            "content": "Understood. Spongy pedal and ABS light on a 2024 Camry could indicate a hydraulic or sensor issue within the ABS system. Have you performed a visual inspection of the brake lines and master cylinder for leaks?",
+            "type": "text"
+        },
+        "msg_006_003": {
+            "id": "msg_006_003",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_006",
+            "createdAt": "2023-09-10T09:22:00Z",
+            "content": "Yeah, I checked for obvious leaks, and the master cylinder reservoir level is good. I pulled codes with my scan tool; it's showing C0200, C0205, and C1235. Those are right front wheel speed sensor circuit, left front wheel speed sensor circuit, and ABS solenoid relay failure codes.",
+            "type": "text"
+        },
+        "msg_006_004": {
+            "id": "msg_006_004",
+            "sender": "bot",
+            "chatHistoryId": "chat_006",
+            "createdAt": "2023-09-10T09:24:00Z",
+            "content": "Okay, the C0200 and C0205 together suggest a possible issue affecting both front wheel speed sensors. Given the C1235 code alongside, let's investigate the solenoid relay. Have you checked the ABS solenoid relay circuit for voltage and ground? A faulty relay could trigger multiple sensor errors.",
+            "type": "text"
+        },
+        "msg_006_005": {
+            "id": "msg_006_005",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_006",
+            "createdAt": "2023-09-10T09:26:00Z",
+            "content": "I haven't checked the relay circuit yet, but I did check the front wheel speed sensor wiring harnesses for damage. They seem ok. I'll check the relay and the associated wiring and report back.",
+            "type": "text"
+        },
+        "msg_006_006": {
+            "id": "msg_006_006",
+            "sender": "bot",
+            "chatHistoryId": "chat_006",
+            "createdAt": "2023-09-10T09:28:00Z",
+            "content": "Excellent. If the ABS solenoid relay circuit checks out fine, the next step would be to individually test the wheel speed sensors using an oscilloscope to evaluate their signal patterns while rotating the wheels. This can help differentiate between a sensor malfunction and a wiring issue affecting multiple sensors.",
+            "type": "text"
+        },
+        "msg_006_007": {
+            "id": "msg_006_007",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_006",
+            "createdAt": "2023-09-10T09:30:00Z",
+            "content": "Okay, I checked the ABS solenoid relay circuit. I'm getting good voltage and ground. I'll move on to scoping the wheel speed sensors and see what I find.",
+            "type": "text"
+        },
+        "msg_007_001": {
+            "id": "msg_007_001",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_007",
+            "createdAt": "2023-09-10T09:32:00Z",
+            "content": "Hey bot, I've got a 2023 Tesla Model 3 in the shop with a persistent electrical issue. The customer reports numerous dashboard warning lights and significant battery drain overnight. No obvious physical damage, but the range has plummeted.",
+            "type": "text"
+        },
+        "msg_007_002": {
+            "id": "msg_007_002",
+            "sender": "bot",
+            "chatHistoryId": "chat_007",
+            "createdAt": "2023-09-10T09:34:00Z",
+            "content": "Understood. Can you provide the specific error codes being displayed on the dashboard? Also, has the vehicle recently undergone any software updates or had any aftermarket modifications performed?",
+            "type": "text"
+        },
+        "msg_007_003": {
+            "id": "msg_007_003",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_007",
+            "createdAt": "2023-09-10T09:36:00Z",
+            "content": "I've pulled the codes. Getting BMS_u008 (Battery Management System internal communication error), DI_a158 (DC-DC converter fault) and VCFRONT_a212 (Vehicle Controller Front communication timeout). Customer claims no modifications or recent updates.",
+            "type": "text"
+        },
+        "msg_007_004": {
+            "id": "msg_007_004",
+            "sender": "bot",
+            "chatHistoryId": "chat_007",
+            "createdAt": "2023-09-10T09:38:00Z",
+            "content": "Okay, those codes point to potential issues with the Battery Management System, DC-DC converter, and front vehicle controller. Let's start by checking the 12V auxiliary battery health. A failing 12V battery can cause erratic behavior in Teslas. Can you provide the voltage reading under load and at rest?",
+            "type": "text"
+        },
+        "msg_007_005": {
+            "id": "msg_007_005",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_007",
+            "createdAt": "2023-09-10T09:40:00Z",
+            "content": "Just tested the 12V. At rest, it's reading 12.4V, but drops to 10.8V under a simulated load test. Seems weak.",
+            "type": "text"
+        },
+        "msg_007_006": {
+            "id": "msg_007_006",
+            "sender": "bot",
+            "chatHistoryId": "chat_007",
+            "createdAt": "2023-09-10T09:42:00Z",
+            "content": "That confirms a weak 12V battery. Given the error codes and battery drain, I recommend replacing the 12V auxiliary battery. Clear the error codes after replacement and monitor for recurrence. If the BMS_u008 persists after replacing the 12V battery, further diagnostics of the BMS module and associated wiring harness will be required.",
+            "type": "text"
+        },
+        "msg_007_007": {
+            "id": "msg_007_007",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_007",
+            "createdAt": "2023-09-10T09:44:00Z",
+            "content": "Sounds good. Replacing the 12V now. Will update you if the problem persists. Thanks for the quick assist.",
+            "type": "text"
+        },
+        "msg_008_001": {
+            "id": "msg_008_001",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_008",
+            "createdAt": "2023-09-10T09:46:00Z",
+            "content": "Hey AI, I've got a 2018 BMW 3 Series here, AC's blowing warm. Customer says it just started happening. Compressor seems to be cycling on and off pretty frequently.",
+            "type": "text"
+        },
+        "msg_008_002": {
+            "id": "msg_008_002",
+            "sender": "bot",
+            "chatHistoryId": "chat_008",
+            "createdAt": "2023-09-10T09:48:00Z",
+            "content": "Okay, understood. Frequent compressor cycling suggests a possible low refrigerant level or high-pressure issue. Can you tell me what the static refrigerant pressure readings are on both the high and low sides?",
+            "type": "text"
+        },
+        "msg_008_003": {
+            "id": "msg_008_003",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_008",
+            "createdAt": "2023-09-10T09:50:00Z",
+            "content": "Alright, just checked. Static pressure is about 50 PSI on both high and low. Seems a bit low, doesn't it?",
+            "type": "text"
+        },
+        "msg_008_004": {
+            "id": "msg_008_004",
+            "sender": "bot",
+            "chatHistoryId": "chat_008",
+            "createdAt": "2023-09-10T09:52:00Z",
+            "content": "Yes, 50 PSI is significantly below the expected static pressure for R-134a at typical ambient temperatures. Have you observed any obvious leaks, such as oil residue around fittings or the compressor shaft seal?",
+            "type": "text"
+        },
+        "msg_008_005": {
+            "id": "msg_008_005",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_008",
+            "createdAt": "2023-09-10T09:54:00Z",
+            "content": "I've given it a quick visual inspection, haven't spotted anything obvious. I'll hook up the vacuum pump and see if it holds a vacuum for at least 30 minutes.",
+            "type": "text"
+        },
+        "msg_008_006": {
+            "id": "msg_008_006",
+            "sender": "bot",
+            "chatHistoryId": "chat_008",
+            "createdAt": "2023-09-10T09:56:00Z",
+            "content": "Good plan. If it doesn't hold vacuum, you'll need to pinpoint the leak. Use a UV dye and leak detector after pulling vacuum, before recharging. If it does hold vacuum, proceed with a refrigerant recharge to the system's specified capacity and re-evaluate.",
+            "type": "text"
+        },
+        "msg_008_007": {
+            "id": "msg_008_007",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_008",
+            "createdAt": "2023-09-10T09:58:00Z",
+            "content": "Vacuum held for 45 minutes, so no major leaks. I recharged the system to spec, which is 600 grams of R-134a. Now the compressor is still cycling frequently and the vent temperature is only getting down to about 75 degrees F.",
+            "type": "text"
+        },
+        "msg_008_008": {
+            "id": "msg_008_008",
+            "sender": "bot",
+            "chatHistoryId": "chat_008",
+            "createdAt": "2023-09-10T10:00:00Z",
+            "content": "Okay, since the system is properly charged and the compressor is still cycling, we need to investigate potential high-side issues. Check the condenser fan operation. Is the fan running at the correct speed when the AC is engaged? Also, monitor the high-side pressure during compressor operation. Excessively high pressures can cause the compressor to cycle due to the high-pressure cutoff switch.",
+            "type": "text"
+        },
+        "msg_009_001": {
+            "id": "msg_009_001",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_009",
+            "createdAt": "2023-09-10T10:02:00Z",
+            "content": "Hey Auto-Diag, I've got a 2023 Tesla Model 3 with some serious electrical issues. Dashboard is lit up like a Christmas tree and the customer is reporting significant battery drain overnight.",
+            "type": "text"
+        },
+        "msg_009_002": {
+            "id": "msg_009_002",
+            "sender": "bot",
+            "chatHistoryId": "chat_009",
+            "createdAt": "2023-09-10T10:04:00Z",
+            "content": "Understood, Mike. Can you provide the specific dashboard warning lights illuminated? Are there any error codes present when you connect to the Tesla diagnostic interface?",
+            "type": "text"
+        },
+        "msg_009_003": {
+            "id": "msg_009_003",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_009",
+            "createdAt": "2023-09-10T10:06:00Z",
+            "content": "Yeah, I've pulled a few codes. I'm seeing BMS_u000, BCM_a032, and PCS_w011. The dash is showing warnings for battery system malfunction, airbag system, and pre-collision system disabled. I've checked the 12V battery, and it seems fine at 12.6V.",
+            "type": "text"
+        },
+        "msg_009_004": {
+            "id": "msg_009_004",
+            "sender": "bot",
+            "chatHistoryId": "chat_009",
+            "createdAt": "2023-09-10T10:08:00Z",
+            "content": "Okay, those codes point towards a potential issue within the vehicle's CAN bus network. Have you checked the CAN bus voltage levels and continuity between modules? Specifically, focus on the high-speed CAN bus linking the BMS, BCM, and PCS.",
+            "type": "text"
+        },
+        "msg_009_005": {
+            "id": "msg_009_005",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_009",
+            "createdAt": "2023-09-10T10:10:00Z",
+            "content": "Haven't gone that far yet, I'll check the CAN bus voltage and continuity now. Where are the primary CAN bus termination resistors located on this model?",
+            "type": "text"
+        },
+        "msg_009_006": {
+            "id": "msg_009_006",
+            "sender": "bot",
+            "chatHistoryId": "chat_009",
+            "createdAt": "2023-09-10T10:12:00Z",
+            "content": "On the 2023 Model 3, the CAN bus termination resistors are typically integrated within the Body Control Module (BCM) and the Battery Management System (BMS). Refer to the Tesla service manual for precise location diagrams. A faulty termination resistor can disrupt communication and cause the errors you are seeing. Check for corrosion or damage to the connectors as well.",
+            "type": "text"
+        },
+        "msg_009_007": {
+            "id": "msg_009_007",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_009",
+            "createdAt": "2023-09-10T10:14:00Z",
+            "content": "Alright, good to know. I'll check the BCM and BMS connectors and the termination resistors. Will update you when I have more readings. Thanks!",
+            "type": "text"
+        },
+        "msg_009_008": {
+            "id": "msg_009_008",
+            "sender": "bot",
+            "chatHistoryId": "chat_009",
+            "createdAt": "2023-09-10T10:16:00Z",
+            "content": "You're welcome, Mike. While you are checking those components, also inspect the wiring harness for any signs of physical damage or chafing, especially near sharp edges or moving parts. Any shorts to ground could also cause these issues. Good luck, and keep me informed of your progress.",
+            "type": "text"
+        },
+        "msg_010_001": {
+            "id": "msg_010_001",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_010",
+            "createdAt": "2023-09-10T10:18:00Z",
+            "content": "Hey AutoDoc, I've got a 2023 Model 3 here with a bunch of warning lights on the dash and the customer says the battery is draining way faster than it should. No recent accidents or modifications.",
+            "type": "text"
+        },
+        "msg_010_002": {
+            "id": "msg_010_002",
+            "sender": "bot",
+            "chatHistoryId": "chat_010",
+            "createdAt": "2023-09-10T10:20:00Z",
+            "content": "Understood, Mike. Can you provide the specific warning lights illuminated on the dashboard? Also, what is the reported voltage of the 12V auxiliary battery? I need that for initial diagnostics.",
+            "type": "text"
+        },
+        "msg_010_003": {
+            "id": "msg_010_003",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_010",
+            "createdAt": "2023-09-10T10:22:00Z",
+            "content": "Okay, I've got the dash lit up like a Christmas tree. I see 'Regenerative Braking Limited', 'Traction Control Disabled', and 'Vehicle Systems Alert'. The 12V aux battery is reading 11.8V. Seems low.",
+            "type": "text"
+        },
+        "msg_010_004": {
+            "id": "msg_010_004",
+            "sender": "bot",
+            "chatHistoryId": "chat_010",
+            "createdAt": "2023-09-10T10:24:00Z",
+            "content": "11.8V is indeed low. This could indicate a charging issue with the DC-DC converter, which is responsible for maintaining the 12V system. Have you checked the DC-DC converter's output voltage? It should be around 14.5V when the vehicle is 'on'.",
+            "type": "text"
+        },
+        "msg_010_005": {
+            "id": "msg_010_005",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_010",
+            "createdAt": "2023-09-10T10:26:00Z",
+            "content": "Alright, let me check that now... Okay, the DC-DC converter output is only showing 12.2V, not the 14.5V it should be. Also, I'm seeing some error codes relating to the Body Control Module (BCM).",
+            "type": "text"
+        },
+        "msg_010_006": {
+            "id": "msg_010_006",
+            "sender": "bot",
+            "chatHistoryId": "chat_010",
+            "createdAt": "2023-09-10T10:28:00Z",
+            "content": "The low DC-DC converter output confirms a charging issue. The BCM errors are likely a consequence of the low voltage condition. Before replacing the DC-DC converter, inspect its wiring and connectors for corrosion or damage. Also, check the HV battery contactors are functioning correctly, as they can affect DC-DC converter operation.",
+            "type": "text"
+        },
+        "msg_010_007": {
+            "id": "msg_010_007",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_010",
+            "createdAt": "2023-09-10T10:30:00Z",
+            "content": "Good call on the HV contactors. I'll check those and the wiring now. I appreciate the help!",
+            "type": "text"
+        },
+        "msg_011_001": {
+            "id": "msg_011_001",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_011",
+            "createdAt": "2023-09-10T10:32:00Z",
+            "content": "Hey, I've got a 2024 Camry here with the ABS warning light on. Customer says the brake pedal feels spongy.",
+            "type": "text"
+        },
+        "msg_011_002": {
+            "id": "msg_011_002",
+            "sender": "bot",
+            "chatHistoryId": "chat_011",
+            "createdAt": "2023-09-10T10:34:00Z",
+            "content": "Okay, spongy pedal and ABS light on a 2024 Camry. Have you performed a visual inspection of the brake system yet? Specifically, check for any leaks in the brake lines, master cylinder, or calipers. Also, inspect the ABS modulator for any obvious damage.",
+            "type": "text"
+        },
+        "msg_011_003": {
+            "id": "msg_011_003",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_011",
+            "createdAt": "2023-09-10T10:36:00Z",
+            "content": "Yeah, visually inspected everything. No leaks, ABS modulator looks fine. I hooked up my scan tool and I'm getting a C0200 code - Front Right Wheel Speed Sensor Circuit.",
+            "type": "text"
+        },
+        "msg_011_004": {
+            "id": "msg_011_004",
+            "sender": "bot",
+            "chatHistoryId": "chat_011",
+            "createdAt": "2023-09-10T10:38:00Z",
+            "content": "C0200 - Front Right Wheel Speed Sensor Circuit. That indicates a potential issue with the sensor itself, the wiring, or the ABS control module. Have you checked the sensor's resistance and signal output with a multimeter or oscilloscope?",
+            "type": "text"
+        },
+        "msg_011_005": {
+            "id": "msg_011_005",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_011",
+            "createdAt": "2023-09-10T10:40:00Z",
+            "content": "I haven't scoped it yet, but I did check the resistance across the sensor pins. It's showing open, which isn't right. Book says it should be between 0.8-1.6 kOhms.",
+            "type": "text"
+        },
+        "msg_011_006": {
+            "id": "msg_011_006",
+            "sender": "bot",
+            "chatHistoryId": "chat_011",
+            "createdAt": "2023-09-10T10:42:00Z",
+            "content": "Okay, an open circuit on the front right wheel speed sensor confirms a likely fault with the sensor itself. Before replacing the sensor, I'd advise checking the wiring harness and connector for any damage, corrosion, or loose connections. Backprobe the connector with your multimeter to verify you're getting power and ground to the sensor circuit from the ABS module.",
+            "type": "text"
+        },
+        "msg_011_007": {
+            "id": "msg_011_007",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_011",
+            "createdAt": "2023-09-10T10:44:00Z",
+            "content": "Good call. I'll check the connector and wiring harness. If that checks out, I'll replace the sensor. Thanks.",
+            "type": "text"
+        },
+        "msg_011_008": {
+            "id": "msg_011_008",
+            "sender": "bot",
+            "chatHistoryId": "chat_011",
+            "createdAt": "2023-09-10T10:46:00Z",
+            "content": "You're welcome. After replacing the sensor, clear the code and perform a road test to ensure the ABS light is off and the brake pedal feel is normal. If the problem persists, further diagnostics of the ABS module and wiring may be required.",
+            "type": "text"
+        },
+        "msg_012_001": {
+            "id": "msg_012_001",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_012",
+            "createdAt": "2023-09-10T10:48:00Z",
+            "content": "Hey bot, I've got a 2019 Honda Civic overheating. Temperature gauge is pegged, and there's steam coming from under the hood. Customer says it happened suddenly.",
+            "type": "text"
+        },
+        "msg_012_002": {
+            "id": "msg_012_002",
+            "sender": "bot",
+            "chatHistoryId": "chat_012",
+            "createdAt": "2023-09-10T10:50:00Z",
+            "content": "Okay, Mike. Sudden overheating in a 2019 Civic. Have you visually inspected the engine bay yet? Specifically, check for obvious coolant leaks: radiator, hoses, water pump area, and reservoir.",
+            "type": "text"
+        },
+        "msg_012_003": {
+            "id": "msg_012_003",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_012",
+            "createdAt": "2023-09-10T10:52:00Z",
+            "content": "Yeah, I did a quick visual. Coolant reservoir is empty. I'm seeing some dried coolant residue around the water pump housing. Looks like it might be leaking there. I haven't done a pressure test yet.",
+            "type": "text"
+        },
+        "msg_012_004": {
+            "id": "msg_012_004",
+            "sender": "bot",
+            "chatHistoryId": "chat_012",
+            "createdAt": "2023-09-10T10:54:00Z",
+            "content": "Dried coolant around the water pump housing is a strong indicator. Before condemning the pump, is the cooling fan operating normally? Check the fan relay and fuse as well. If the fan isn't running, the leak could be exacerbating the issue.",
+            "type": "text"
+        },
+        "msg_012_005": {
+            "id": "msg_012_005",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_012",
+            "createdAt": "2023-09-10T10:56:00Z",
+            "content": "Good point. I'll check the fan and relay first. I did notice it wasn't running when I popped the hood, but I assumed it was because the engine was already overheating so much. I'll get back to you after I check that.",
+            "type": "text"
+        },
+        "msg_012_006": {
+            "id": "msg_012_006",
+            "sender": "bot",
+            "chatHistoryId": "chat_012",
+            "createdAt": "2023-09-10T10:58:00Z",
+            "content": "Understood. Also, while checking the electrical components, verify the integrity of the thermostat housing and its connector. A faulty coolant temperature sensor can send inaccurate readings to the ECU, potentially affecting fan operation as well. Run a scan tool to check for any relevant DTCs.",
+            "type": "text"
+        },
+        "msg_012_007": {
+            "id": "msg_012_007",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_012",
+            "createdAt": "2023-09-10T11:00:00Z",
+            "content": "Alright, I checked the fan relay and fuse - both are good. Fan motor itself seems fine when I jump it with a power source. I'm pulling a P0117 code - Coolant Temperature Sensor Circuit Low Input. That likely explains why the fan wasn't running. I'm going to replace the sensor and then do a cooling system pressure test to confirm the water pump leak.",
+            "type": "text"
+        },
+        "msg_012_008": {
+            "id": "msg_012_008",
+            "sender": "bot",
+            "chatHistoryId": "chat_012",
+            "createdAt": "2023-09-10T11:02:00Z",
+            "content": "Excellent. A P0117 code aligns with the symptoms. Replacing the coolant temperature sensor is a logical next step. After replacement and the pressure test, confirm that the cooling fan now operates correctly at the appropriate temperature thresholds. Let me know the results of the pressure test and fan operation after the repairs.",
+            "type": "text"
+        },
+        "msg_013_001": {
+            "id": "msg_013_001",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_013",
+            "createdAt": "2023-09-10T11:04:00Z",
+            "content": "Hi, I need help diagnosing a Brake noise on a 2022 Nissan Altima. squealing when braking, vibration in steering wheel",
+            "type": "text"
+        },
+        "msg_013_002": {
+            "id": "msg_013_002",
+            "sender": "bot",
+            "chatHistoryId": "chat_013",
+            "createdAt": "2023-09-10T11:06:00Z",
+            "content": "Hello Emily Davis, I can help you with that. Can you tell me more about when the symptoms first appeared?",
+            "type": "text"
+        },
+        "msg_013_003": {
+            "id": "msg_013_003",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_013",
+            "createdAt": "2023-09-10T11:08:00Z",
+            "content": "The customer noticed it yesterday. I've done a visual inspection but need guidance on next steps.",
+            "type": "text"
+        },
+        "msg_013_004": {
+            "id": "msg_013_004",
+            "sender": "bot",
+            "chatHistoryId": "chat_013",
+            "createdAt": "2023-09-10T11:10:00Z",
+            "content": "Let's start with a diagnostic scan. Do you have access to an OBD-II scanner? This will help us identify any stored error codes.",
+            "type": "text"
+        },
+        "msg_013_005": {
+            "id": "msg_013_005",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_013",
+            "createdAt": "2023-09-10T11:12:00Z",
+            "content": "Yes, I have the scanner ready. Let me connect it and see what codes come up.",
+            "type": "text"
+        },
+        "msg_013_006": {
+            "id": "msg_013_006",
+            "sender": "bot",
+            "chatHistoryId": "chat_013",
+            "createdAt": "2023-09-10T11:14:00Z",
+            "content": "Great! Once you have the codes, please share them with me and I'll help you interpret the results and plan the repair strategy.",
+            "type": "text"
+        },
+        "msg_014_001": {
+            "id": "msg_014_001",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_014",
+            "createdAt": "2023-09-10T11:16:00Z",
+            "content": "Alright, I've got a 2019 Honda Civic overheating. Temperature gauge pegged in the red, customer reports steam coming from under the hood. I haven't started tearing into it yet, what's your initial assessment?",
+            "type": "text"
+        },
+        "msg_014_002": {
+            "id": "msg_014_002",
+            "sender": "bot",
+            "chatHistoryId": "chat_014",
+            "createdAt": "2023-09-10T11:18:00Z",
+            "content": "Understood. Based on the symptoms, potential causes include a coolant leak, thermostat malfunction, radiator obstruction, water pump failure, or head gasket issue. Before proceeding, can you visually inspect the engine bay for any obvious coolant leaks or damage to the radiator hoses?",
+            "type": "text"
+        },
+        "msg_014_003": {
+            "id": "msg_014_003",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_014",
+            "createdAt": "2023-09-10T11:20:00Z",
+            "content": "Okay, I did a quick visual. I see coolant sprayed around the radiator cap and upper radiator hose, but no obvious cracks or ruptures in the hose itself.",
+            "type": "text"
+        },
+        "msg_014_004": {
+            "id": "msg_014_004",
+            "sender": "bot",
+            "chatHistoryId": "chat_014",
+            "createdAt": "2023-09-10T11:22:00Z",
+            "content": "The coolant spray around the radiator cap suggests a possible pressure issue. Is the cap sealing properly? Also, could you perform a pressure test on the cooling system to check for leaks? Start with a cold engine to avoid burns. Note the pressure reading and any locations of observed leaks.",
+            "type": "text"
+        },
+        "msg_014_005": {
+            "id": "msg_014_005",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_014",
+            "createdAt": "2023-09-10T11:24:00Z",
+            "content": "Ran a pressure test. Holds pressure for a short period, then slowly drops. I'm seeing a small amount of coolant seeping from where the upper radiator hose connects to the engine block. It's not a gusher, but definitely a leak.",
+            "type": "text"
+        },
+        "msg_014_006": {
+            "id": "msg_014_006",
+            "sender": "bot",
+            "chatHistoryId": "chat_014",
+            "createdAt": "2023-09-10T11:26:00Z",
+            "content": "The coolant seeping from the upper radiator hose connection points to a potential issue with the hose clamp, the hose itself, or the engine block's coolant outlet. Before replacing parts, ensure the hose clamp is properly tightened and not damaged. Also, carefully inspect the hose for any hidden cracks or deformation near the connection point. Does the hose feel soft or spongy compared to a new one?",
+            "type": "text"
+        },
+        "msg_014_007": {
+            "id": "msg_014_007",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_014",
+            "createdAt": "2023-09-10T11:28:00Z",
+            "content": "Clamp seems fine, but the hose feels a bit soft near the connection. I'm leaning towards replacing the upper radiator hose and clamp as a starting point.",
+            "type": "text"
+        },
+        "msg_014_008": {
+            "id": "msg_014_008",
+            "sender": "bot",
+            "chatHistoryId": "chat_014",
+            "createdAt": "2023-09-10T11:30:00Z",
+            "content": "Replacing the upper radiator hose and clamp is a reasonable next step, given the observed symptoms and test results. After replacement, re-pressurize the system and verify that the leak is resolved. If the problem persists, further investigation of the thermostat and water pump functionality will be necessary.",
+            "type": "text"
+        },
+        "msg_015_001": {
+            "id": "msg_015_001",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_015",
+            "createdAt": "2023-09-10T11:32:00Z",
+            "content": "Hey AutoDiag, I've got a 2017 Subaru Outback, engine code EJ25, with a nasty rattling noise coming from the timing cover area and it's misfiring. Getting a P0300 code \u2013 Random/Multiple Cylinder Misfire Detected.",
+            "type": "text"
+        },
+        "msg_015_002": {
+            "id": "msg_015_002",
+            "sender": "bot",
+            "chatHistoryId": "chat_015",
+            "createdAt": "2023-09-10T11:34:00Z",
+            "content": "Okay, Emily. P0300 and a rattling from the timing cover on an EJ25 often points towards timing issues. Before we jump to conclusions, can you confirm if the vehicle has had its timing belt replaced according to the maintenance schedule (every 105,000 miles or 105 months)? Also, is the engine running rough at idle or under load?",
+            "type": "text"
+        },
+        "msg_015_003": {
+            "id": "msg_015_003",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_015",
+            "createdAt": "2023-09-10T11:36:00Z",
+            "content": "Mileage is at 115,000 and the customer doesn't have records of a timing belt change. Engine runs rough at idle, gets a little better under load but the rattling persists and the misfire is still present.",
+            "type": "text"
+        },
+        "msg_015_004": {
+            "id": "msg_015_004",
+            "sender": "bot",
+            "chatHistoryId": "chat_015",
+            "createdAt": "2023-09-10T11:38:00Z",
+            "content": "Given the mileage and lack of timing belt replacement records, coupled with the symptoms, a failing or degraded timing belt is highly probable. Before condemning the belt outright, can you perform a compression test on all cylinders? This will help rule out bent valves if the belt has skipped a tooth or broken.",
+            "type": "text"
+        },
+        "msg_015_005": {
+            "id": "msg_015_005",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_015",
+            "createdAt": "2023-09-10T11:40:00Z",
+            "content": "Compression test completed. Cylinder 1: 140psi, Cylinder 2: 135psi, Cylinder 3: 90psi, Cylinder 4: 145psi. Definitely looks like a problem with cylinder 3.",
+            "type": "text"
+        },
+        "msg_015_006": {
+            "id": "msg_015_006",
+            "sender": "bot",
+            "chatHistoryId": "chat_015",
+            "createdAt": "2023-09-10T11:42:00Z",
+            "content": "Okay, a significantly lower compression reading on cylinder 3, combined with the other symptoms, strongly suggests valve damage due to timing belt slippage. At this point, I recommend removing the timing cover for a visual inspection of the timing belt condition, tensioner, and pulleys. Look for signs of cracking, wear, or missing teeth on the belt. Be prepared to replace the timing belt, tensioner, water pump, and potentially address valve damage in cylinder 3.",
+            "type": "text"
+        },
+        "msg_015_007": {
+            "id": "msg_015_007",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_015",
+            "createdAt": "2023-09-10T11:44:00Z",
+            "content": "Thanks AutoDiag, that confirms my suspicions. I'll pull the cover and inspect the belt. Looks like we're headed for a timing belt job and possibly some head work.",
+            "type": "text"
+        },
+        "msg_016_001": {
+            "id": "msg_016_001",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_016",
+            "createdAt": "2023-09-10T11:46:00Z",
+            "content": "Okay, I've got a 2021 Ford F-150 with a slipping transmission. Customer reports delayed shifting and RPM spikes without a corresponding increase in speed, especially between 3rd and 5th gear.",
+            "type": "text"
+        },
+        "msg_016_002": {
+            "id": "msg_016_002",
+            "sender": "bot",
+            "chatHistoryId": "chat_016",
+            "createdAt": "2023-09-10T11:48:00Z",
+            "content": "Understood. Can you confirm the engine type (e.g., 3.5L EcoBoost, 5.0L V8) and the transmission model (e.g., 10R80)? Also, have you scanned for any DTCs related to the transmission or engine?",
+            "type": "text"
+        },
+        "msg_016_003": {
+            "id": "msg_016_003",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_016",
+            "createdAt": "2023-09-10T11:50:00Z",
+            "content": "It's the 3.5L EcoBoost with the 10R80 transmission. Yes, I scanned it. Code P0734 - Incorrect Gear Ratio in 4th Gear is present.",
+            "type": "text"
+        },
+        "msg_016_004": {
+            "id": "msg_016_004",
+            "sender": "bot",
+            "chatHistoryId": "chat_016",
+            "createdAt": "2023-09-10T11:52:00Z",
+            "content": "P0734 indicates a discrepancy between the commanded gear ratio and the actual gear ratio in 4th gear. Have you checked the transmission fluid level and condition? Is it burnt or discolored? Any metallic debris present?",
+            "type": "text"
+        },
+        "msg_016_005": {
+            "id": "msg_016_005",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_016",
+            "createdAt": "2023-09-10T11:54:00Z",
+            "content": "Fluid level is within the normal range, but it does appear slightly darker than normal. I'll drop the pan and check for debris. If I find significant metallic shavings, what are your recommendations?",
+            "type": "text"
+        },
+        "msg_016_006": {
+            "id": "msg_016_006",
+            "sender": "bot",
+            "chatHistoryId": "chat_016",
+            "createdAt": "2023-09-10T11:56:00Z",
+            "content": "Significant metallic debris points to internal mechanical failure, likely within the 10R80. At that point, a transmission rebuild or replacement would be the most likely course of action. Further diagnostics, such as a valve body inspection and solenoid testing, could be performed, but with significant debris, the cost may outweigh the benefit given the probable damage.",
+            "type": "text"
+        },
+        "msg_016_007": {
+            "id": "msg_016_007",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_016",
+            "createdAt": "2023-09-10T11:58:00Z",
+            "content": "Alright, I'll proceed with the pan drop and inspection. Thanks for the guidance.",
+            "type": "text"
+        },
+        "msg_017_001": {
+            "id": "msg_017_001",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_017",
+            "createdAt": "2023-09-10T12:00:00Z",
+            "content": "Hey, I've got a 2020 Chevy Malibu with a check engine light. Customer reports a rough idle and noticeable decrease in fuel economy.",
+            "type": "text"
+        },
+        "msg_017_002": {
+            "id": "msg_017_002",
+            "sender": "bot",
+            "chatHistoryId": "chat_017",
+            "createdAt": "2023-09-10T12:02:00Z",
+            "content": "Understood. Have you pulled any diagnostic trouble codes (DTCs) yet, David? If so, please provide them.",
+            "type": "text"
+        },
+        "msg_017_003": {
+            "id": "msg_017_003",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_017",
+            "createdAt": "2023-09-10T12:04:00Z",
+            "content": "Yeah, I pulled a P0300 - Random/Multiple Cylinder Misfire Detected. I've also got a P0171 - System Too Lean (Bank 1).",
+            "type": "text"
+        },
+        "msg_017_004": {
+            "id": "msg_017_004",
+            "sender": "bot",
+            "chatHistoryId": "chat_017",
+            "createdAt": "2023-09-10T12:06:00Z",
+            "content": "Okay, P0300 and P0171. Given the lean condition and misfire, have you checked for any obvious vacuum leaks, especially around the intake manifold or PCV system? Also, can you provide the engine's short-term and long-term fuel trim values at idle?",
+            "type": "text"
+        },
+        "msg_017_005": {
+            "id": "msg_017_005",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_017",
+            "createdAt": "2023-09-10T12:08:00Z",
+            "content": "I did a quick visual check for vacuum leaks but didn't find anything obvious. I'll hook up the scan tool and grab those fuel trim values for you. Give me a minute...",
+            "type": "text"
+        },
+        "msg_017_006": {
+            "id": "msg_017_006",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_017",
+            "createdAt": "2023-09-10T12:10:00Z",
+            "content": "Alright, at idle, the STFT is fluctuating between +8% and +12%, and the LTFT is holding steady at +22%.",
+            "type": "text"
+        },
+        "msg_017_007": {
+            "id": "msg_017_007",
+            "sender": "bot",
+            "chatHistoryId": "chat_017",
+            "createdAt": "2023-09-10T12:12:00Z",
+            "content": "With those high fuel trim values, especially the LTFT, I'd recommend performing a smoke test to pinpoint any potential vacuum leaks that may not be visually apparent. A leak after the MAF sensor would cause both the P0171 and P0300 codes. If the smoke test doesn't reveal anything, consider inspecting the Mass Air Flow (MAF) sensor itself for contamination or malfunction.",
+            "type": "text"
+        },
+        "msg_018_001": {
+            "id": "msg_018_001",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_018",
+            "createdAt": "2023-09-10T12:14:00Z",
+            "content": "Alright, I've got a 2019 VW Jetta with a hard start, strong fuel smell, and poor performance. I suspect a fuel system issue. Where should I begin my diagnosis?",
+            "type": "text"
+        },
+        "msg_018_002": {
+            "id": "msg_018_002",
+            "sender": "bot",
+            "chatHistoryId": "chat_018",
+            "createdAt": "2023-09-10T12:16:00Z",
+            "content": "Okay, David. Let's start with the basics. Before any invasive procedures, can you confirm the fuel pressure at the fuel rail during cranking and idle? Also, have you noticed any fuel leaks around the fuel tank, fuel lines, or injectors? A visual inspection is crucial.",
+            "type": "text"
+        },
+        "msg_018_003": {
+            "id": "msg_018_003",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_018",
+            "createdAt": "2023-09-10T12:18:00Z",
+            "content": "I haven't checked the fuel pressure yet, but I did a quick visual. No obvious leaks around the tank or lines that I could see. I'll check the pressure and report back. Anything else to check while I'm at it?",
+            "type": "text"
+        },
+        "msg_018_004": {
+            "id": "msg_018_004",
+            "sender": "bot",
+            "chatHistoryId": "chat_018",
+            "createdAt": "2023-09-10T12:20:00Z",
+            "content": "Yes, while you're accessing the fuel rail, examine the fuel injectors for any signs of physical damage or excessive fuel residue. Also, if you have access to a scan tool, check for any fuel trim values that are significantly outside the normal range (e.g., long-term fuel trim exceeding +/- 10%). High positive values might indicate a lean condition causing the computer to compensate.",
+            "type": "text"
+        },
+        "msg_018_005": {
+            "id": "msg_018_005",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_018",
+            "createdAt": "2023-09-10T12:22:00Z",
+            "content": "Okay, fuel pressure is low during cranking - about 25 psi. Spec is around 50 psi, I believe. I scanned it, and I'm getting a P0087 code: 'Fuel Rail/System Pressure - Too Low'. Long term fuel trim is sitting at +22%.",
+            "type": "text"
+        },
+        "msg_018_006": {
+            "id": "msg_018_006",
+            "sender": "bot",
+            "chatHistoryId": "chat_018",
+            "createdAt": "2023-09-10T12:24:00Z",
+            "content": "The P0087 code and low fuel pressure, coupled with the high positive fuel trim, strongly suggest a fuel delivery problem before the rail. Based on this evidence, the most likely culprits are a failing fuel pump, a blocked fuel filter, or a faulty fuel pressure regulator. Since you've already visually inspected for leaks, I recommend testing the fuel pump's amperage draw. A low amperage reading could indicate a failing pump motor.",
+            "type": "text"
+        },
+        "msg_018_007": {
+            "id": "msg_018_007",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_018",
+            "createdAt": "2023-09-10T12:26:00Z",
+            "content": "Good call. I'll check the fuel pump amperage. If it's within spec, I'll replace the fuel filter next. Thanks for the direction.",
+            "type": "text"
+        },
+        "msg_019_001": {
+            "id": "msg_019_001",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_019",
+            "createdAt": "2023-09-10T12:28:00Z",
+            "content": "I've got a 2017 Subaru Outback with a nasty rattling noise coming from the engine. Customer also reports misfiring. I suspect timing, maybe the belt.",
+            "type": "text"
+        },
+        "msg_019_002": {
+            "id": "msg_019_002",
+            "sender": "bot",
+            "chatHistoryId": "chat_019",
+            "createdAt": "2023-09-10T12:30:00Z",
+            "content": "Understood. Can you confirm the engine type? (e.g., 2.5L naturally aspirated, 3.6L, or 2.0L turbo). Also, what is the engine mileage?",
+            "type": "text"
+        },
+        "msg_019_003": {
+            "id": "msg_019_003",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_019",
+            "createdAt": "2023-09-10T12:32:00Z",
+            "content": "It's the 2.5L naturally aspirated engine, and the odometer reads 115,000 miles.",
+            "type": "text"
+        },
+        "msg_019_004": {
+            "id": "msg_019_004",
+            "sender": "bot",
+            "chatHistoryId": "chat_019",
+            "createdAt": "2023-09-10T12:34:00Z",
+            "content": "Okay, given the mileage and symptoms, a timing belt issue is plausible. Have you performed a visual inspection of the belt and surrounding components, such as the tensioner and idler pulleys? What did you observe?",
+            "type": "text"
+        },
+        "msg_019_005": {
+            "id": "msg_019_005",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_019",
+            "createdAt": "2023-09-10T12:36:00Z",
+            "content": "Yeah, I took a quick look. The belt seems a little loose, and there's some visible wear and tear on the edges. The tensioner pulley also appears to be vibrating excessively.",
+            "type": "text"
+        },
+        "msg_019_006": {
+            "id": "msg_019_006",
+            "sender": "bot",
+            "chatHistoryId": "chat_019",
+            "createdAt": "2023-09-10T12:38:00Z",
+            "content": "The loose belt and vibrating tensioner are consistent with a failing tensioner or a stretched belt. Before replacing the timing belt kit, I recommend performing a compression test on all cylinders to rule out any valve damage that may have occurred due to potential timing slippage. Note the values for each cylinder.",
+            "type": "text"
+        },
+        "msg_019_007": {
+            "id": "msg_019_007",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_019",
+            "createdAt": "2023-09-10T12:40:00Z",
+            "content": "Good call. I'll run a compression test and let you know the results.",
+            "type": "text"
+        },
+        "msg_020_001": {
+            "id": "msg_020_001",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_020",
+            "createdAt": "2023-09-10T12:42:00Z",
+            "content": "Alright, I've got a 2020 Jeep Wrangler here, customer complaint is a clunking noise from the suspension when going over bumps. Also says it's pulling slightly to the right.",
+            "type": "text"
+        },
+        "msg_020_002": {
+            "id": "msg_020_002",
+            "sender": "bot",
+            "chatHistoryId": "chat_020",
+            "createdAt": "2023-09-10T12:44:00Z",
+            "content": "Okay, David. Thanks for the details. Can you tell me which side of the vehicle the clunking noise seems most prominent? And has the vehicle been lifted or modified in any way?",
+            "type": "text"
+        },
+        "msg_020_003": {
+            "id": "msg_020_003",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_020",
+            "createdAt": "2023-09-10T12:46:00Z",
+            "content": "Seems to be coming from the front left, and no, the customer says it's completely stock. I've already done a quick visual inspection, didn't see anything obviously broken or leaking on the shocks or control arms.",
+            "type": "text"
+        },
+        "msg_020_004": {
+            "id": "msg_020_004",
+            "sender": "bot",
+            "chatHistoryId": "chat_020",
+            "createdAt": "2023-09-10T12:48:00Z",
+            "content": "Understood. Given the pulling to the right and the noise originating from the front left, I recommend checking the front left ball joints, tie rod ends, and wheel bearing for play. Also, inspect the lower control arm bushings for excessive wear or cracking. Start with a pry bar test on the ball joints. Let me know what you find.",
+            "type": "text"
+        },
+        "msg_020_005": {
+            "id": "msg_020_005",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_020",
+            "createdAt": "2023-09-10T12:50:00Z",
+            "content": "Good call. Just did the pry bar test on the lower ball joint on the front left, definitely some play there. The bushing on the lower control arm looks a little suspect too, some cracking is visible. I think the lower ball joint is the primary culprit though.",
+            "type": "text"
+        },
+        "msg_020_006": {
+            "id": "msg_020_006",
+            "sender": "bot",
+            "chatHistoryId": "chat_020",
+            "createdAt": "2023-09-10T12:52:00Z",
+            "content": "Excellent. Considering the play in the lower ball joint and the cracking in the lower control arm bushing, replacing both components on the front left would be the recommended course of action. Address both issues simultaneously to avoid premature wear on the new ball joint from the worn bushing. Would you like me to provide torque specs and a diagram for the replacement procedure?",
+            "type": "text"
+        },
+        "msg_020_007": {
+            "id": "msg_020_007",
+            "sender": "mechanic",
+            "chatHistoryId": "chat_020",
+            "createdAt": "2023-09-10T12:54:00Z",
+            "content": "Yeah, torque specs would be great, especially for the lower ball joint and the lower control arm bolts. Thanks.",
+            "type": "text"
+        },
+        "msg_020_008": {
+            "id": "msg_020_008",
+            "sender": "bot",
+            "chatHistoryId": "chat_020",
+            "createdAt": "2023-09-10T12:56:00Z",
+            "content": "Confirmed. For a 2020 Jeep Wrangler, the lower ball joint castle nut should be torqued to 80 ft-lbs, then tightened further to align the cotter pin hole. The lower control arm bolts should be torqued to 130 ft-lbs. Remember to always consult the vehicle's service manual to verify these specs before proceeding. Is there anything else I can assist you with?",
+            "type": "text"
+        }
+    }
+}

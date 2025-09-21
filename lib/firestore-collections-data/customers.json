@@ -1,0 +1,114 @@
+{
+    "customers": {
+        "customer_001": {
+            "id": "customer_001",
+            "name": "Ahmad bin Abdullah",
+            "email": "ahmad.abdullah@email.com",
+            "phone": "+6012-345-6789",
+            "address": "15, Jalan Setia 3/12, Taman Setia Indah, 81100 Johor Bahru, Johor",
+            "avatar": "https://i.scdn.co/image/ab67616d0000b27360b9cc1f2d246eab636c8f6d",
+            "createdAt": "2025-01-15T08:00:00Z",
+            "updatedAt": "2025-09-14T15:30:00Z",
+            "preferredContactMethod": "email"
+        },
+        "customer_002": {
+            "id": "customer_002",
+            "name": "Siti Aminah binti Hassan",
+            "email": "siti.aminah@email.com",
+            "phone": "+6019-876-5432",
+            "address": "42-1, Jalan SS15/4B, SS15, 47500 Subang Jaya, Selangor",
+            "avatar": "https://i.scdn.co/image/ab67616d0000b27360b9cc1f2d246eab636c8f6d",
+            "createdAt": "2025-02-20T10:30:00Z",
+            "updatedAt": "2025-09-13T16:45:00Z",
+            "preferredContactMethod": "phone"
+        },
+        "customer_003": {
+            "id": "customer_003",
+            "name": "Tan Wei Ming",
+            "email": "tanwm@techworks.com.my",
+            "phone": "+6017-234-5678",
+            "address": "Block C-12-3, Plaza Mont Kiara, Jalan Mont Kiara, 50480 Kuala Lumpur",
+            "avatar": "https://i.scdn.co/image/ab67616d0000b27360b9cc1f2d246eab636c8f6d",
+            "createdAt": "2025-03-10T09:15:00Z",
+            "updatedAt": "2025-09-14T10:20:00Z",
+            "preferredContactMethod": "email"
+        },
+        "customer_004": {
+            "id": "customer_004",
+            "name": "Nurul Huda binti Aziz",
+            "email": "nurul.huda@email.com",
+            "phone": "+6013-987-6543",
+            "address": "23, Lorong Makmur 5, Taman Makmur, 11700 Gelugor, Pulau Pinang",
+            "avatar": "https://i.scdn.co/image/ab67616d0000b27360b9cc1f2d246eab636c8f6d",
+            "createdAt": "2025-04-05T14:20:00Z",
+            "updatedAt": "2025-09-10T09:15:00Z",
+            "preferredContactMethod": "phone"
+        },
+        "customer_005": {
+            "id": "customer_005",
+            "name": "Rajesh Kumar a/l Muthu",
+            "email": "rajesh@constructmy.com.my",
+            "phone": "+6016-543-2109",
+            "address": "88, Jalan Industri 2/3, Kawasan Perindustrian Bukit Jambul, 11900 Bayan Lepas, Pulau Pinang",
+            "avatar": "https://i.scdn.co/image/ab67616d0000b27360b9cc1f2d246eab636c8f6d",
+            "createdAt": "2025-05-12T11:00:00Z",
+            "updatedAt": "2025-09-13T14:30:00Z",
+            "preferredContactMethod": "email"
+        },
+        "customer_006": {
+            "id": "customer_006",
+            "name": "Lee Mei Ling",
+            "email": "meiling.lee@email.com",
+            "phone": "+6012-789-0123",
+            "address": "9A, Jalan Bukit Bintang, 55100 Kuala Lumpur",
+            "avatar": "https://i.scdn.co/image/ab67616d0000b27360b9cc1f2d246eab636c8f6d",
+            "createdAt": "2025-06-18T13:45:00Z",
+            "updatedAt": "2025-09-12T11:30:00Z",
+            "preferredContactMethod": "phone"
+        },
+        "customer_007": {
+            "id": "customer_007",
+            "name": "Mohammad Ismail bin Yusof",
+            "email": "ismail@mbsa.gov.my",
+            "phone": "+6019-321-6547",
+            "address": "Tingkat 3, Bangunan MBSA, Persiaran Perbandaran, 40000 Shah Alam, Selangor",
+            "avatar": "https://i.scdn.co/image/ab67616d0000b27360b9cc1f2d246eab636c8f6d",
+            "createdAt": "2025-07-01T08:30:00Z",
+            "updatedAt": "2025-09-14T09:45:00Z",
+            "preferredContactMethod": "email"
+        },
+        "customer_008": {
+            "id": "customer_008",
+            "name": "Wong Kai Xin",
+            "email": "kxwong@email.com",
+            "phone": "+6016-890-1234",
+            "address": "18, Jalan Kuchai Maju 13, Kuchai Entrepreneurs Park, 58200 Kuala Lumpur",
+            "avatar": "https://i.scdn.co/image/ab67616d0000b27360b9cc1f2d246eab636c8f6d",
+            "createdAt": "2025-07-15T15:20:00Z",
+            "updatedAt": "2025-09-11T13:40:00Z",
+            "preferredContactMethod": "email"
+        },
+        "customer_009": {
+            "id": "customer_009",
+            "name": "Kamal bin Ibrahim",
+            "email": "kamal@mining.com.my",
+            "phone": "+6013-456-7890",
+            "address": "Lot 789, Jalan Perusahaan 3, Kawasan Perindustrian Gebeng, 26080 Kuantan, Pahang",
+            "avatar": "https://i.scdn.co/image/ab67616d0000b27360b9cc1f2d246eab636c8f6d",
+            "createdAt": "2025-08-05T09:00:00Z",
+            "updatedAt": "2025-09-14T16:15:00Z",
+            "preferredContactMethod": "phone"
+        },
+        "customer_010": {
+            "id": "customer_010",
+            "name": "Aisha binti Omar",
+            "email": "aisha.omar@email.com",
+            "phone": "+6019-234-5678",
+            "address": "27, Jalan Ampang Hilir, Taman U-Thant, 55000 Kuala Lumpur",
+            "avatar": "https://i.scdn.co/image/ab67616d0000b27360b9cc1f2d246eab636c8f6d",
+            "createdAt": "2025-08-20T11:30:00Z",
+            "updatedAt": "2025-09-10T15:20:00Z",
+            "preferredContactMethod": "email"
+        }
+    }
+}

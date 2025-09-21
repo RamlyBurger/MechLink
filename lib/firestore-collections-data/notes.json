@@ -1,0 +1,447 @@
+{
+    "notes": {
+        "note_001": {
+            "id": "note_001",
+            "jobId": "job_002",
+            "name": "Oil filter stuck",
+            "description": "Oil filter was over-tightened and difficult to remove. Used filter wrench and penetrating oil. Filter housing threads are okay, no damage found.",
+            "photos": [
+                "https://images.unsplash.com/photo-1586953208448-b95a79798f07?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+                "https://static.vecteezy.com/system/resources/previews/024/467/518/non_2x/colored-sticky-notes-paper-illustration-blank-paper-sheets-for-note-cute-notes-paper-stickers-for-your-message-blank-notes-with-elements-of-planning-for-business-office-writing-reminds-vector.jpg",
+                "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+            ],
+            "noteType": "problem",
+            "status": "pending",
+            "createdAt": "2025-09-14T13:16:46Z",
+            "updatedAt": "2025-09-14T13:16:46Z"
+        },
+        "note_002": {
+            "id": "note_002",
+            "jobId": "job_002",
+            "name": "Oil drain plug stripped threads",
+            "description": "Found drain plug threads partially stripped. Used thread repair kit to restore threads. Applied thread sealant to prevent future issues.",
+            "photos": [
+                "https://static.vecteezy.com/system/resources/previews/024/467/518/non_2x/colored-sticky-notes-paper-illustration-blank-paper-sheets-for-note-cute-notes-paper-stickers-for-your-message-blank-notes-with-elements-of-planning-for-business-office-writing-reminds-vector.jpg",
+                "https://images.unsplash.com/photo-1586953208448-b95a79798f07?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+                "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+            ],
+            "noteType": "problem",
+            "status": "pending",
+            "createdAt": "2025-09-14T14:00:53Z",
+            "updatedAt": "2025-09-14T14:00:53Z"
+        },
+        "note_003": {
+            "id": "note_003",
+            "jobId": "job_004",
+            "name": "Tire pressure sensor malfunction",
+            "description": "TPMS sensor in rear left tire not responding. Sensor battery appears dead. Recommend sensor replacement during tire service.",
+            "photos": [
+                "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+            ],
+            "noteType": "problem",
+            "status": "solved",
+            "createdAt": "2024-01-28T18:43:54Z",
+            "updatedAt": "2024-01-28T18:43:54Z"
+        },
+        "note_004": {
+            "id": "note_004",
+            "jobId": "job_004",
+            "name": "Uneven tire wear pattern",
+            "description": "Found excessive wear on inside edge of front tires indicating alignment issue. Performed alignment check and found toe-out condition. Alignment adjustment needed.",
+            "photos": [
+                "https://static.vecteezy.com/system/resources/previews/024/467/518/non_2x/colored-sticky-notes-paper-illustration-blank-paper-sheets-for-note-cute-notes-paper-stickers-for-your-message-blank-notes-with-elements-of-planning-for-business-office-writing-reminds-vector.jpg",
+                "https://images.unsplash.com/photo-1586953208448-b95a79798f07?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+                "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+            ],
+            "noteType": "problem",
+            "status": "solved",
+            "createdAt": "2024-01-28T18:43:54Z",
+            "updatedAt": "2024-01-28T18:43:54Z"
+        },
+        "note_005": {
+            "id": "note_005",
+            "jobId": "job_004",
+            "name": "Uneven tire wear pattern",
+            "description": "Found excessive wear on inside edge of front tires indicating alignment issue. Performed alignment check and found toe-out condition. Alignment adjustment needed.",
+            "photos": [],
+            "noteType": "problem",
+            "status": "solved",
+            "createdAt": "2024-01-28T18:43:54Z",
+            "updatedAt": "2024-01-28T18:43:54Z"
+        },
+        "note_006": {
+            "id": "note_006",
+            "jobId": "job_006",
+            "name": "Unexpected component wear",
+            "description": "Found additional wear on related components during service. Addressed issue and documented for future reference.",
+            "photos": [
+                "https://static.vecteezy.com/system/resources/previews/024/467/518/non_2x/colored-sticky-notes-paper-illustration-blank-paper-sheets-for-note-cute-notes-paper-stickers-for-your-message-blank-notes-with-elements-of-planning-for-business-office-writing-reminds-vector.jpg",
+                "https://images.unsplash.com/photo-1586953208448-b95a79798f07?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+                "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+            ],
+            "noteType": "problem",
+            "status": "pending",
+            "createdAt": "2024-02-15T15:13:10Z",
+            "updatedAt": "2024-02-15T15:13:10Z"
+        },
+        "note_007": {
+            "id": "note_007",
+            "jobId": "job_006",
+            "name": "Customer service inquiry",
+            "description": "Customer had questions about service procedure and maintenance recommendations. Provided detailed explanation and documentation.",
+            "photos": [],
+            "noteType": "request",
+            "status": "pending",
+            "createdAt": "2024-02-15T15:13:10Z",
+            "updatedAt": "2024-02-15T15:13:10Z"
+        },
+        "note_008": {
+            "id": "note_008",
+            "jobId": "job_006",
+            "name": "Customer service inquiry",
+            "description": "Customer had questions about service procedure and maintenance recommendations. Provided detailed explanation and documentation.",
+            "photos": [],
+            "noteType": "request",
+            "status": "pending",
+            "createdAt": "2024-02-15T15:13:10Z",
+            "updatedAt": "2024-02-15T15:13:10Z"
+        },
+        "note_009": {
+            "id": "note_009",
+            "jobId": "job_008",
+            "name": "Access difficulty",
+            "description": "Component access more difficult than expected due to equipment configuration. Required additional time and special tools.",
+            "photos": [
+                "https://static.vecteezy.com/system/resources/previews/024/467/518/non_2x/colored-sticky-notes-paper-illustration-blank-paper-sheets-for-note-cute-notes-paper-stickers-for-your-message-blank-notes-with-elements-of-planning-for-business-office-writing-reminds-vector.jpg",
+                "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+                "https://images.unsplash.com/photo-1586953208448-b95a79798f07?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+            ],
+            "noteType": "problem",
+            "status": "solved",
+            "createdAt": "2024-03-04T11:42:26Z",
+            "updatedAt": "2024-03-04T11:42:26Z"
+        },
+        "note_010": {
+            "id": "note_010",
+            "jobId": "job_008",
+            "name": "Additional service request",
+            "description": "Customer requested additional inspection of related systems while equipment is being serviced.",
+            "photos": [
+                "https://images.unsplash.com/photo-1586953208448-b95a79798f07?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+            ],
+            "noteType": "request",
+            "status": "accepted",
+            "createdAt": "2024-03-04T11:42:26Z",
+            "updatedAt": "2024-03-04T11:42:26Z"
+        },
+        "note_011": {
+            "id": "note_011",
+            "jobId": "job_009",
+            "name": "Request for oil change interval advice",
+            "description": "Customer asking about optimal oil change intervals for their driving conditions. Recommended 5,000 miles for city driving, 7,500 for highway.",
+            "photos": [
+                "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+                "https://images.unsplash.com/photo-1586953208448-b95a79798f07?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+            ],
+            "noteType": "request",
+            "status": "accepted",
+            "createdAt": "2024-03-13T09:57:04Z",
+            "updatedAt": "2024-03-13T09:57:04Z"
+        },
+        "note_012": {
+            "id": "note_012",
+            "jobId": "job_009",
+            "name": "Oil filter stuck",
+            "description": "Oil filter was over-tightened and difficult to remove. Used filter wrench and penetrating oil. Filter housing threads are okay, no damage found.",
+            "photos": [],
+            "noteType": "problem",
+            "status": "accepted",
+            "createdAt": "2024-03-13T09:57:04Z",
+            "updatedAt": "2024-03-13T09:57:04Z"
+        },
+        "note_013": {
+            "id": "note_013",
+            "jobId": "job_009",
+            "name": "Oil filter stuck",
+            "description": "Oil filter was over-tightened and difficult to remove. Used filter wrench and penetrating oil. Filter housing threads are okay, no damage found.",
+            "photos": [
+                "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+                "https://static.vecteezy.com/system/resources/previews/024/467/518/non_2x/colored-sticky-notes-paper-illustration-blank-paper-sheets-for-note-cute-notes-paper-stickers-for-your-message-blank-notes-with-elements-of-planning-for-business-office-writing-reminds-vector.jpg"
+            ],
+            "noteType": "problem",
+            "status": "solved",
+            "createdAt": "2024-03-13T09:57:04Z",
+            "updatedAt": "2024-03-13T09:57:04Z"
+        },
+        "note_014": {
+            "id": "note_014",
+            "jobId": "job_012",
+            "name": "Customer service inquiry",
+            "description": "Customer had questions about service procedure and maintenance recommendations. Provided detailed explanation and documentation.",
+            "photos": [],
+            "noteType": "request",
+            "status": "pending",
+            "createdAt": "2025-09-12T08:39:19Z",
+            "updatedAt": "2025-09-12T08:39:19Z"
+        },
+        "note_015": {
+            "id": "note_015",
+            "jobId": "job_012",
+            "name": "Customer service inquiry",
+            "description": "Customer had questions about service procedure and maintenance recommendations. Provided detailed explanation and documentation.",
+            "photos": [
+                "https://static.vecteezy.com/system/resources/previews/024/467/518/non_2x/colored-sticky-notes-paper-illustration-blank-paper-sheets-for-note-cute-notes-paper-stickers-for-your-message-blank-notes-with-elements-of-planning-for-business-office-writing-reminds-vector.jpg"
+            ],
+            "noteType": "request",
+            "status": "pending",
+            "createdAt": "2025-09-11T18:47:31Z",
+            "updatedAt": "2025-09-11T18:47:31Z"
+        },
+        "note_016": {
+            "id": "note_016",
+            "jobId": "job_012",
+            "name": "Access difficulty",
+            "description": "Component access more difficult than expected due to equipment configuration. Required additional time and special tools.",
+            "photos": [
+                "https://images.unsplash.com/photo-1586953208448-b95a79798f07?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+                "https://static.vecteezy.com/system/resources/previews/024/467/518/non_2x/colored-sticky-notes-paper-illustration-blank-paper-sheets-for-note-cute-notes-paper-stickers-for-your-message-blank-notes-with-elements-of-planning-for-business-office-writing-reminds-vector.jpg",
+                "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+            ],
+            "noteType": "problem",
+            "status": "pending",
+            "createdAt": "2025-09-12T06:55:46Z",
+            "updatedAt": "2025-09-12T06:55:46Z"
+        },
+        "note_017": {
+            "id": "note_017",
+            "jobId": "job_013",
+            "name": "Additional service request",
+            "description": "Customer requested additional inspection of related systems while equipment is being serviced.",
+            "photos": [
+                "https://images.unsplash.com/photo-1586953208448-b95a79798f07?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+                "https://static.vecteezy.com/system/resources/previews/024/467/518/non_2x/colored-sticky-notes-paper-illustration-blank-paper-sheets-for-note-cute-notes-paper-stickers-for-your-message-blank-notes-with-elements-of-planning-for-business-office-writing-reminds-vector.jpg"
+            ],
+            "noteType": "request",
+            "status": "accepted",
+            "createdAt": "2024-04-18T02:55:36Z",
+            "updatedAt": "2024-04-18T02:55:36Z"
+        },
+        "note_018": {
+            "id": "note_018",
+            "jobId": "job_014",
+            "name": "Customer service inquiry",
+            "description": "Customer had questions about service procedure and maintenance recommendations. Provided detailed explanation and documentation.",
+            "photos": [
+                "https://images.unsplash.com/photo-1586953208448-b95a79798f07?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+                "https://static.vecteezy.com/system/resources/previews/024/467/518/non_2x/colored-sticky-notes-paper-illustration-blank-paper-sheets-for-note-cute-notes-paper-stickers-for-your-message-blank-notes-with-elements-of-planning-for-business-office-writing-reminds-vector.jpg",
+                "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+            ],
+            "noteType": "request",
+            "status": "accepted",
+            "createdAt": "2024-04-27T01:10:14Z",
+            "updatedAt": "2024-04-27T01:10:14Z"
+        },
+        "note_019": {
+            "id": "note_019",
+            "jobId": "job_016",
+            "name": "Unexpected component wear",
+            "description": "Found additional wear on related components during service. Addressed issue and documented for future reference.",
+            "photos": [
+                "https://images.unsplash.com/photo-1586953208448-b95a79798f07?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+                "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+                "https://static.vecteezy.com/system/resources/previews/024/467/518/non_2x/colored-sticky-notes-paper-illustration-blank-paper-sheets-for-note-cute-notes-paper-stickers-for-your-message-blank-notes-with-elements-of-planning-for-business-office-writing-reminds-vector.jpg"
+            ],
+            "noteType": "problem",
+            "status": "accepted",
+            "createdAt": "2025-07-15T06:20:49Z",
+            "updatedAt": "2025-07-15T08:25:49Z"
+        },
+        "note_020": {
+            "id": "note_020",
+            "jobId": "job_016",
+            "name": "Additional service request",
+            "description": "Customer requested additional inspection of related systems while equipment is being serviced.",
+            "photos": [],
+            "noteType": "request",
+            "status": "pending",
+            "createdAt": "2025-07-15T12:32:02Z",
+            "updatedAt": "2025-07-15T12:32:02Z"
+        },
+        "note_021": {
+            "id": "note_021",
+            "jobId": "job_016",
+            "name": "Customer service inquiry",
+            "description": "Customer had questions about service procedure and maintenance recommendations. Provided detailed explanation and documentation.",
+            "photos": [
+                "https://images.unsplash.com/photo-1586953208448-b95a79798f07?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+                "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+            ],
+            "noteType": "request",
+            "status": "pending",
+            "createdAt": "2025-07-15T19:11:45Z",
+            "updatedAt": "2025-07-15T19:11:45Z"
+        },
+        "note_022": {
+            "id": "note_022",
+            "jobId": "job_017",
+            "name": "Unexpected component wear",
+            "description": "Found additional wear on related components during service. Addressed issue and documented for future reference.",
+            "photos": [
+                "https://static.vecteezy.com/system/resources/previews/024/467/518/non_2x/colored-sticky-notes-paper-illustration-blank-paper-sheets-for-note-cute-notes-paper-stickers-for-your-message-blank-notes-with-elements-of-planning-for-business-office-writing-reminds-vector.jpg",
+                "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+                "https://images.unsplash.com/photo-1586953208448-b95a79798f07?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+            ],
+            "noteType": "problem",
+            "status": "accepted",
+            "createdAt": "2025-01-11T00:00:34Z",
+            "updatedAt": "2025-01-11T02:27:34Z"
+        },
+        "note_023": {
+            "id": "note_023",
+            "jobId": "job_017",
+            "name": "Access difficulty",
+            "description": "Component access more difficult than expected due to equipment configuration. Required additional time and special tools.",
+            "photos": [
+                "https://images.unsplash.com/photo-1586953208448-b95a79798f07?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+                "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+                "https://static.vecteezy.com/system/resources/previews/024/467/518/non_2x/colored-sticky-notes-paper-illustration-blank-paper-sheets-for-note-cute-notes-paper-stickers-for-your-message-blank-notes-with-elements-of-planning-for-business-office-writing-reminds-vector.jpg"
+            ],
+            "noteType": "problem",
+            "status": "accepted",
+            "createdAt": "2025-01-10T16:35:05Z",
+            "updatedAt": "2025-01-10T18:09:05Z"
+        },
+        "note_024": {
+            "id": "note_024",
+            "jobId": "job_019",
+            "name": "Request for preventive maintenance schedule",
+            "description": "Customer wants to establish regular hydraulic maintenance schedule. Recommended quarterly inspections and annual oil changes based on operating hours.",
+            "photos": [
+                "https://static.vecteezy.com/system/resources/previews/024/467/518/non_2x/colored-sticky-notes-paper-illustration-blank-paper-sheets-for-note-cute-notes-paper-stickers-for-your-message-blank-notes-with-elements-of-planning-for-business-office-writing-reminds-vector.jpg",
+                "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+            ],
+            "noteType": "request",
+            "status": "pending",
+            "createdAt": "2025-01-11T21:20:42Z",
+            "updatedAt": "2025-01-11T21:20:42Z"
+        },
+        "note_025": {
+            "id": "note_025",
+            "jobId": "job_020",
+            "name": "Access difficulty",
+            "description": "Component access more difficult than expected due to equipment configuration. Required additional time and special tools.",
+            "photos": [
+                "https://images.unsplash.com/photo-1586953208448-b95a79798f07?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+            ],
+            "noteType": "problem",
+            "status": "solved",
+            "createdAt": "2024-06-19T14:38:02Z",
+            "updatedAt": "2024-06-19T14:38:02Z"
+        },
+        "note_026": {
+            "id": "note_026",
+            "jobId": "job_020",
+            "name": "Access difficulty",
+            "description": "Component access more difficult than expected due to equipment configuration. Required additional time and special tools.",
+            "photos": [
+                "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+            ],
+            "noteType": "problem",
+            "status": "solved",
+            "createdAt": "2024-06-19T14:38:02Z",
+            "updatedAt": "2024-06-19T14:38:02Z"
+        },
+        "note_027": {
+            "id": "note_027",
+            "jobId": "job_023",
+            "name": "Request for wheel balancing",
+            "description": "Customer mentioned steering wheel vibration at highway speeds. Recommending wheel balancing service in addition to rotation and alignment.",
+            "photos": [],
+            "noteType": "request",
+            "status": "pending",
+            "createdAt": "2024-07-16T09:21:57Z",
+            "updatedAt": "2024-07-16T09:21:57Z"
+        },
+        "note_028": {
+            "id": "note_028",
+            "jobId": "job_026",
+            "name": "Hydraulic cylinder seal leak",
+            "description": "Main lift cylinder showing external oil leak from rod seal. Seal replacement required. Ordered replacement seals, will complete during next service window.",
+            "photos": [
+                "https://static.vecteezy.com/system/resources/previews/024/467/518/non_2x/colored-sticky-notes-paper-illustration-blank-paper-sheets-for-note-cute-notes-paper-stickers-for-your-message-blank-notes-with-elements-of-planning-for-business-office-writing-reminds-vector.jpg"
+            ],
+            "noteType": "problem",
+            "status": "solved",
+            "createdAt": "2024-08-12T04:05:51Z",
+            "updatedAt": "2024-08-12T04:05:51Z"
+        },
+        "note_029": {
+            "id": "note_029",
+            "jobId": "job_027",
+            "name": "Request for preventive maintenance schedule",
+            "description": "Customer wants to establish regular hydraulic maintenance schedule. Recommended quarterly inspections and annual oil changes based on operating hours.",
+            "photos": [
+                "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+                "https://images.unsplash.com/photo-1586953208448-b95a79798f07?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+            ],
+            "noteType": "request",
+            "status": "pending",
+            "createdAt": "2024-08-21T02:20:29Z",
+            "updatedAt": "2024-08-21T02:20:29Z"
+        },
+        "note_030": {
+            "id": "note_030",
+            "jobId": "job_028",
+            "name": "Request for extended warranty",
+            "description": "Customer asking about extended warranty coverage for overhauled engine. Explained 2-year/2000-hour warranty terms and coverage details.",
+            "photos": [
+                "https://images.unsplash.com/photo-1586953208448-b95a79798f07?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+            ],
+            "noteType": "request",
+            "status": "accepted",
+            "createdAt": "2024-08-30T00:35:07Z",
+            "updatedAt": "2024-08-30T00:35:07Z"
+        },
+        "note_031": {
+            "id": "note_031",
+            "jobId": "job_028",
+            "name": "Customer request for performance upgrades",
+            "description": "Customer interested in performance modifications during overhaul. Discussed turbocharger upgrade and high-compression pistons options.",
+            "photos": [
+                "https://images.unsplash.com/photo-1586953208448-b95a79798f07?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+            ],
+            "noteType": "request",
+            "status": "pending",
+            "createdAt": "2024-08-30T00:35:07Z",
+            "updatedAt": "2024-08-30T00:35:07Z"
+        },
+        "note_032": {
+            "id": "note_032",
+            "jobId": "job_029",
+            "name": "Unexpected component wear",
+            "description": "Found additional wear on related components during service. Addressed issue and documented for future reference.",
+            "photos": [
+                "https://static.vecteezy.com/system/resources/previews/024/467/518/non_2x/colored-sticky-notes-paper-illustration-blank-paper-sheets-for-note-cute-notes-paper-stickers-for-your-message-blank-notes-with-elements-of-planning-for-business-office-writing-reminds-vector.jpg",
+                "https://images.unsplash.com/photo-1586953208448-b95a79798f07?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+            ],
+            "noteType": "problem",
+            "status": "pending",
+            "createdAt": "2025-08-19T05:52:53Z",
+            "updatedAt": "2025-08-19T05:52:53Z"
+        },
+        "note_033": {
+            "id": "note_033",
+            "jobId": "job_039",
+            "name": "Additional service request",
+            "description": "Customer requested additional inspection of related systems while equipment is being serviced.",
+            "photos": [
+                "https://images.unsplash.com/photo-1586953208448-b95a79798f07?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+                "https://static.vecteezy.com/system/resources/previews/024/467/518/non_2x/colored-sticky-notes-paper-illustration-blank-paper-sheets-for-note-cute-notes-paper-stickers-for-your-message-blank-notes-with-elements-of-planning-for-business-office-writing-reminds-vector.jpg"
+            ],
+            "noteType": "request",
+            "status": "pending",
+            "createdAt": "2024-12-06T05:16:05Z",
+            "updatedAt": "2024-12-06T05:16:05Z"
+        }
+    }
+}

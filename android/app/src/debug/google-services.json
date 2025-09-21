@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1091807366213",
+    "project_id": "mechlink-34628",
+    "storage_bucket": "mechlink-34628.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1091807366213:android:1af7e5cb47fd97bc06672c",
+        "android_client_info": {
+          "package_name": "com.mechlink.mechlink"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVrBzasrQyEn0gPSBCoJ-hpcJXpQZjbzo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

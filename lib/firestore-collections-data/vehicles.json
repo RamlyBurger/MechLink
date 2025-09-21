@@ -1,0 +1,363 @@
+{
+    "vehicles": {
+        "vehicle_001": {
+            "id": "vehicle_001",
+            "customerId": "customer_001",
+            "make": "Perodua",
+            "model": "Myvi",
+            "year": 2023,
+            "color": "Granite Grey",
+            "mileage": 15000,
+            "photos": [
+                "https://perodua.co/wp-content/uploads/2022/08/Myvi-Granite-Grey.jpg.webp",
+                "https://car4rent.my/wp-content/uploads/2019/12/1.png",
+                "https://www.keretaperodua.my/wp-content/uploads/2020/12/Perodua-Myvi-Grey-2022.png"
+            ],
+            "createdAt": "2023-01-15T10:45:00Z",
+            "updatedAt": "2023-09-14T14:25:00Z"
+        },
+        "vehicle_002": {
+            "id": "vehicle_002",
+            "customerId": "customer_002",
+            "make": "Honda",
+            "model": "City",
+            "year": 2024,
+            "color": "Platinum White Pearl",
+            "mileage": 8000,
+            "photos": [
+                "https://www.siambodykit.com/wp-content/uploads/2023/12/city-2024-mc-aero-x-siam-bodykit-white-3.webp",
+                "https://paultan.org/image/2024/09/2024-Honda-City-SE_Ext-1.jpg",
+                "https://www.motaauto.com/wp-content/uploads/2024/05/2024-Honda-City-Hatchback-RS-2.jpg"
+            ],
+            "createdAt": "2023-02-20T09:30:00Z",
+            "updatedAt": "2023-09-13T16:50:00Z"
+        },
+        "vehicle_003": {
+            "id": "vehicle_003",
+            "customerId": "customer_003",
+            "make": "BMW",
+            "model": "530i",
+            "year": 2024,
+            "color": "Mineral Grey",
+            "mileage": 12000,
+            "photos": [
+                "https://static.overfuel.com/photos/80/857729/3e5c1e58ed4f4cebb872c7a38c407cfe-thumb.webp",
+                "https://paultan.org/image/2021/09/2021-G30-BMW-530i-M-Sport-Malaysia_Ext-1.jpg",
+                "https://assets.autobuzz.my/wp-content/uploads/2017/09/21212302/2017-BMW-G30-5-Series-CKD-Launched-in-Malaysia-7.jpg"
+            ],
+            "createdAt": "2023-03-10T14:00:00Z",
+            "updatedAt": "2023-09-14T10:20:00Z"
+        },
+        "vehicle_004": {
+            "id": "vehicle_004",
+            "customerId": "customer_004",
+            "make": "Proton",
+            "model": "X50",
+            "year": 2023,
+            "color": "Ruby Red",
+            "mileage": 22000,
+            "photos": [
+                "https://proton.cars/wp-content/uploads/2024/07/IMG_9784.webp",
+                "https://paultan.org/image/2020/09/2020-Proton-X50-first-reveal-1.jpg",
+                "https://www.soyacincau.com/wp-content/uploads/2020/10/201027-Proton-X50-official-premium-red.jpg"
+            ],
+            "createdAt": "2023-04-05T11:30:00Z",
+            "updatedAt": "2023-09-10T09:15:00Z"
+        },
+        "vehicle_005": {
+            "id": "vehicle_005",
+            "customerId": "customer_005",
+            "make": "Toyota",
+            "model": "Hilux",
+            "year": 2023,
+            "color": "Attitude Black",
+            "mileage": 35000,
+            "photos": [
+                "https://static-content-live.caricarz.com/media_library/car/740844/15950938/conversions/740844_1756371305-thumb.webp",
+                "https://www.toyotasabah.com/wp-content/uploads/2023/04/toyota-my-hilux-colours-black-mica.webp"
+            ],
+            "createdAt": "2023-05-12T15:20:00Z",
+            "updatedAt": "2023-09-13T14:30:00Z"
+        },
+        "vehicle_006": {
+            "id": "vehicle_006",
+            "customerId": "customer_005",
+            "make": "Mitsubishi",
+            "model": "Triton",
+            "year": 2024,
+            "color": "Sun Flare Orange Pearl",
+            "mileage": 18000,
+            "photos": [
+                "https://www.mitsubishi-motors.com.my/wp-content/uploads/2024/03/triton-adventure-x-new-colour-sun-flare-orange-pearl-01.webp"
+            ],
+            "createdAt": "2023-05-12T15:25:00Z",
+            "updatedAt": "2023-09-13T14:35:00Z"
+        },
+        "vehicle_007": {
+            "id": "vehicle_007",
+            "customerId": "customer_006",
+            "make": "Mercedes-Benz",
+            "model": "C200",
+            "year": 2024,
+            "color": "Obsidian Black",
+            "mileage": 5000,
+            "photos": [
+                "https://img1.icarcdn.com/93853851/main-m_recon-car-carlist-mercedes-benz-c-class-c200-amg-line-coupe-malaysia_ef38d4c4-629d-4791-b7dc-3800c5249226.jpeg.webp"
+            ],
+            "createdAt": "2023-06-18T13:45:00Z",
+            "updatedAt": "2023-09-12T11:30:00Z"
+        },
+        "vehicle_008": {
+            "id": "vehicle_008",
+            "customerId": "customer_007",
+            "make": "Toyota",
+            "model": "Fortuner",
+            "year": 2023,
+            "color": "Silver Metallic",
+            "mileage": 42000,
+            "photos": [
+                "https://toyotapasig.com/wp-content/uploads/2018/09/Fortuner-G-4x2-AT-Silver-Metallic.webp"
+            ],
+            "createdAt": "2023-07-01T08:30:00Z",
+            "updatedAt": "2023-09-14T09:45:00Z"
+        },
+        "vehicle_009": {
+            "id": "vehicle_009",
+            "customerId": "customer_008",
+            "make": "Honda",
+            "model": "HR-V",
+            "year": 2024,
+            "color": "Meteoroid Gray Metallic",
+            "mileage": 9500,
+            "photos": [
+                "https://img1.icarcdn.com/82476971/main-l_used-car-carlist-honda-hr-v-e-suv-malaysia_000082476971_9bc909db_f9d9_47c2_b472_851c1b7485c2.jpg.webp"
+            ],
+            "createdAt": "2023-07-15T15:20:00Z",
+            "updatedAt": "2023-09-11T13:40:00Z"
+        },
+        "vehicle_010": {
+            "id": "vehicle_010",
+            "customerId": "customer_009",
+            "make": "Isuzu",
+            "model": "D-Max",
+            "year": 2023,
+            "color": "Valencia Orange",
+            "mileage": 55000,
+            "photos": [
+                "https://img1.icarcdn.com/94740911/gallery_new-car-carlist-isuzu-d-max-v-cross-x-terrain-pickup-truck-malaysia_000094740911_0d44f0df_6812_4b27_869b_11b6eb3ebeda.png.webp"
+            ],
+            "createdAt": "2023-08-05T09:00:00Z",
+            "updatedAt": "2023-09-14T16:15:00Z"
+        },
+        "vehicle_011": {
+            "id": "vehicle_011",
+            "customerId": "customer_010",
+            "make": "Perodua",
+            "model": "Bezza",
+            "year": 2023,
+            "color": "Garnet Red",
+            "mileage": 25000,
+            "photos": [
+                "https://static-content-live.caricarz.com/media_library/car/631883/12852137/conversions/631883_1721008475-thumb.webp"
+            ],
+            "createdAt": "2023-08-20T11:30:00Z",
+            "updatedAt": "2023-09-10T15:20:00Z"
+        },
+        "vehicle_012": {
+            "id": "vehicle_012",
+            "customerId": "customer_003",
+            "make": "Mercedes-Benz",
+            "model": "GLC300",
+            "year": 2024,
+            "color": "Selenite Grey",
+            "mileage": 7000,
+            "photos": [
+                "https://img1.icarcdn.com/79017371/main-l_used-car-carlist-mercedes-benz-glc-class-glc300-4matic-amg-line-suv-malaysia_d4ee95868f60e1ebb024defba37e0fb9_2f1adde9_86ae_431c_bf27_c1b3cbf99c20_000079017371_9c97d34d_832e_4d7d_b876_34db4e2a5754.jpg.webp"
+            ],
+            "createdAt": "2023-03-10T14:30:00Z",
+            "updatedAt": "2023-09-14T10:25:00Z"
+        },
+        "vehicle_013": {
+            "id": "vehicle_013",
+            "customerId": "customer_006",
+            "make": "BMW",
+            "model": "iX3",
+            "year": 2024,
+            "color": "Phytonic Blue",
+            "mileage": 3000,
+            "photos": [
+                "https://www.auto-in-china.com/wp-content/uploads/2025/08/BMW-iX3-2024-Pioneer-Edition-BLUE-2-500x333.webp"
+            ],
+            "createdAt": "2023-06-18T14:00:00Z",
+            "updatedAt": "2023-09-12T11:35:00Z"
+        },
+        "vehicle_014": {
+            "id": "vehicle_014",
+            "customerId": "customer_001",
+            "make": "Toyota",
+            "model": "Alphard",
+            "year": 2024,
+            "color": "White Pearl Crystal Shine",
+            "mileage": 5000,
+            "photos": [
+                "https://img1.icarcdn.com/83790371/main-l_recon-car-carlist-toyota-alphard-g-sa-golden-eyes--mpv-malaysia_71214feb-c1b5-42de-9c66-91667dfc8ecf.jpeg.webp"
+            ],
+            "createdAt": "2023-08-01T10:45:00Z",
+            "updatedAt": "2023-09-14T14:30:00Z"
+        },
+        "vehicle_015": {
+            "id": "vehicle_015",
+            "customerId": "customer_009",
+            "make": "Toyota",
+            "model": "Land Cruiser",
+            "year": 2024,
+            "color": "Precious White Pearl",
+            "mileage": 15000,
+            "photos": [
+                "https://fortune-toyota.com/wp-content/uploads/2024/03/LC-mid-1600-885.webp"
+            ],
+            "createdAt": "2023-08-05T09:30:00Z",
+            "updatedAt": "2023-09-14T16:20:00Z"
+        },
+        "vehicle_016": {
+            "id": "vehicle_016",
+            "customerId": "customer_004",
+            "make": "Honda",
+            "model": "Civic",
+            "year": 2024,
+            "color": "Ignite Red Metallic",
+            "mileage": 8000,
+            "photos": [
+                "https://img1.icarcdn.com/78650161/gallery_new-car-carlist-honda-civic-rs-vtec-sedan-malaysia_000078650161_f4ba88e5_73e7_4910_abcc_7e9cfaa8b069.png.webp"
+            ],
+            "createdAt": "2023-04-05T11:45:00Z",
+            "updatedAt": "2023-09-10T09:20:00Z"
+        },
+        "vehicle_017": {
+            "id": "vehicle_017",
+            "customerId": "customer_007",
+            "make": "Toyota",
+            "model": "Camry",
+            "year": 2024,
+            "color": "Platinum White Pearl",
+            "mileage": 25000,
+            "photos": [
+                "https://www.v3cars.com/media/model-imgs/001758platinum-white-pearl.webp"
+            ],
+            "createdAt": "2023-07-01T08:45:00Z",
+            "updatedAt": "2023-09-14T09:50:00Z"
+        },
+        "vehicle_018": {
+            "id": "vehicle_018",
+            "customerId": "customer_008",
+            "make": "Proton",
+            "model": "X90",
+            "year": 2024,
+            "color": "Space Grey",
+            "mileage": 2000,
+            "photos": [
+                "https://www.protonbangi.com.my/wp-content/uploads/2024/09/proton-x90-640x423.webp"
+            ],
+            "createdAt": "2023-07-15T15:30:00Z",
+            "updatedAt": "2023-09-11T13:45:00Z"
+        },
+        "vehicle_019": {
+            "id": "vehicle_019",
+            "customerId": "customer_002",
+            "make": "Proton",
+            "model": "Persona",
+            "year": 2023,
+            "color": "Ruby Red",
+            "mileage": 28000,
+            "photos": [
+                "https://static-content-live.caricarz.com/media_library/car/678392/14098160/conversions/678392_1732863261-thumb.webp"
+            ],
+            "createdAt": "2023-02-20T09:45:00Z",
+            "updatedAt": "2023-09-13T16:55:00Z"
+        },
+        "vehicle_020": {
+            "id": "vehicle_020",
+            "customerId": "customer_005",
+            "make": "Nissan",
+            "model": "Navara",
+            "year": 2024,
+            "color": "Stealth Grey",
+            "mileage": 12000,
+            "photos": [
+                "https://img.philkotse.com/temp/2024/07/27/img-9616-01be-wm-02fc.webp"
+            ],
+            "createdAt": "2023-05-12T15:35:00Z",
+            "updatedAt": "2023-09-13T14:40:00Z"
+        },
+        "vehicle_021": {
+            "id": "vehicle_021",
+            "customerId": "customer_003",
+            "make": "Porsche",
+            "model": "Taycan",
+            "year": 2024,
+            "color": "Frozen Blue Metallic",
+            "mileage": 5000,
+            "photos": [
+                "https://img-cdn.evfy.in/Frozen%20Blue%20Metallic.webp"
+            ],
+            "createdAt": "2023-03-10T14:45:00Z",
+            "updatedAt": "2023-09-14T10:30:00Z"
+        },
+        "vehicle_022": {
+            "id": "vehicle_022",
+            "customerId": "customer_010",
+            "make": "Honda",
+            "model": "CR-V",
+            "year": 2024,
+            "color": "Canyon River Blue Metallic",
+            "mileage": 10000,
+            "photos": [
+                "https://di-uploads-pod3.dealerinspire.com/germainhondaofannarbor/uploads/2024/10/CR-V-LX-Canyon-River-Blue-Metallic-2410.webp"
+            ],
+            "createdAt": "2023-08-20T11:45:00Z",
+            "updatedAt": "2023-09-10T15:25:00Z"
+        },
+        "vehicle_023": {
+            "id": "vehicle_023",
+            "customerId": "customer_007",
+            "make": "Nissan",
+            "model": "Serena",
+            "year": 2024,
+            "color": "Brilliant White Pearl",
+            "mileage": 15000,
+            "photos": [
+                "https://static-content-live.caricarz.com/media_library/car/729424/15607709/conversions/729424_1751594800-thumb.webp"
+            ],
+            "createdAt": "2023-07-01T09:00:00Z",
+            "updatedAt": "2023-09-14T09:55:00Z"
+        },
+        "vehicle_024": {
+            "id": "vehicle_024",
+            "customerId": "customer_004",
+            "make": "Perodua",
+            "model": "Axia",
+            "year": 2024,
+            "color": "Lava Red",
+            "mileage": 4500,
+            "photos": [
+                "https://perodua.my/wp-content/uploads/2024/01/axia-red.jpg.webp"
+            ],
+            "createdAt": "2023-04-05T12:00:00Z",
+            "updatedAt": "2023-09-10T09:25:00Z"
+        },
+        "vehicle_025": {
+            "id": "vehicle_025",
+            "customerId": "customer_009",
+            "make": "Ford",
+            "model": "Ranger Raptor",
+            "year": 2024,
+            "color": "Code Orange",
+            "mileage": 8000,
+            "photos": [
+                "https://img.philkotse.com/temp/2024/07/26/ford-ranger-raptor-1-1c42-wm-6713.webp"
+            ],
+            "createdAt": "2023-08-05T09:45:00Z",
+            "updatedAt": "2023-09-14T16:25:00Z"
+        }
+    }
+}
