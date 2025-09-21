@@ -151,9 +151,7 @@ class TaskMonitoringService:
                 # Continue background recording
                 self._continue_background_recording(mechanic_id, recording_data)
             
-            # Check if task has reached estimated time and send notification
-            if not is_notified:
-                self._check_estimated_time_notification(mechanic_id, recording_data)
+            # Note: Task time exceeded notifications are now handled by task_notification_service.py
                 
         except Exception as e:
             print(f"Error processing recording for mechanic {mechanic_id}: {e}")
@@ -185,119 +183,6 @@ class TaskMonitoringService:
                 
         except Exception as e:
             print(f"Error continuing background recording: {e}")
-    
-    def _check_estimated_time_notification(self, mechanic_id: str, recording_data: Dict[str, Any]):
-        """Check if task has reached estimated time and send notification"""
-        try:
-            task_id = recording_data.get('taskId', '')
-            current_duration = recording_data.get('duration', 0)
-            device_id = recording_data.get('deviceId', '')
-            
-            if not task_id or not device_id:
-                return
-            
-            # Get task data from Firestore
-            task_doc = self.firestore_client.collection('tasks').document(task_id).get()
-            if not task_doc.exists:
-                return
-            
-            task_data = task_doc.to_dict()
-            estimated_time_hours = task_data.get('estimatedTime', 0)  # in hours
-            estimated_seconds = int(estimated_time_hours * 3600)  # convert hours to seconds
-            
-            # Check if current duration has reached or exceeded estimated time
-            if current_duration >= estimated_seconds:
-                print(f"Task {task_id} has reached estimated time ({estimated_time_hours} hours)")
-                
-                # Send notification
-                self._send_estimated_time_notification(mechanic_id, task_data, device_id, current_duration)
-                
-                # Mark as notified
-                self.db_ref.child(mechanic_id).child('isNotified').set(True)
-                self.tracked_recordings[mechanic_id]['isNotified'] = True
-                
-        except Exception as e:
-            print(f"Error checking estimated time notification: {e}")
-    
-    def _send_estimated_time_notification(self, mechanic_id: str, task_data: Dict[str, Any], device_id: str, current_duration: int):
-        """Send notification when task reaches estimated time"""
-        try:
-            task_title = task_data.get('title', 'Task')
-            estimated_time_hours = task_data.get('estimatedTime', 0)
-            
-            # Get mechanic info
-            mechanic_info = self._get_mechanic_info(mechanic_id)
-            mechanic_name = mechanic_info.get('name', 'Mechanic') if mechanic_info else 'Mechanic'
-            
-            # Format current duration
-            current_hours = current_duration / 3600
-            current_minutes = current_duration // 60
-            
-            # Create notification
-            notification = messaging.Notification(
-                title="⏰ Estimated Time Reached",
-                body=f"Hi {mechanic_name}! '{task_title}' has reached its estimated time of {estimated_time_hours} hours. Current time: {current_minutes} minutes."
-            )
-            
-            # Create data payload
-            data = {
-                'type': 'estimated_time_reached',
-                'taskId': task_data.get('id', ''),
-                'estimatedTime': str(estimated_time_hours),
-                'currentDuration': str(current_duration)
-            }
-            
-            # Create message
-            message = messaging.Message(
-                notification=notification,
-                data=data,
-                token=device_id
-            )
-            
-            # Send notification
-            response = messaging.send(message)
-            print(f"Estimated time notification sent: {response}")
-            
-            # Create notification record in Firestore
-            self._create_notification_record(
-                mechanic_id, 
-                "⏰ Estimated Time Reached",
-                f"'{task_title}' has reached its estimated time of {estimated_time_hours} hours.",
-                'estimated_time_reached',
-                task_data.get('id', '')
-            )
-            
-        except Exception as e:
-            print(f"Error sending estimated time notification: {e}")
-    
-    def _create_notification_record(self, mechanic_id: str, title: str, message: str, notification_type: str, task_id: str = ''):
-        """Create a notification record in Firestore"""
-        try:
-            notification_data = {
-                'mechanicId': mechanic_id,
-                'title': title,
-                'message': message,
-                'created': datetime.now(),
-                'type': notification_type,
-                'taskId': task_id
-            }
-            
-            self.firestore_client.collection('notifications').add(notification_data)
-            print(f"Notification record created for mechanic {mechanic_id}")
-            
-        except Exception as e:
-            print(f"Error creating notification record: {e}")
-    
-    def _get_mechanic_info(self, mechanic_id: str) -> Optional[Dict[str, Any]]:
-        """Get mechanic information from Firestore"""
-        try:
-            mechanic_doc = self.firestore_client.collection('mechanics').document(mechanic_id).get()
-            if mechanic_doc.exists:
-                return mechanic_doc.to_dict()
-            return None
-        except Exception as e:
-            print(f"Error getting mechanic info: {e}")
-            return None
     
     def get_statistics(self) -> Dict[str, Any]:
         """Get monitoring statistics"""
