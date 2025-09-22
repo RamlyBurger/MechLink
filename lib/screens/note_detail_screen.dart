@@ -468,22 +468,32 @@ class _NoteDetailScreenState extends State<NoteDetailScreen>
           children: [
             // Background Image or Gradient
             if (photos.isNotEmpty)
-              _buildPhotoGallery(photos)
+              NotificationListener<OverscrollIndicatorNotification>(
+                onNotification: (overscroll) {
+                  overscroll.disallowIndicator();
+                  return true;
+                },
+                child: _buildPhotoGallery(photos), // <-- contains arrows
+              )
             else
               _buildDefaultHeroBackground(),
 
+            // 👇 MOVE THESE BELOW PHOTO GALLERY
             // Gradient Overlay
-            Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Colors.black.withOpacity(0.3),
-                    Colors.transparent,
-                    Colors.black.withOpacity(0.7),
-                  ],
-                  stops: const [0.0, 0.5, 1.0],
+            IgnorePointer(
+              ignoring: true, // so touches pass through
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Colors.black.withOpacity(0.3),
+                      Colors.transparent,
+                      Colors.black.withOpacity(0.7),
+                    ],
+                    stops: const [0.0, 0.5, 1.0],
+                  ),
                 ),
               ),
             ),
@@ -496,7 +506,6 @@ class _NoteDetailScreenState extends State<NoteDetailScreen>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Status and Type Chips
                   Row(
                     children: [
                       _buildModernStatusChip(
@@ -509,7 +518,6 @@ class _NoteDetailScreenState extends State<NoteDetailScreen>
                     ],
                   ),
                   const SizedBox(height: 12),
-                  // Note Title
                   Text(
                     _noteDetails!['name'] ?? 'Untitled Note',
                     style: const TextStyle(
@@ -526,7 +534,6 @@ class _NoteDetailScreenState extends State<NoteDetailScreen>
                     ),
                   ),
                   const SizedBox(height: 4),
-                  // Creation Date
                   Text(
                     'Created ${DateTimeHelper.formatDateWithTime(_noteDetails!['createdAt'])}',
                     style: TextStyle(
@@ -552,25 +559,25 @@ class _NoteDetailScreenState extends State<NoteDetailScreen>
   }
 
   Widget _buildPhotoGallery(List<String> photos) {
-    return PageView.builder(
-      controller: _photoPageController,
-      itemCount: photos.length,
-      onPageChanged: (index) {
-        setState(() {
-          _currentPhotoIndex = index;
-        });
-      },
-      itemBuilder: (context, index) {
-        final photoString = photos[index];
-        final isUrl =
-            photoString.startsWith('http://') ||
-            photoString.startsWith('https://');
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        // PageView
+        PageView.builder(
+          controller: _photoPageController,
+          itemCount: photos.length,
+          onPageChanged: (index) {
+            setState(() {
+              _currentPhotoIndex = index;
+            });
+          },
+          itemBuilder: (context, index) {
+            final photoString = photos[index];
+            final isUrl =
+                photoString.startsWith('http://') ||
+                photoString.startsWith('https://');
 
-        return Stack(
-          fit: StackFit.expand,
-          children: [
-            // Photo
-            isUrl
+            return isUrl
                 ? Image.network(
                     photoString,
                     fit: BoxFit.cover,
@@ -597,42 +604,98 @@ class _NoteDetailScreenState extends State<NoteDetailScreen>
                     fit: BoxFit.cover,
                     errorBuilder: (context, error, stackTrace) =>
                         _buildDefaultHeroBackground(),
-                  ),
+                  );
+          },
+        ),
 
-            // Photo Indicators
-            if (photos.length > 1)
-              Positioned(
-                top: 100,
-                left: 0,
-                right: 0,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: photos.asMap().entries.map((entry) {
-                    return AnimatedContainer(
-                      duration: const Duration(milliseconds: 300),
-                      width: _currentPhotoIndex == entry.key ? 24 : 8,
-                      height: 8,
-                      margin: const EdgeInsets.symmetric(horizontal: 4),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(4),
-                        color: _currentPhotoIndex == entry.key
-                            ? Colors.white
-                            : Colors.white.withOpacity(0.5),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.3),
-                            blurRadius: 4,
-                            offset: const Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                    );
-                  }).toList(),
-                ),
+        // Left button
+        Positioned(
+          left: 8,
+          top: 0,
+          bottom: 0,
+          child: Center(
+            child: IconButton(
+              style: IconButton.styleFrom(
+                backgroundColor: Colors.black.withOpacity(0.3),
+                shape: const CircleBorder(),
               ),
-          ],
-        );
-      },
+              icon: const Icon(
+                Icons.chevron_left,
+                color: Colors.white,
+                size: 32,
+              ),
+              onPressed: () {
+                if (_currentPhotoIndex > 0) {
+                  _photoPageController.previousPage(
+                    duration: const Duration(milliseconds: 400),
+                    curve: Curves.easeInOut,
+                  );
+                }
+              },
+            ),
+          ),
+        ),
+
+        // Right button
+        Positioned(
+          right: 8,
+          top: 0,
+          bottom: 0,
+          child: Center(
+            child: IconButton(
+              style: IconButton.styleFrom(
+                backgroundColor: Colors.black.withOpacity(0.3),
+                shape: const CircleBorder(),
+              ),
+              icon: const Icon(
+                Icons.chevron_right,
+                color: Colors.white,
+                size: 32,
+              ),
+              onPressed: () {
+                if (_currentPhotoIndex < photos.length - 1) {
+                  _photoPageController.nextPage(
+                    duration: const Duration(milliseconds: 400),
+                    curve: Curves.easeInOut,
+                  );
+                }
+              },
+            ),
+          ),
+        ),
+
+        // Photo Indicators
+        if (photos.length > 1)
+          Positioned(
+            bottom: 16,
+            left: 0,
+            right: 0,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: photos.asMap().entries.map((entry) {
+                return AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
+                  width: _currentPhotoIndex == entry.key ? 24 : 8,
+                  height: 8,
+                  margin: const EdgeInsets.symmetric(horizontal: 4),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(4),
+                    color: _currentPhotoIndex == entry.key
+                        ? Colors.white
+                        : Colors.white.withOpacity(0.5),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.3),
+                        blurRadius: 4,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                );
+              }).toList(),
+            ),
+          ),
+      ],
     );
   }
 

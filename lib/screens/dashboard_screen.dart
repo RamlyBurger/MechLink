@@ -2035,7 +2035,7 @@ class _DashboardScreenState extends State<DashboardScreen>
         Colors.blue.shade600,
       ),
       ChartData(
-        'Completion',
+        'Complete',
         (notesData['completionNotes'] ?? 0).toDouble(),
         Colors.green.shade600,
       ),
