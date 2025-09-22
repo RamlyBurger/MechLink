@@ -513,7 +513,7 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
                               ),
                             ),
                             Text(
-                              '\$${_jobDetails!['estimatedCost'].toStringAsFixed(2)}',
+                              'RM ${_jobDetails!['estimatedCost'].toStringAsFixed(2)}',
                               style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w600,
@@ -572,7 +572,7 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
                                 ),
                               ),
                               Text(
-                                '\$${_jobDetails!['actualCost'].toStringAsFixed(2)}',
+                                'RM ${_jobDetails!['actualCost'].toStringAsFixed(2)}',
                                 style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,

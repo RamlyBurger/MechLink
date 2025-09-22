@@ -355,7 +355,7 @@ class BottomNavPainter extends CustomPainter {
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
         colors: [
-          const Color.fromARGB(255, 187, 193, 255),
+          const Color.fromARGB(255, 223, 226, 255),
           const Color.fromARGB(255, 241, 229, 255),
           const Color.fromARGB(255, 253, 252, 255),
           const Color.fromARGB(255, 253, 252, 255),
@@ -368,10 +368,10 @@ class BottomNavPainter extends CustomPainter {
     final Paint borderPaint = Paint()
       ..color =
           const Color.fromARGB(
-            47,
-            112,
-            73,
-            228,
+            45,
+            205,
+            189,
+            255,
           ) // purple border (change as needed)
       ..strokeWidth =
           2.0 // border thickness

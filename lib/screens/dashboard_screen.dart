@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../services/auth_service.dart';
 import '../services/dashboard_service.dart';
+import '../widgets/stat_card.dart';
 import 'job_detail_screen.dart';
+import 'dart:ui';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -14,7 +17,7 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen>
-    with AutomaticKeepAliveClientMixin {
+    with AutomaticKeepAliveClientMixin, TickerProviderStateMixin {
   final AuthService _authService = AuthService();
   final DashboardService _dashboardService = DashboardService();
 
@@ -25,18 +28,55 @@ class _DashboardScreenState extends State<DashboardScreen>
   String _selectedDateFilter =
       'assignedAt'; // 'assignedAt', 'startedAt', 'completedAt'
 
+  late AnimationController _fadeAnimationController;
+  late AnimationController _slideAnimationController;
+  late Animation<double> _fadeAnimation;
+  late Animation<Offset> _slideAnimation;
+  late ScrollController _scrollController;
+
   @override
   bool get wantKeepAlive => true;
 
   @override
   void initState() {
     super.initState();
+
+    // Initialize animations
+    _fadeAnimationController = AnimationController(
+      duration: const Duration(milliseconds: 1000),
+      vsync: this,
+    );
+    _slideAnimationController = AnimationController(
+      duration: const Duration(milliseconds: 800),
+      vsync: this,
+    );
+
+    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _fadeAnimationController,
+        curve: Curves.easeInOut,
+      ),
+    );
+
+    _slideAnimation =
+        Tween<Offset>(begin: const Offset(0, 0.3), end: Offset.zero).animate(
+          CurvedAnimation(
+            parent: _slideAnimationController,
+            curve: Curves.easeOutCubic,
+          ),
+        );
+
+    _scrollController = ScrollController();
+
     _loadDashboardData();
   }
 
   @override
   void dispose() {
     _isDisposed = true;
+    _fadeAnimationController.dispose();
+    _slideAnimationController.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 
@@ -59,6 +99,10 @@ class _DashboardScreenState extends State<DashboardScreen>
         _dashboardData = data;
         _isLoading = false;
       });
+
+      // Start animations after data is loaded
+      _fadeAnimationController.forward();
+      _slideAnimationController.forward();
     } catch (e) {
       if (_isDisposed || !mounted) return;
 
@@ -74,282 +118,466 @@ class _DashboardScreenState extends State<DashboardScreen>
   @override
   Widget build(BuildContext context) {
     super.build(context); // Required for AutomaticKeepAliveClientMixin
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Dashboard'),
-        automaticallyImplyLeading: false,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            onPressed: _loadDashboardData,
-          ),
-        ],
-      ),
+      backgroundColor: colorScheme.surface,
       body: _buildDashboard(),
     );
   }
 
   Widget _buildDashboard() {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
     if (_isLoading) {
-      return const Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CircularProgressIndicator(),
-            SizedBox(height: 16),
-            Text('Loading dashboard data...'),
-          ],
+      return Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Colors.blue.shade600.withOpacity(0.1),
+              colorScheme.surface,
+              colorScheme.surface,
+            ],
+          ),
+        ),
+        child: SafeArea(
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(32),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.9),
+                    borderRadius: BorderRadius.circular(24),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.blue.shade200.withOpacity(0.3),
+                        blurRadius: 20,
+                        offset: const Offset(0, 10),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    children: [
+                      Container(
+                        width: 60,
+                        height: 60,
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              Colors.blue.shade400,
+                              Colors.blue.shade600,
+                            ],
+                          ),
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        child: const Center(
+                          child: CircularProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              Colors.white,
+                            ),
+                            strokeWidth: 3,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 24),
+                      Text(
+                        'Loading Dashboard',
+                        style: theme.textTheme.headlineSmall?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: colorScheme.onSurface,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        'Preparing your personalized insights...',
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          color: colorScheme.onSurface.withOpacity(0.7),
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       );
     }
 
-    return RefreshIndicator(
-      onRefresh: _loadDashboardData,
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.only(
-          top: 16,
-          left: 16,
-          right: 16,
-          bottom: 125,
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [Colors.blue.shade600.withOpacity(0.05), colorScheme.surface],
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildQuickStats(),
-            const SizedBox(height: 24),
-            _buildJobStatusChart(),
-            const SizedBox(height: 24),
-            _buildPriorityDistributionChart(),
-            const SizedBox(height: 24),
-            _buildServiceTypeBreakdown(),
-            const SizedBox(height: 24),
-            _buildTimePerformanceChart(),
-            const SizedBox(height: 24),
-            _buildCostAnalysisChart(),
-            const SizedBox(height: 24),
-            _buildCustomerSatisfactionChart(),
-            const SizedBox(height: 24),
-            _buildTaskAnalyticsChart(),
-            const SizedBox(height: 24),
-            _buildTimelineAnalytics(),
-            const SizedBox(height: 24),
-            _buildNotesAnalysis(),
-            const SizedBox(height: 24),
-            _buildCalendarView(),
-            const SizedBox(height: 24),
-            _buildPartsUsageChart(),
-            const SizedBox(height: 24),
-            _buildVehicleAnalytics(),
-            const SizedBox(height: 24),
-            _buildEquipmentAnalytics(),
-            const SizedBox(height: 24),
-            _buildCustomerInsights(),
-            const SizedBox(height: 24),
-            _buildDigitalSignoffAnalytics(),
-            const SizedBox(height: 24),
-            _buildFinancialAnalytics(),
-            const SizedBox(height: 24),
-            _buildMechanicPerformance(),
-          ],
+      ),
+      child: RefreshIndicator(
+        onRefresh: _loadDashboardData,
+        color: Colors.blue.shade600,
+        displacement: 60,
+        strokeWidth: 3,
+        child: FadeTransition(
+          opacity: _fadeAnimation,
+          child: SlideTransition(
+            position: _slideAnimation,
+            child: SingleChildScrollView(
+              controller: _scrollController,
+              padding: const EdgeInsets.only(
+                top: 60, // Account for status bar
+                left: 20,
+                right: 20,
+                bottom: 125,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildModernQuickStats(),
+                  _buildModernJobStatusChart(),
+                  const SizedBox(height: 32),
+                  _buildModernPriorityDistributionChart(),
+                  const SizedBox(height: 32),
+                  _buildServiceTypeBreakdown(),
+                  const SizedBox(height: 32),
+                  _buildTimePerformanceChart(),
+                  const SizedBox(height: 32),
+                  _buildModernCostAnalysisChart(),
+                  const SizedBox(height: 32),
+                  _buildCustomerSatisfactionChart(),
+                  const SizedBox(height: 32),
+                  _buildTaskAnalyticsChart(),
+                  const SizedBox(height: 32),
+                  _buildTimelineAnalytics(),
+                  const SizedBox(height: 32),
+                  _buildNotesAnalysis(),
+                  const SizedBox(height: 32),
+                  _buildModernCalendarView(),
+                  const SizedBox(height: 32),
+                  _buildPartsUsageChart(),
+                  const SizedBox(height: 32),
+                  _buildVehicleAnalytics(),
+                  const SizedBox(height: 32),
+                  _buildEquipmentAnalytics(),
+                  const SizedBox(height: 32),
+                  _buildCustomerInsights(),
+                  const SizedBox(height: 32),
+                  _buildDigitalSignoffAnalytics(),
+                  const SizedBox(height: 32),
+                  _buildFinancialAnalytics(),
+                  const SizedBox(height: 32),
+                  _buildAssignedJobsOverview(),
+                  const SizedBox(height: 32),
+                  _buildMechanicPerformance(),
+                ],
+              ),
+            ),
+          ),
         ),
       ),
     );
   }
 
-  Widget _buildQuickStats() {
+  // Modern Quick Stats using horizontal scrollable StatCard widget
+  Widget _buildModernQuickStats() {
     final jobStats =
         _dashboardData['jobStatistics'] as Map<String, dynamic>? ?? {};
     final customerSatisfaction =
         _dashboardData['customerSatisfactionAnalytics']
             as Map<String, dynamic>? ??
         {};
+    final theme = Theme.of(context);
 
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
+    return Container(
+      margin: const EdgeInsets.only(bottom: 32),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 4),
+            child: Text(
               'Quick Overview',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              style: theme.textTheme.headlineSmall?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: theme.colorScheme.onSurface,
+              ),
             ),
-            const SizedBox(height: 16),
-            Row(
+          ),
+          const SizedBox(height: 16),
+          SizedBox(
+            height: 120,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              padding: const EdgeInsets.symmetric(horizontal: 4),
               children: [
-                Expanded(
-                  child: _buildStatCard(
-                    'Total Jobs',
-                    '${jobStats['total'] ?? 0}',
-                    Icons.work,
-                    Colors.blue,
+                SizedBox(
+                  width: 160,
+                  child: StatCard(
+                    title: 'Total Jobs',
+                    value: '${jobStats['total'] ?? 0}',
+                    subtitle: 'All assigned jobs',
+                    backgroundColor: Colors.blue.shade600,
+                    textColor: Colors.white,
+                    icon: Icons.work_outline,
                   ),
                 ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: _buildStatCard(
-                    'Completed',
-                    '${jobStats['completed'] ?? 0}',
-                    Icons.check_circle,
-                    Colors.green,
+                const SizedBox(width: 12),
+                SizedBox(
+                  width: 160,
+                  child: StatCard(
+                    title: 'Completed',
+                    value: '${jobStats['completed'] ?? 0}',
+                    subtitle: 'Successfully finished',
+                    backgroundColor: Colors.green.shade600,
+                    textColor: Colors.white,
+                    icon: Icons.check_circle_outline,
                   ),
                 ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: _buildStatCard(
-                    'In Progress',
-                    '${jobStats['inProgress'] ?? 0}',
-                    Icons.hourglass_empty,
-                    Colors.orange,
+                const SizedBox(width: 12),
+                SizedBox(
+                  width: 160,
+                  child: StatCard(
+                    title: 'In Progress',
+                    value: '${jobStats['inProgress'] ?? 0}',
+                    subtitle: 'Currently working on',
+                    backgroundColor: Colors.orange.shade600,
+                    textColor: Colors.white,
+                    icon: Icons.hourglass_empty,
                   ),
                 ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: _buildStatCard(
-                    'Rating',
-                    '${(customerSatisfaction['averageRating'] ?? 0.0).toStringAsFixed(1)}⭐',
-                    Icons.star,
-                    Colors.amber,
+                const SizedBox(width: 12),
+                SizedBox(
+                  width: 160,
+                  child: StatCard(
+                    title: 'Rating',
+                    value:
+                        '${(customerSatisfaction['averageRating'] ?? 0.0).toStringAsFixed(1)}⭐',
+                    subtitle: 'Customer satisfaction',
+                    backgroundColor: Colors.amber.shade600,
+                    textColor: Colors.white,
+                    icon: Icons.star_outline,
                   ),
                 ),
               ],
             ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildStatCard(
-    String title,
-    String value,
-    IconData icon,
-    Color color,
-  ) {
-    return Container(
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: color.withValues(alpha: 0.3)),
-      ),
-      child: Column(
-        children: [
-          Icon(icon, color: color, size: 24),
-          const SizedBox(height: 8),
-          Text(
-            value,
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: color,
-            ),
-          ),
-          Text(
-            title,
-            style: const TextStyle(fontSize: 12),
-            textAlign: TextAlign.center,
           ),
         ],
       ),
     );
   }
 
-  Widget _buildJobStatusChart() {
+  // Modern Job Status Chart with enhanced design
+  Widget _buildModernJobStatusChart() {
     final jobStats =
         _dashboardData['jobStatistics'] as Map<String, dynamic>? ?? {};
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
 
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Job Status Distribution',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 16),
-            SizedBox(
-              height: 200,
-              child: PieChart(
-                PieChartData(
-                  sectionsSpace: 0,
-                  centerSpaceRadius: 40,
-                  sections: [
-                    PieChartSectionData(
-                      color: Colors.blue,
-                      value: (jobStats['assigned'] ?? 0).toDouble(),
-                      title: 'Assigned\n${jobStats['assigned'] ?? 0}',
-                      radius: 50,
-                      titleStyle: const TextStyle(
-                        fontSize: 10,
+    return Container(
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [Colors.white, Colors.green.shade50.withOpacity(0.3)],
+        ),
+        borderRadius: BorderRadius.circular(24),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.green.shade100.withOpacity(0.3),
+            blurRadius: 20,
+            offset: const Offset(0, 8),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Colors.green.shade400, Colors.green.shade600],
+                  ),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: const Icon(
+                  Icons.pie_chart_rounded,
+                  color: Colors.white,
+                  size: 24,
+                ),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Job Status Distribution',
+                      style: theme.textTheme.headlineSmall?.copyWith(
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: colorScheme.onSurface,
                       ),
                     ),
-                    PieChartSectionData(
-                      color: Colors.orange,
-                      value: (jobStats['inProgress'] ?? 0).toDouble(),
-                      title: 'In Progress\n${jobStats['inProgress'] ?? 0}',
-                      radius: 50,
-                      titleStyle: const TextStyle(
-                        fontSize: 10,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                    PieChartSectionData(
-                      color: Colors.green,
-                      value: (jobStats['completed'] ?? 0).toDouble(),
-                      title: 'Completed\n${jobStats['completed'] ?? 0}',
-                      radius: 50,
-                      titleStyle: const TextStyle(
-                        fontSize: 10,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                    PieChartSectionData(
-                      color: Colors.red,
-                      value: (jobStats['onHold'] ?? 0).toDouble(),
-                      title: 'On Hold\n${jobStats['onHold'] ?? 0}',
-                      radius: 50,
-                      titleStyle: const TextStyle(
-                        fontSize: 10,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                    PieChartSectionData(
-                      color: Colors.grey,
-                      value: (jobStats['cancelled'] ?? 0).toDouble(),
-                      title: 'Cancelled\n${jobStats['cancelled'] ?? 0}',
-                      radius: 50,
-                      titleStyle: const TextStyle(
-                        fontSize: 10,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                    Text(
+                      'Current workload breakdown',
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: colorScheme.onSurface.withOpacity(0.7),
                       ),
                     ),
                   ],
                 ),
               ),
+            ],
+          ),
+          const SizedBox(height: 24),
+          SizedBox(
+            height: 250,
+            child: PieChart(
+              PieChartData(
+                sectionsSpace: 4,
+                centerSpaceRadius: 60,
+                sections: [
+                  PieChartSectionData(
+                    color: Colors.blue.shade600,
+                    value: (jobStats['assigned'] ?? 0).toDouble(),
+                    title: '${jobStats['assigned'] ?? 0}',
+                    radius: 45,
+                    titleStyle: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                  PieChartSectionData(
+                    color: Colors.orange.shade600,
+                    value: (jobStats['inProgress'] ?? 0).toDouble(),
+                    title: '${jobStats['inProgress'] ?? 0}',
+                    radius: 45,
+                    titleStyle: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                  PieChartSectionData(
+                    color: Colors.green.shade600,
+                    value: (jobStats['completed'] ?? 0).toDouble(),
+                    title: '${jobStats['completed'] ?? 0}',
+                    radius: 45,
+                    titleStyle: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                  PieChartSectionData(
+                    color: Colors.red.shade600,
+                    value: (jobStats['onHold'] ?? 0).toDouble(),
+                    title: '${jobStats['onHold'] ?? 0}',
+                    radius: 45,
+                    titleStyle: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                  PieChartSectionData(
+                    color: Colors.grey.shade600,
+                    value: (jobStats['cancelled'] ?? 0).toDouble(),
+                    title: '${jobStats['cancelled'] ?? 0}',
+                    radius: 45,
+                    titleStyle: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ],
-        ),
+          ),
+          const SizedBox(height: 20),
+          // Legend
+          Wrap(
+            spacing: 16,
+            runSpacing: 12,
+            children: [
+              _buildLegendItem(
+                'Assigned',
+                Colors.blue.shade600,
+                jobStats['assigned'] ?? 0,
+              ),
+              _buildLegendItem(
+                'In Progress',
+                Colors.orange.shade600,
+                jobStats['inProgress'] ?? 0,
+              ),
+              _buildLegendItem(
+                'Completed',
+                Colors.green.shade600,
+                jobStats['completed'] ?? 0,
+              ),
+              _buildLegendItem(
+                'On Hold',
+                Colors.red.shade600,
+                jobStats['onHold'] ?? 0,
+              ),
+              _buildLegendItem(
+                'Cancelled',
+                Colors.grey.shade600,
+                jobStats['cancelled'] ?? 0,
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
 
-  Widget _buildPriorityDistributionChart() {
+  Widget _buildLegendItem(String label, Color color, int count) {
+    final theme = Theme.of(context);
+
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          width: 16,
+          height: 16,
+          decoration: BoxDecoration(
+            color: color,
+            borderRadius: BorderRadius.circular(4),
+          ),
+        ),
+        const SizedBox(width: 8),
+        Text(
+          '$label ($count)',
+          style: theme.textTheme.bodySmall?.copyWith(
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ],
+    );
+  }
+
+  // Modern Priority Distribution Chart
+  Widget _buildModernPriorityDistributionChart() {
     if (_isDisposed || !mounted) {
       return const SizedBox.shrink();
     }
 
     final priorityData =
         _dashboardData['priorityDistribution'] as Map<String, dynamic>? ?? {};
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
 
     List<ChartData> chartData = [];
     if (priorityData.isNotEmpty) {
@@ -366,35 +594,95 @@ class _DashboardScreenState extends State<DashboardScreen>
       });
     }
 
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Job Priority Distribution',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 16),
-            SizedBox(
-              height: 250,
-              child: SfCartesianChart(
-                primaryXAxis: const CategoryAxis(),
-                primaryYAxis: const NumericAxis(),
-                series: <CartesianSeries>[
-                  ColumnSeries<ChartData, String>(
-                    dataSource: chartData,
-                    xValueMapper: (ChartData data, _) => data.x,
-                    yValueMapper: (ChartData data, _) => data.y,
-                    pointColorMapper: (ChartData data, _) => data.color,
-                    dataLabelSettings: const DataLabelSettings(isVisible: true),
-                  ),
-                ],
-              ),
-            ),
-          ],
+    return Container(
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [Colors.white, Colors.purple.shade50.withOpacity(0.3)],
         ),
+        borderRadius: BorderRadius.circular(24),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.purple.shade100.withOpacity(0.3),
+            blurRadius: 20,
+            offset: const Offset(0, 8),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Colors.purple.shade400, Colors.purple.shade600],
+                  ),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: const Icon(
+                  Icons.priority_high_rounded,
+                  color: Colors.white,
+                  size: 24,
+                ),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Job Priority Distribution',
+                      style: theme.textTheme.headlineSmall?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: colorScheme.onSurface,
+                      ),
+                    ),
+                    Text(
+                      'Priority levels breakdown',
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: colorScheme.onSurface.withOpacity(0.7),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 24),
+          SizedBox(
+            height: 280,
+            child: SfCartesianChart(
+              primaryXAxis: const CategoryAxis(
+                labelStyle: TextStyle(fontWeight: FontWeight.w600),
+              ),
+              primaryYAxis: const NumericAxis(
+                labelStyle: TextStyle(fontWeight: FontWeight.w600),
+              ),
+              plotAreaBorderWidth: 0,
+              series: <CartesianSeries>[
+                ColumnSeries<ChartData, String>(
+                  dataSource: chartData,
+                  xValueMapper: (ChartData data, _) => data.x,
+                  yValueMapper: (ChartData data, _) => data.y,
+                  pointColorMapper: (ChartData data, _) => data.color,
+                  dataLabelSettings: const DataLabelSettings(
+                    isVisible: true,
+                    textStyle: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                  borderRadius: const BorderRadius.all(Radius.circular(8)),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -406,145 +694,271 @@ class _DashboardScreenState extends State<DashboardScreen>
 
     final timeData =
         _dashboardData['timePerformance'] as Map<String, dynamic>? ?? {};
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
 
     List<ChartData> chartData = [
       ChartData(
         'Estimated',
         timeData['totalEstimatedHours']?.toDouble() ?? 0,
-        Colors.blue,
+        Colors.blue.shade600,
       ),
       ChartData(
         'Actual',
         timeData['totalActualHours']?.toDouble() ?? 0,
-        Colors.orange,
+        Colors.orange.shade600,
       ),
     ];
 
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Time Performance (Hours)',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            Text(
-              'Variance: ${(timeData['timeVariancePercentage'] ?? 0).toStringAsFixed(1)}%',
-              style: TextStyle(
-                color: (timeData['timeVariancePercentage'] ?? 0) > 0
-                    ? Colors.red
-                    : Colors.green,
-              ),
-            ),
-            const SizedBox(height: 16),
-            SizedBox(
-              height: 200,
-              child: SfCartesianChart(
-                primaryXAxis: const CategoryAxis(),
-                primaryYAxis: const NumericAxis(),
-                series: <CartesianSeries>[
-                  ColumnSeries<ChartData, String>(
-                    dataSource: chartData,
-                    xValueMapper: (ChartData data, _) => data.x,
-                    yValueMapper: (ChartData data, _) => data.y,
-                    pointColorMapper: (ChartData data, _) => data.color,
-                    dataLabelSettings: const DataLabelSettings(isVisible: true),
-                  ),
-                ],
-              ),
-            ),
-          ],
+    return Container(
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [Colors.white, Colors.deepPurple.shade50.withOpacity(0.3)],
         ),
+        borderRadius: BorderRadius.circular(24),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.deepPurple.shade100.withOpacity(0.3),
+            blurRadius: 20,
+            offset: const Offset(0, 8),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Colors.deepPurple.shade400,
+                      Colors.deepPurple.shade600,
+                    ],
+                  ),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: const Icon(
+                  Icons.schedule_rounded,
+                  color: Colors.white,
+                  size: 24,
+                ),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Time Performance',
+                      style: theme.textTheme.headlineSmall?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: colorScheme.onSurface,
+                      ),
+                    ),
+                    Text(
+                      'Variance: ${(timeData['timeVariancePercentage'] ?? 0).toStringAsFixed(1)}%',
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: (timeData['timeVariancePercentage'] ?? 0) > 0
+                            ? Colors.red.shade600
+                            : Colors.green.shade600,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 24),
+          SizedBox(
+            height: 220,
+            child: SfCartesianChart(
+              primaryXAxis: const CategoryAxis(
+                labelStyle: TextStyle(fontWeight: FontWeight.w600),
+              ),
+              primaryYAxis: const NumericAxis(
+                labelStyle: TextStyle(fontWeight: FontWeight.w600),
+              ),
+              plotAreaBorderWidth: 0,
+              series: <CartesianSeries>[
+                ColumnSeries<ChartData, String>(
+                  dataSource: chartData,
+                  xValueMapper: (ChartData data, _) => data.x,
+                  yValueMapper: (ChartData data, _) => data.y,
+                  pointColorMapper: (ChartData data, _) => data.color,
+                  dataLabelSettings: const DataLabelSettings(
+                    isVisible: true,
+                    textStyle: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                  borderRadius: const BorderRadius.all(Radius.circular(8)),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
 
-  Widget _buildCostAnalysisChart() {
+  // Modern Cost Analysis Chart
+  Widget _buildModernCostAnalysisChart() {
     final costData =
         _dashboardData['costAnalysis'] as Map<String, dynamic>? ?? {};
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
 
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Cost Analysis',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 16),
-            Row(
-              children: [
-                Expanded(
-                  child: _buildCostCard(
-                    'Estimated Cost',
-                    'RM ${(costData['totalEstimatedCost'] ?? 0).toStringAsFixed(0)}',
-                    Colors.blue,
-                  ),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: _buildCostCard(
-                    'Actual Cost',
-                    'RM ${(costData['totalActualCost'] ?? 0).toStringAsFixed(0)}',
-                    Colors.orange,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            Row(
-              children: [
-                Expanded(
-                  child: _buildCostCard(
-                    'Variance',
-                    'RM ${(costData['costVariance'] ?? 0).toStringAsFixed(0)}',
-                    (costData['costVariance'] ?? 0) > 0
-                        ? Colors.red
-                        : Colors.green,
-                  ),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: _buildCostCard(
-                    'Avg Job Cost',
-                    'RM ${(costData['averageJobCost'] ?? 0).toStringAsFixed(0)}',
-                    Colors.purple,
-                  ),
-                ),
-              ],
-            ),
-          ],
+    return Container(
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [Colors.white, Colors.teal.shade50.withOpacity(0.3)],
         ),
+        borderRadius: BorderRadius.circular(24),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.teal.shade100.withOpacity(0.3),
+            blurRadius: 20,
+            offset: const Offset(0, 8),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Colors.teal.shade400, Colors.teal.shade600],
+                  ),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: const Icon(
+                  Icons.attach_money_rounded,
+                  color: Colors.white,
+                  size: 24,
+                ),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Cost Analysis',
+                      style: theme.textTheme.headlineSmall?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: colorScheme.onSurface,
+                      ),
+                    ),
+                    Text(
+                      'Financial performance overview',
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: colorScheme.onSurface.withOpacity(0.7),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 24),
+          GridView.count(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            crossAxisCount: 2,
+            mainAxisSpacing: 16,
+            crossAxisSpacing: 16,
+            childAspectRatio: 1.3,
+            children: [
+              _buildModernCostCard(
+                'Estimated Cost',
+                'RM ${(costData['totalEstimatedCost'] ?? 0).toStringAsFixed(0)}',
+                Icons.calculate_outlined,
+                Colors.blue.shade600,
+                Colors.blue.shade50,
+              ),
+              _buildModernCostCard(
+                'Actual Cost',
+                'RM ${(costData['totalActualCost'] ?? 0).toStringAsFixed(0)}',
+                Icons.receipt_long_outlined,
+                Colors.orange.shade600,
+                Colors.orange.shade50,
+              ),
+              _buildModernCostCard(
+                'Variance',
+                'RM ${(costData['costVariance'] ?? 0).toStringAsFixed(0)}',
+                Icons.trending_up_outlined,
+                (costData['costVariance'] ?? 0) > 0
+                    ? Colors.red.shade600
+                    : Colors.green.shade600,
+                (costData['costVariance'] ?? 0) > 0
+                    ? Colors.red.shade50
+                    : Colors.green.shade50,
+              ),
+              _buildModernCostCard(
+                'Avg Job Cost',
+                'RM ${(costData['averageJobCost'] ?? 0).toStringAsFixed(0)}',
+                Icons.analytics_outlined,
+                Colors.purple.shade600,
+                Colors.purple.shade50,
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
 
-  Widget _buildCostCard(String title, String value, Color color) {
+  Widget _buildModernCostCard(
+    String title,
+    String value,
+    IconData icon,
+    Color primaryColor,
+    Color backgroundColor,
+  ) {
+    final theme = Theme.of(context);
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: color.withValues(alpha: 0.3)),
+        color: backgroundColor,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: primaryColor.withOpacity(0.2), width: 1),
       ),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          Icon(icon, color: primaryColor, size: 28),
+          const SizedBox(height: 8),
           Text(
             value,
-            style: TextStyle(
-              fontSize: 20,
+            style: theme.textTheme.titleLarge?.copyWith(
               fontWeight: FontWeight.bold,
-              color: color,
+              color: primaryColor,
             ),
+            textAlign: TextAlign.center,
           ),
           const SizedBox(height: 4),
           Text(
             title,
-            style: const TextStyle(fontSize: 12),
+            style: theme.textTheme.bodySmall?.copyWith(
+              color: primaryColor.withOpacity(0.8),
+              fontWeight: FontWeight.w600,
+            ),
             textAlign: TextAlign.center,
           ),
         ],
@@ -552,173 +966,126 @@ class _DashboardScreenState extends State<DashboardScreen>
     );
   }
 
-  Widget _buildCustomerSatisfactionChart() {
-    if (_isDisposed || !mounted) {
-      return const SizedBox.shrink();
-    }
+  // Modern Calendar View with actual TableCalendar
+  Widget _buildModernCalendarView() {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
 
-    final satisfactionData =
-        _dashboardData['customerSatisfactionAnalytics']
-            as Map<String, dynamic>? ??
-        {};
-    final ratingDistribution =
-        satisfactionData['ratingDistribution'] as Map<String, dynamic>? ?? {};
-
-    List<ChartData> chartData = [];
-    for (int i = 1; i <= 5; i++) {
-      chartData.add(
-        ChartData(
-          '$i⭐',
-          (ratingDistribution[i.toString()] ?? 0).toDouble(),
-          _getStarColor(i),
+    return Container(
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [Colors.white, Colors.indigo.shade50.withOpacity(0.3)],
         ),
-      );
-    }
-
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Customer Satisfaction (${(satisfactionData['averageRating'] ?? 0.0).toStringAsFixed(1)}⭐ avg)',
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 16),
-            SizedBox(
-              height: 200,
-              child: SfCartesianChart(
-                primaryXAxis: const CategoryAxis(),
-                primaryYAxis: const NumericAxis(),
-                series: <CartesianSeries>[
-                  BarSeries<ChartData, String>(
-                    dataSource: chartData,
-                    xValueMapper: (ChartData data, _) => data.x,
-                    yValueMapper: (ChartData data, _) => data.y,
-                    pointColorMapper: (ChartData data, _) => data.color,
-                    dataLabelSettings: const DataLabelSettings(isVisible: true),
+        borderRadius: BorderRadius.circular(24),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.indigo.shade100.withOpacity(0.3),
+            blurRadius: 20,
+            offset: const Offset(0, 8),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Colors.indigo.shade400, Colors.indigo.shade600],
                   ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildTaskAnalyticsChart() {
-    final taskData =
-        _dashboardData['taskAnalytics'] as Map<String, dynamic>? ?? {};
-
-    List<ChartData> chartData = [
-      ChartData(
-        'Completed',
-        (taskData['completedTasks'] ?? 0).toDouble(),
-        Colors.green,
-      ),
-      ChartData(
-        'In Progress',
-        (taskData['inProgressTasks'] ?? 0).toDouble(),
-        Colors.orange,
-      ),
-      ChartData(
-        'Pending',
-        (taskData['pendingTasks'] ?? 0).toDouble(),
-        Colors.red,
-      ),
-    ];
-
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Task Analytics (${taskData['totalTasks'] ?? 0} total)',
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 16),
-            SizedBox(
-              height: 200,
-              child: PieChart(
-                PieChartData(
-                  sectionsSpace: 2,
-                  centerSpaceRadius: 50,
-                  sections: chartData.map((data) {
-                    return PieChartSectionData(
-                      color: data.color,
-                      value: data.y,
-                      title: '${data.x}\n${data.y.toInt()}',
-                      radius: 40,
-                      titleStyle: const TextStyle(
-                        fontSize: 10,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    );
-                  }).toList(),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: const Icon(
+                  Icons.calendar_month_rounded,
+                  color: Colors.white,
+                  size: 24,
                 ),
               ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildCalendarView() {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  'Calendar Overview',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-                Row(
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _buildDateFilterButton('assignedAt', 'Assigned'),
-                    const SizedBox(width: 4),
-                    _buildDateFilterButton('startedAt', 'Started'),
-                    const SizedBox(width: 4),
-                    _buildDateFilterButton('completedAt', 'Completed'),
+                    Text(
+                      'Calendar Overview',
+                      style: theme.textTheme.headlineSmall?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: colorScheme.onSurface,
+                      ),
+                    ),
+                    Text(
+                      'Schedule and timeline view',
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: colorScheme.onSurface.withOpacity(0.7),
+                      ),
+                    ),
                   ],
                 ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            FutureBuilder<Map<DateTime, List<Map<String, dynamic>>>>(
-              future: _dashboardService.getJobsByDate(
-                mechanicId: _authService.currentMechanicId,
-                dateField: _selectedDateFilter,
               ),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
-                }
+            ],
+          ),
+          const SizedBox(height: 24),
+          // Filter buttons
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              _buildModernDateFilterButton('assignedAt', 'Assigned'),
+              _buildModernDateFilterButton('startedAt', 'Started'),
+              _buildModernDateFilterButton('completedAt', 'Completed'),
+            ],
+          ),
+          const SizedBox(height: 24),
+          // Actual TableCalendar
+          FutureBuilder<Map<DateTime, List<Map<String, dynamic>>>>(
+            future: _dashboardService.getJobsByDate(
+              mechanicId: _authService.currentMechanicId,
+              dateField: _selectedDateFilter,
+            ),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Container(
+                  height: 300,
+                  decoration: BoxDecoration(
+                    color: colorScheme.surface,
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: const Center(child: CircularProgressIndicator()),
+                );
+              }
 
-                if (snapshot.hasError) {
-                  return Center(child: Text('Error: ${snapshot.error}'));
-                }
+              if (snapshot.hasError) {
+                return Container(
+                  height: 300,
+                  decoration: BoxDecoration(
+                    color: colorScheme.surface,
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Center(child: Text('Error: ${snapshot.error}')),
+                );
+              }
 
-                final jobsByDate = snapshot.data ?? {};
+              final jobsByDate = snapshot.data ?? {};
 
-                return TableCalendar<Map<String, dynamic>>(
+              return Container(
+                decoration: BoxDecoration(
+                  color: colorScheme.surface,
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(
+                    color: colorScheme.outline.withOpacity(0.2),
+                  ),
+                ),
+                child: TableCalendar<Map<String, dynamic>>(
                   firstDay: DateTime.utc(2020, 1, 1),
                   lastDay: DateTime.utc(2030, 12, 31),
                   focusedDay: _focusedDay,
-                  selectedDayPredicate: (day) =>
-                      false, // Disable day selection highlighting
+                  selectedDayPredicate: (day) => false,
                   onDaySelected: (selectedDay, focusedDay) {
-                    // Only show job details dialog without updating focused day
                     final dateOnly = DateTime(
                       selectedDay.year,
                       selectedDay.month,
@@ -739,37 +1106,16 @@ class _DashboardScreenState extends State<DashboardScreen>
                       final jobs = jobsByDate[dateOnly] ?? [];
 
                       if (jobs.isEmpty) {
-                        return null; // Use default rendering
+                        return null;
                       }
-
-                      // Group jobs by status
-                      Map<String, int> statusCounts = {};
-                      for (var job in jobs) {
-                        final status = job['status'] as String;
-                        statusCounts[status] = (statusCounts[status] ?? 0) + 1;
-                      }
-
-                      // Find the most common status for background color
-                      String dominantStatus = 'assigned';
-                      int maxCount = 0;
-                      statusCounts.forEach((status, count) {
-                        if (count > maxCount) {
-                          maxCount = count;
-                          dominantStatus = status;
-                        }
-                      });
 
                       return Container(
                         margin: const EdgeInsets.all(2),
                         decoration: BoxDecoration(
-                          color: _getStatusColor(
-                            dominantStatus,
-                          ).withValues(alpha: 0.2),
+                          color: Colors.indigo.shade100,
                           borderRadius: BorderRadius.circular(8),
                           border: Border.all(
-                            color: _getStatusColor(
-                              dominantStatus,
-                            ).withValues(alpha: 0.7),
+                            color: Colors.indigo.shade300,
                             width: 1,
                           ),
                         ),
@@ -779,104 +1125,451 @@ class _DashboardScreenState extends State<DashboardScreen>
                             children: [
                               Text(
                                 '${day.day}',
-                                style: const TextStyle(
-                                  color: Colors.white,
+                                style: TextStyle(
+                                  color: Colors.indigo.shade800,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 14,
                                 ),
                               ),
-                              if (jobs.isNotEmpty) ...[
-                                const SizedBox(height: 2),
-                                _buildStatusCountsWidget(statusCounts),
-                              ],
+                              if (jobs.isNotEmpty)
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 4,
+                                    vertical: 1,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: Colors.indigo.shade600,
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: Text(
+                                    '${jobs.length}',
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 8,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
                             ],
                           ),
                         ),
                       );
                     },
-                    // Remove todayBuilder to eliminate current date highlighting
                   ),
                   calendarFormat: CalendarFormat.month,
-                  headerStyle: const HeaderStyle(
+                  headerStyle: HeaderStyle(
                     formatButtonVisible: false,
                     titleCentered: true,
+                    titleTextStyle:
+                        theme.textTheme.titleLarge?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: colorScheme.onSurface,
+                        ) ??
+                        const TextStyle(),
                   ),
                   calendarStyle: CalendarStyle(
                     markersMaxCount: 0,
                     outsideDaysVisible: false,
-                    weekendTextStyle: TextStyle(color: Colors.red[400]),
-                    holidayTextStyle: TextStyle(color: Colors.red[800]),
+                    weekendTextStyle: TextStyle(color: Colors.red.shade400),
+                    holidayTextStyle: TextStyle(color: Colors.red.shade800),
                   ),
-                );
-              },
-            ),
-            const SizedBox(height: 16),
-            // Legend for status colors
-            Wrap(
-              spacing: 16,
-              children: [
-                _buildStatusLegend('Completed', Colors.green),
-                _buildStatusLegend('In Progress', Colors.orange),
-                _buildStatusLegend('Assigned', Colors.blue),
-                _buildStatusLegend('Pending', Colors.grey),
-              ],
-            ),
-          ],
+                ),
+              );
+            },
+          ),
+          const SizedBox(height: 16),
+          // Legend
+          Wrap(
+            spacing: 16,
+            children: [
+              _buildStatusLegend('Has Jobs', Colors.indigo.shade600),
+              _buildStatusLegend('No Jobs', Colors.grey.shade400),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildModernDateFilterButton(String value, String label) {
+    final isSelected = _selectedDateFilter == value;
+    final theme = Theme.of(context);
+
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          _selectedDateFilter = value;
+        });
+      },
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        decoration: BoxDecoration(
+          gradient: isSelected
+              ? LinearGradient(
+                  colors: [Colors.indigo.shade400, Colors.indigo.shade600],
+                )
+              : null,
+          color: isSelected ? null : Colors.grey.shade100,
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(
+            color: isSelected ? Colors.indigo.shade600 : Colors.grey.shade300,
+            width: 1,
+          ),
+          boxShadow: isSelected
+              ? [
+                  BoxShadow(
+                    color: Colors.indigo.shade200.withOpacity(0.4),
+                    blurRadius: 8,
+                    offset: const Offset(0, 4),
+                  ),
+                ]
+              : null,
+        ),
+        child: Text(
+          label,
+          style: theme.textTheme.bodySmall?.copyWith(
+            color: isSelected ? Colors.white : Colors.grey.shade700,
+            fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+          ),
         ),
       ),
     );
   }
 
-  /// Build widget to display multiple status counts
-  Widget _buildStatusCountsWidget(Map<String, int> statusCounts) {
-    List<Widget> countWidgets = [];
-
-    // Define the order of statuses to display
-    final statusOrder = ['completed', 'inProgress', 'assigned', 'pending'];
-
-    for (String status in statusOrder) {
-      if (statusCounts.containsKey(status) && statusCounts[status]! > 0) {
-        countWidgets.add(
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 1),
-            margin: const EdgeInsets.symmetric(horizontal: 1),
-            decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.9),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Text(
-              '${statusCounts[status]}',
-              style: TextStyle(
-                color: _getStatusColor(status),
-                fontSize: 8,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+  Widget _buildStatusLegend(String status, Color color) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          width: 12,
+          height: 12,
+          decoration: BoxDecoration(
+            color: color,
+            borderRadius: BorderRadius.circular(2),
           ),
-        );
-      }
+        ),
+        const SizedBox(width: 4),
+        Text(
+          status,
+          style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+        ),
+      ],
+    );
+  }
+
+  void _showJobsDialog(DateTime selectedDay, List<Map<String, dynamic>> jobs) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: Text(
+          'Jobs for ${selectedDay.day}/${selectedDay.month}/${selectedDay.year}',
+          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+        content: SizedBox(
+          width: double.maxFinite,
+          child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: jobs.length,
+            itemBuilder: (context, index) {
+              final job = jobs[index];
+              return Card(
+                margin: const EdgeInsets.only(bottom: 8),
+                child: ListTile(
+                  title: Text(job['title'] ?? 'Untitled Job'),
+                  subtitle: Text(job['status'] ?? 'Unknown Status'),
+                  leading: CircleAvatar(
+                    backgroundColor: _getStatusColor(
+                      job['status'] ?? 'pending',
+                    ),
+                    child: Text(
+                      '${index + 1}',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => JobDetailScreen(jobId: job['id']),
+                      ),
+                    );
+                  },
+                ),
+              );
+            },
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Close'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCustomerSatisfactionChart() {
+    if (_isDisposed || !mounted) {
+      return const SizedBox.shrink();
     }
 
-    if (countWidgets.length == 1) {
-      // If only one status, make it slightly larger
-      return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
-        decoration: BoxDecoration(
-          color: Colors.white.withValues(alpha: 0.9),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Text(
-          '${statusCounts.values.first}',
-          style: TextStyle(
-            color: _getStatusColor(statusCounts.keys.first),
-            fontSize: 10,
-            fontWeight: FontWeight.bold,
-          ),
+    final satisfactionData =
+        _dashboardData['customerSatisfactionAnalytics']
+            as Map<String, dynamic>? ??
+        {};
+    final ratingDistribution =
+        satisfactionData['ratingDistribution'] as Map<String, dynamic>? ?? {};
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
+    List<ChartData> chartData = [];
+    for (int i = 1; i <= 5; i++) {
+      chartData.add(
+        ChartData(
+          '$i⭐',
+          (ratingDistribution[i.toString()] ?? 0).toDouble(),
+          _getStarColor(i),
         ),
       );
     }
 
-    return Wrap(spacing: 1, runSpacing: 1, children: countWidgets);
+    return Container(
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [Colors.white, Colors.amber.shade50.withOpacity(0.3)],
+        ),
+        borderRadius: BorderRadius.circular(24),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.amber.shade100.withOpacity(0.3),
+            blurRadius: 20,
+            offset: const Offset(0, 8),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Colors.amber.shade400, Colors.amber.shade600],
+                  ),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: const Icon(
+                  Icons.star_rounded,
+                  color: Colors.white,
+                  size: 24,
+                ),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Customer Satisfaction',
+                      style: theme.textTheme.headlineSmall?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: colorScheme.onSurface,
+                      ),
+                    ),
+                    Text(
+                      '${(satisfactionData['averageRating'] ?? 0.0).toStringAsFixed(1)}⭐ average rating',
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: colorScheme.onSurface.withOpacity(0.7),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 24),
+          SizedBox(
+            height: 220,
+            child: SfCartesianChart(
+              primaryXAxis: const CategoryAxis(
+                labelStyle: TextStyle(fontWeight: FontWeight.w600),
+              ),
+              primaryYAxis: const NumericAxis(
+                labelStyle: TextStyle(fontWeight: FontWeight.w600),
+              ),
+              plotAreaBorderWidth: 0,
+              series: <CartesianSeries>[
+                BarSeries<ChartData, String>(
+                  dataSource: chartData,
+                  xValueMapper: (ChartData data, _) => data.x,
+                  yValueMapper: (ChartData data, _) => data.y,
+                  pointColorMapper: (ChartData data, _) => data.color,
+                  dataLabelSettings: const DataLabelSettings(
+                    isVisible: true,
+                    textStyle: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                  borderRadius: const BorderRadius.all(Radius.circular(8)),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTaskAnalyticsChart() {
+    final taskData =
+        _dashboardData['taskAnalytics'] as Map<String, dynamic>? ?? {};
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
+    List<ChartData> chartData = [
+      ChartData(
+        'Completed',
+        (taskData['completedTasks'] ?? 0).toDouble(),
+        Colors.green.shade600,
+      ),
+      ChartData(
+        'In Progress',
+        (taskData['inProgressTasks'] ?? 0).toDouble(),
+        Colors.orange.shade600,
+      ),
+      ChartData(
+        'Pending',
+        (taskData['pendingTasks'] ?? 0).toDouble(),
+        Colors.red.shade600,
+      ),
+    ];
+
+    return Container(
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [Colors.white, Colors.cyan.shade50.withOpacity(0.3)],
+        ),
+        borderRadius: BorderRadius.circular(24),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.cyan.shade100.withOpacity(0.3),
+            blurRadius: 20,
+            offset: const Offset(0, 8),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Colors.cyan.shade400, Colors.cyan.shade600],
+                  ),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: const Icon(
+                  Icons.task_alt_rounded,
+                  color: Colors.white,
+                  size: 24,
+                ),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Task Analytics',
+                      style: theme.textTheme.headlineSmall?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: colorScheme.onSurface,
+                      ),
+                    ),
+                    Text(
+                      '${taskData['totalTasks'] ?? 0} total tasks',
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: colorScheme.onSurface.withOpacity(0.7),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 24),
+          SizedBox(
+            height: 220,
+            child: PieChart(
+              PieChartData(
+                sectionsSpace: 4,
+                centerSpaceRadius: 60,
+                sections: chartData.map((data) {
+                  return PieChartSectionData(
+                    color: data.color,
+                    value: data.y,
+                    title: '${data.y.toInt()}',
+                    radius: 45,
+                    titleStyle: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  );
+                }).toList(),
+              ),
+            ),
+          ),
+          const SizedBox(height: 20),
+          // Legend
+          Wrap(
+            spacing: 16,
+            runSpacing: 12,
+            children: chartData.map((data) {
+              return Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    width: 16,
+                    height: 16,
+                    decoration: BoxDecoration(
+                      color: data.color,
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
+                    '${data.x} (${data.y.toInt()})',
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              );
+            }).toList(),
+          ),
+        ],
+      ),
+    );
   }
 
   /// Get color for job status
@@ -895,150 +1588,15 @@ class _DashboardScreenState extends State<DashboardScreen>
     }
   }
 
-  /// Build status legend item
-  Widget _buildStatusLegend(String status, Color color) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Container(
-          width: 12,
-          height: 12,
-          decoration: BoxDecoration(
-            color: color,
-            borderRadius: BorderRadius.circular(2),
-          ),
-        ),
-        const SizedBox(width: 4),
-        Text(status, style: const TextStyle(fontSize: 12)),
-      ],
-    );
-  }
-
-  /// Build date filter button
-  Widget _buildDateFilterButton(String value, String label) {
-    final isSelected = _selectedDateFilter == value;
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          _selectedDateFilter = value;
-        });
-      },
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-        decoration: BoxDecoration(
-          color: isSelected ? Colors.blue : Colors.grey[200],
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(
-            color: isSelected ? Colors.blue : Colors.grey[300]!,
-            width: 1,
-          ),
-        ),
-        child: Text(
-          label,
-          style: TextStyle(
-            color: isSelected ? Colors.white : Colors.grey[700],
-            fontSize: 12,
-            fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-          ),
-        ),
-      ),
-    );
-  }
-
-  /// Show dialog with jobs for the selected date
-  void _showJobsDialog(DateTime selectedDate, List<Map<String, dynamic>> jobs) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(
-            'Jobs for ${selectedDate.day}/${selectedDate.month}/${selectedDate.year}',
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-          content: SizedBox(
-            width: double.maxFinite,
-            height: 400,
-            child: jobs.isEmpty
-                ? const Center(child: Text('No jobs found for this date'))
-                : ListView.builder(
-                    itemCount: jobs.length,
-                    itemBuilder: (context, index) {
-                      final job = jobs[index];
-                      return Card(
-                        margin: const EdgeInsets.symmetric(vertical: 4),
-                        child: ListTile(
-                          leading: Container(
-                            width: 40,
-                            height: 40,
-                            decoration: BoxDecoration(
-                              color: _getStatusColor(
-                                job['status'],
-                              ).withValues(alpha: 0.8),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Center(
-                              child: Text(
-                                job['status']?.substring(0, 1).toUpperCase() ??
-                                    'J',
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ),
-                          title: Text(
-                            job['title'] ?? 'Untitled Job',
-                            style: const TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          subtitle: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Customer: ${job['customerName'] ?? 'Unknown'}',
-                              ),
-                              Text('Status: ${job['status'] ?? 'Unknown'}'),
-                              Text('Priority: ${job['priority'] ?? 'Unknown'}'),
-                            ],
-                          ),
-                          trailing: Icon(
-                            Icons.arrow_forward_ios,
-                            color: Colors.grey[600],
-                            size: 16,
-                          ),
-                          onTap: () {
-                            Navigator.of(context).pop(); // Close dialog
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    JobDetailScreen(jobId: job['id']),
-                              ),
-                            );
-                          },
-                        ),
-                      );
-                    },
-                  ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Close'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   Widget _buildPartsUsageChart() {
     final partsData =
         _dashboardData['partsAnalysis'] as Map<String, dynamic>? ?? {};
     final topParts = partsData['topParts'] as List<dynamic>? ?? [];
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
 
     List<ChartData> chartData = [];
-    for (int i = 0; i < (topParts.length > 5 ? 5 : topParts.length); i++) {
+    for (int i = 0; i < (topParts.length > 3 ? 3 : topParts.length); i++) {
       final part = topParts[i] as Map<String, dynamic>;
       chartData.add(
         ChartData(
@@ -1049,68 +1607,177 @@ class _DashboardScreenState extends State<DashboardScreen>
       );
     }
 
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Top Parts Usage (${partsData['totalPartTypes'] ?? 0} types)',
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+    return Container(
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [Colors.white, Colors.lime.shade50.withOpacity(0.3)],
+        ),
+        borderRadius: BorderRadius.circular(24),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.lime.shade100.withOpacity(0.3),
+            blurRadius: 20,
+            offset: const Offset(0, 8),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Colors.lime.shade600, Colors.lime.shade700],
+                  ),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: const Icon(
+                  Icons.precision_manufacturing_rounded,
+                  color: Colors.white,
+                  size: 24,
+                ),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Top 3 Parts Usage',
+                      style: theme.textTheme.headlineSmall?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: colorScheme.onSurface,
+                      ),
+                    ),
+                    Text(
+                      'Most frequently used parts',
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: colorScheme.onSurface.withOpacity(0.7),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 24),
+          SizedBox(
+            height: 280,
+            child: SfCartesianChart(
+              primaryXAxis: const CategoryAxis(
+                labelRotation: -45,
+                labelStyle: TextStyle(fontWeight: FontWeight.w600),
+              ),
+              primaryYAxis: const NumericAxis(
+                labelStyle: TextStyle(fontWeight: FontWeight.w600),
+              ),
+              plotAreaBorderWidth: 0,
+              series: <CartesianSeries>[
+                ColumnSeries<ChartData, String>(
+                  dataSource: chartData,
+                  xValueMapper: (ChartData data, _) => data.x,
+                  yValueMapper: (ChartData data, _) => data.y,
+                  pointColorMapper: (ChartData data, _) => data.color,
+                  dataLabelSettings: const DataLabelSettings(
+                    isVisible: true,
+                    textStyle: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                  borderRadius: const BorderRadius.all(Radius.circular(8)),
+                ),
+              ],
             ),
-            const SizedBox(height: 16),
-            SizedBox(
-              height: 250,
-              child: SfCartesianChart(
-                primaryXAxis: const CategoryAxis(labelRotation: -45),
-                primaryYAxis: const NumericAxis(),
-                series: <CartesianSeries>[
-                  ColumnSeries<ChartData, String>(
-                    dataSource: chartData,
-                    xValueMapper: (ChartData data, _) => data.x,
-                    yValueMapper: (ChartData data, _) => data.y,
-                    pointColorMapper: (ChartData data, _) => data.color,
-                    dataLabelSettings: const DataLabelSettings(isVisible: true),
+          ),
+          const SizedBox(height: 20),
+          Wrap(
+            spacing: 16,
+            runSpacing: 12,
+            children: chartData.map((data) {
+              return Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    width: 16,
+                    height: 16,
+                    decoration: BoxDecoration(
+                      color: data.color,
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
+                    '${data.x} (${data.y.toInt()})',
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ],
-              ),
-            ),
-          ],
-        ),
+              );
+            }).toList(),
+          ),
+        ],
       ),
     );
   }
 
-  Widget _buildUsageCard(
+  Widget _buildModernTimelineCard(
     String title,
     String value,
     IconData icon,
     Color color,
   ) {
+    final theme = Theme.of(context);
+
     return Container(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: color.withValues(alpha: 0.3)),
+        color: color.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: color.withOpacity(0.2)),
+        boxShadow: [
+          BoxShadow(
+            color: color.withOpacity(0.1),
+            blurRadius: 4,
+            offset: const Offset(0, 2),
+          ),
+        ],
       ),
       child: Column(
         children: [
-          Icon(icon, color: color, size: 20),
-          const SizedBox(height: 8),
+          Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: color.withOpacity(0.2),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Icon(icon, color: color, size: 20),
+          ),
+          const SizedBox(height: 12),
           Text(
             value,
-            style: TextStyle(
-              fontSize: 16,
+            style: theme.textTheme.titleMedium?.copyWith(
               fontWeight: FontWeight.bold,
               color: color,
             ),
           ),
+          const SizedBox(height: 4),
           Text(
             title,
-            style: const TextStyle(fontSize: 10),
+            style: theme.textTheme.bodySmall?.copyWith(
+              color: color.withOpacity(0.8),
+              fontWeight: FontWeight.w500,
+            ),
             textAlign: TextAlign.center,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
           ),
         ],
       ),
@@ -1178,89 +1845,139 @@ class _DashboardScreenState extends State<DashboardScreen>
   Widget _buildTimelineAnalytics() {
     final timelineData =
         _dashboardData['timelineAnalytics'] as Map<String, dynamic>? ?? {};
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
 
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Timeline Analytics',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 16),
-            Column(
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: _buildTimelineCard(
-                        'Avg. Assigned to Started',
-                        '${(timelineData['averageAssignedToStartedDays'] ?? 0).toStringAsFixed(1)} days',
-                        Icons.play_arrow,
-                        Colors.blue,
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: _buildTimelineCard(
-                        'Avg. Started to Completed',
-                        '${(timelineData['averageStartedToCompletedDays'] ?? 0).toStringAsFixed(1)} days',
-                        Icons.check_circle,
-                        Colors.green,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 12),
-                Row(
-                  children: [
-                    Expanded(
-                      child: _buildTimelineCard(
-                        'Started Today',
-                        '${timelineData['jobsStartedToday'] ?? 0}',
-                        Icons.today,
-                        Colors.orange,
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: _buildTimelineCard(
-                        'Completed Today',
-                        '${timelineData['jobsCompletedToday'] ?? 0}',
-                        Icons.done_all,
-                        Colors.purple,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 12),
-                Row(
-                  children: [
-                    Expanded(
-                      child: _buildTimelineCard(
-                        'Assigned This Week',
-                        '${timelineData['jobsAssignedThisWeek'] ?? 0}',
-                        Icons.assignment,
-                        Colors.teal,
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: _buildTimelineCard(
-                        'Completed This Week',
-                        '${timelineData['jobsCompletedThisWeek'] ?? 0}',
-                        Icons.check_box,
-                        Colors.indigo,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ],
+    return Container(
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [Colors.white, Colors.brown.shade50.withOpacity(0.3)],
         ),
+        borderRadius: BorderRadius.circular(24),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.brown.shade100.withOpacity(0.3),
+            blurRadius: 20,
+            offset: const Offset(0, 8),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Colors.brown.shade400, Colors.brown.shade600],
+                  ),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: const Icon(
+                  Icons.timeline_rounded,
+                  color: Colors.white,
+                  size: 24,
+                ),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Timeline Analytics',
+                      style: theme.textTheme.headlineSmall?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: colorScheme.onSurface,
+                      ),
+                    ),
+                    Text(
+                      'Job progression insights',
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: colorScheme.onSurface.withOpacity(0.7),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 24),
+          Column(
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: _buildModernTimelineCard(
+                      'Avg. Assigned to Started',
+                      '${(timelineData['averageAssignedToStartedDays'] ?? 0).toStringAsFixed(1)} days',
+                      Icons.play_arrow_rounded,
+                      Colors.blue.shade600,
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: _buildModernTimelineCard(
+                      'Avg. Started to Completed',
+                      '${(timelineData['averageStartedToCompletedDays'] ?? 0).toStringAsFixed(1)} days',
+                      Icons.check_circle_rounded,
+                      Colors.green.shade600,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+              Row(
+                children: [
+                  Expanded(
+                    child: _buildModernTimelineCard(
+                      'Started Today',
+                      '${timelineData['jobsStartedToday'] ?? 0}',
+                      Icons.today_rounded,
+                      Colors.orange.shade600,
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: _buildModernTimelineCard(
+                      'Completed Today',
+                      '${timelineData['jobsCompletedToday'] ?? 0}',
+                      Icons.done_all_rounded,
+                      Colors.purple.shade600,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+              Row(
+                children: [
+                  Expanded(
+                    child: _buildModernTimelineCard(
+                      'Assigned This Week',
+                      '${timelineData['jobsAssignedThisWeek'] ?? 0}',
+                      Icons.assignment_rounded,
+                      Colors.teal.shade600,
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: _buildModernTimelineCard(
+                      'Completed This Week',
+                      '${timelineData['jobsCompletedThisWeek'] ?? 0}',
+                      Icons.check_box_rounded,
+                      Colors.indigo.shade600,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -1303,22 +2020,24 @@ class _DashboardScreenState extends State<DashboardScreen>
   Widget _buildNotesAnalysis() {
     final notesData =
         _dashboardData['notesAnalysis'] as Map<String, dynamic>? ?? {};
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
 
     List<ChartData> typeChartData = [
       ChartData(
         'Problem',
         (notesData['problemNotes'] ?? 0).toDouble(),
-        Colors.red,
+        Colors.red.shade600,
       ),
       ChartData(
         'Request',
         (notesData['requestNotes'] ?? 0).toDouble(),
-        Colors.blue,
+        Colors.blue.shade600,
       ),
       ChartData(
         'Completion',
         (notesData['completionNotes'] ?? 0).toDouble(),
-        Colors.green,
+        Colors.green.shade600,
       ),
     ];
 
@@ -1326,59 +2045,110 @@ class _DashboardScreenState extends State<DashboardScreen>
       ChartData(
         'Pending',
         (notesData['pendingNotes'] ?? 0).toDouble(),
-        Colors.orange,
+        Colors.orange.shade600,
       ),
       ChartData(
         'Solved',
         (notesData['solvedNotes'] ?? 0).toDouble(),
-        Colors.green,
+        Colors.green.shade600,
       ),
       ChartData(
         'Accepted',
         (notesData['acceptedNotes'] ?? 0).toDouble(),
-        Colors.blue,
+        Colors.blue.shade600,
       ),
     ];
 
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Notes Analysis (${notesData['totalNotes'] ?? 0} total, ${notesData['resolutionRate'] ?? 0}% resolved)',
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 16),
-            Row(
-              children: [
-                Expanded(
+    return Container(
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [Colors.white, Colors.grey.shade50.withOpacity(0.3)],
+        ),
+        borderRadius: BorderRadius.circular(24),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.shade100.withOpacity(0.3),
+            blurRadius: 20,
+            offset: const Offset(0, 8),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Colors.grey.shade600, Colors.grey.shade700],
+                  ),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: const Icon(
+                  Icons.note_alt_rounded,
+                  color: Colors.white,
+                  size: 24,
+                ),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Notes Analysis',
+                      style: theme.textTheme.headlineSmall?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: colorScheme.onSurface,
+                      ),
+                    ),
+                    Text(
+                      '${notesData['totalNotes'] ?? 0} total, ${notesData['resolutionRate'] ?? 0}% resolved',
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: colorScheme.onSurface.withOpacity(0.7),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 24),
+          Row(
+            children: [
+              Expanded(
+                child: Container(
+                  padding: const EdgeInsets.all(16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
+                      Text(
                         'By Type',
-                        style: TextStyle(
-                          fontSize: 14,
+                        style: theme.textTheme.titleMedium?.copyWith(
                           fontWeight: FontWeight.bold,
+                          color: colorScheme.onSurface,
                         ),
                       ),
-                      const SizedBox(height: 8),
+                      const SizedBox(height: 12),
                       SizedBox(
-                        height: 150,
+                        height: 180,
                         child: PieChart(
                           PieChartData(
-                            sectionsSpace: 2,
-                            centerSpaceRadius: 30,
+                            sectionsSpace: 3,
+                            centerSpaceRadius: 40,
                             sections: typeChartData.map((data) {
                               return PieChartSectionData(
                                 color: data.color,
                                 value: data.y,
-                                title: '${data.x}\n${data.y.toInt()}',
+                                title: '${data.y.toInt()}',
                                 radius: 35,
                                 titleStyle: const TextStyle(
-                                  fontSize: 8,
+                                  fontSize: 12,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white,
                                 ),
@@ -1387,36 +2157,64 @@ class _DashboardScreenState extends State<DashboardScreen>
                           ),
                         ),
                       ),
+                      const SizedBox(height: 12),
+                      ...typeChartData.map(
+                        (data) => Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 2),
+                          child: Row(
+                            children: [
+                              Container(
+                                width: 12,
+                                height: 12,
+                                decoration: BoxDecoration(
+                                  color: data.color,
+                                  borderRadius: BorderRadius.circular(2),
+                                ),
+                              ),
+                              const SizedBox(width: 8),
+                              Text(
+                                '${data.x} (${data.y.toInt()})',
+                                style: theme.textTheme.bodySmall?.copyWith(
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
-                const SizedBox(width: 16),
-                Expanded(
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Container(
+                  padding: const EdgeInsets.all(16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
+                      Text(
                         'By Status',
-                        style: TextStyle(
-                          fontSize: 14,
+                        style: theme.textTheme.titleMedium?.copyWith(
                           fontWeight: FontWeight.bold,
+                          color: colorScheme.onSurface,
                         ),
                       ),
-                      const SizedBox(height: 8),
+                      const SizedBox(height: 12),
                       SizedBox(
-                        height: 150,
+                        height: 180,
                         child: PieChart(
                           PieChartData(
-                            sectionsSpace: 2,
-                            centerSpaceRadius: 30,
+                            sectionsSpace: 3,
+                            centerSpaceRadius: 40,
                             sections: statusChartData.map((data) {
                               return PieChartSectionData(
                                 color: data.color,
                                 value: data.y,
-                                title: '${data.x}\n${data.y.toInt()}',
+                                title: '${data.y.toInt()}',
                                 radius: 35,
                                 titleStyle: const TextStyle(
-                                  fontSize: 8,
+                                  fontSize: 12,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white,
                                 ),
@@ -1425,13 +2223,38 @@ class _DashboardScreenState extends State<DashboardScreen>
                           ),
                         ),
                       ),
+                      const SizedBox(height: 12),
+                      ...statusChartData.map(
+                        (data) => Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 2),
+                          child: Row(
+                            children: [
+                              Container(
+                                width: 12,
+                                height: 12,
+                                decoration: BoxDecoration(
+                                  color: data.color,
+                                  borderRadius: BorderRadius.circular(2),
+                                ),
+                              ),
+                              const SizedBox(width: 8),
+                              Text(
+                                '${data.x} (${data.y.toInt()})',
+                                style: theme.textTheme.bodySmall?.copyWith(
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
-              ],
-            ),
-          ],
-        ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -1440,85 +2263,174 @@ class _DashboardScreenState extends State<DashboardScreen>
     final vehicleData =
         _dashboardData['vehicleAnalytics'] as Map<String, dynamic>? ?? {};
     final topMakes = vehicleData['topMakes'] as List<dynamic>? ?? [];
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
 
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Vehicle Analytics (${vehicleData['totalVehicles'] ?? 0} vehicles)',
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 16),
-            Row(
-              children: [
-                Expanded(
-                  child: _buildVehicleInfoCard(
-                    'Average Year',
-                    '${vehicleData['averageYear'] ?? 0}',
-                    Icons.calendar_today,
-                    Colors.blue,
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: _buildVehicleInfoCard(
-                    'Oldest Vehicle',
-                    '${vehicleData['oldestYear'] ?? 0}',
-                    Icons.history,
-                    Colors.orange,
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: _buildVehicleInfoCard(
-                    'Newest Vehicle',
-                    '${vehicleData['newestYear'] ?? 0}',
-                    Icons.new_releases,
-                    Colors.green,
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: _buildVehicleInfoCard(
-                    'Avg Mileage',
-                    '${(vehicleData['averageMileage'] ?? 0)} mi',
-                    Icons.speed,
-                    Colors.purple,
-                  ),
-                ),
-              ],
-            ),
-            if (topMakes.isNotEmpty) ...[
-              const SizedBox(height: 16),
-              const Text(
-                'Top Vehicle Makes',
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 8),
-              ...topMakes.take(5).map((make) {
-                final makeData = make as Map<String, dynamic>;
-                return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 2),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(makeData['make'] ?? 'Unknown'),
-                      Text('${makeData['count'] ?? 0} vehicles'),
-                    ],
-                  ),
-                );
-              }).toList(),
-            ],
-          ],
+    return Container(
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [Colors.white, Colors.red.shade50.withOpacity(0.3)],
         ),
+        borderRadius: BorderRadius.circular(24),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.red.shade100.withOpacity(0.3),
+            blurRadius: 20,
+            offset: const Offset(0, 8),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Colors.red.shade400, Colors.red.shade600],
+                  ),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: const Icon(
+                  Icons.directions_car_rounded,
+                  color: Colors.white,
+                  size: 24,
+                ),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Vehicle Analytics',
+                      style: theme.textTheme.headlineSmall?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: colorScheme.onSurface,
+                      ),
+                    ),
+                    Text(
+                      '${vehicleData['totalVehicles'] ?? 0} vehicles tracked',
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: colorScheme.onSurface.withOpacity(0.7),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 24),
+          GridView.count(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            crossAxisCount: 2,
+            mainAxisSpacing: 16,
+            crossAxisSpacing: 16,
+            childAspectRatio: 1.3,
+            children: [
+              _buildModernVehicleInfoCard(
+                'Average Year',
+                '${vehicleData['averageYear'] ?? 0}',
+                Icons.calendar_today_rounded,
+                Colors.blue.shade600,
+              ),
+              _buildModernVehicleInfoCard(
+                'Oldest Vehicle',
+                '${vehicleData['oldestYear'] ?? 0}',
+                Icons.history_rounded,
+                Colors.orange.shade600,
+              ),
+              _buildModernVehicleInfoCard(
+                'Newest Vehicle',
+                '${vehicleData['newestYear'] ?? 0}',
+                Icons.new_releases_rounded,
+                Colors.green.shade600,
+              ),
+              _buildModernVehicleInfoCard(
+                'Avg Mileage',
+                '${(vehicleData['averageMileage'] ?? 0)} mi',
+                Icons.speed_rounded,
+                Colors.purple.shade600,
+              ),
+            ],
+          ),
+          if (topMakes.isNotEmpty) ...[
+            const SizedBox(height: 24),
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: Colors.red.shade200),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Top Vehicle Makes',
+                    style: theme.textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: colorScheme.onSurface,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  ...topMakes.take(5).map((make) {
+                    final makeData = make as Map<String, dynamic>;
+                    return Container(
+                      margin: const EdgeInsets.symmetric(vertical: 4),
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: Colors.red.shade50,
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(color: Colors.red.shade200),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            makeData['make'] ?? 'Unknown',
+                            style: theme.textTheme.bodyMedium?.copyWith(
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 4,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.red.shade600,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Text(
+                              '${makeData['count'] ?? 0}',
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  }),
+                ],
+              ),
+            ),
+          ],
+        ],
       ),
     );
   }
 
-  Widget _buildVehicleInfoCard(
+  Widget _buildModernVehicleInfoCard(
     String title,
     String value,
     IconData icon,
@@ -2226,6 +3138,446 @@ class _DashboardScreenState extends State<DashboardScreen>
       Colors.pink,
     ];
     return colors[index % colors.length];
+  }
+
+  // Modern Assigned Jobs Overview Section
+  Widget _buildAssignedJobsOverview() {
+    final assignedJobsData =
+        _dashboardData['assignedJobsOverview'] as Map<String, dynamic>? ?? {};
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
+    final todayJobs = assignedJobsData['todayJobs'] as List<dynamic>? ?? [];
+    final thisWeekJobs =
+        assignedJobsData['thisWeekJobs'] as List<dynamic>? ?? [];
+    final totalAssigned = assignedJobsData['totalAssigned'] ?? 0;
+    final highPriorityJobs = assignedJobsData['highPriorityJobs'] ?? 0;
+    final overdueJobs = assignedJobsData['overdueJobs'] ?? 0;
+
+    return Container(
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [Colors.white, Colors.blue.shade50.withOpacity(0.3)],
+        ),
+        borderRadius: BorderRadius.circular(24),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.blue.shade100.withOpacity(0.3),
+            blurRadius: 20,
+            offset: const Offset(0, 8),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Colors.blue.shade400, Colors.blue.shade600],
+                  ),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: const Icon(
+                  Icons.assignment_rounded,
+                  color: Colors.white,
+                  size: 24,
+                ),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Assigned Jobs Overview',
+                      style: theme.textTheme.headlineSmall?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: colorScheme.onSurface,
+                      ),
+                    ),
+                    Text(
+                      'Your current workload and upcoming tasks',
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: colorScheme.onSurface.withOpacity(0.7),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 24),
+          // Summary Cards
+          Row(
+            children: [
+              Expanded(
+                child: _buildJobSummaryCard(
+                  'Total Assigned',
+                  totalAssigned.toString(),
+                  Icons.work_rounded,
+                  Colors.blue.shade600,
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: _buildJobSummaryCard(
+                  'High Priority',
+                  highPriorityJobs.toString(),
+                  Icons.priority_high_rounded,
+                  Colors.red.shade600,
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: _buildJobSummaryCard(
+                  'Overdue',
+                  overdueJobs.toString(),
+                  Icons.warning_rounded,
+                  Colors.orange.shade600,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 24),
+          // Today's Jobs Section
+          if (todayJobs.isNotEmpty) ...[
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: Colors.blue.shade200),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.today_rounded,
+                        color: Colors.blue.shade600,
+                        size: 20,
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        'Today\'s Jobs (${todayJobs.length})',
+                        style: theme.textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: colorScheme.onSurface,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  ...todayJobs.take(5).map((job) => _buildJobCard(job, theme)),
+                  if (todayJobs.length > 5)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8),
+                      child: Text(
+                        '... and ${todayJobs.length - 5} more jobs',
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: Colors.blue.shade600,
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 16),
+          ],
+          // This Week's Jobs Section
+          if (thisWeekJobs.isNotEmpty) ...[
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: Colors.blue.shade200),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.date_range_rounded,
+                        color: Colors.blue.shade600,
+                        size: 20,
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        'This Week\'s Jobs (${thisWeekJobs.length})',
+                        style: theme.textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: colorScheme.onSurface,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  ...thisWeekJobs
+                      .take(3)
+                      .map((job) => _buildJobCard(job, theme)),
+                  if (thisWeekJobs.length > 3)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8),
+                      child: Text(
+                        '... and ${thisWeekJobs.length - 3} more jobs',
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: Colors.blue.shade600,
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          ],
+          // Empty state
+          if (todayJobs.isEmpty && thisWeekJobs.isEmpty)
+            Container(
+              padding: const EdgeInsets.all(32),
+              decoration: BoxDecoration(
+                color: Colors.blue.shade50,
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: Colors.blue.shade200),
+              ),
+              child: Center(
+                child: Column(
+                  children: [
+                    Icon(
+                      Icons.assignment_turned_in_rounded,
+                      size: 48,
+                      color: Colors.blue.shade400,
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      'No assigned jobs for today or this week',
+                      style: theme.textTheme.titleMedium?.copyWith(
+                        color: Colors.blue.shade700,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      'Great job staying on top of your workload!',
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: Colors.blue.shade600,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildJobSummaryCard(
+    String title,
+    String value,
+    IconData icon,
+    Color color,
+  ) {
+    final theme = Theme.of(context);
+
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: color.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: color.withOpacity(0.2)),
+        boxShadow: [
+          BoxShadow(
+            color: color.withOpacity(0.1),
+            blurRadius: 4,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: color.withOpacity(0.2),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Icon(icon, color: color, size: 20),
+          ),
+          const SizedBox(height: 12),
+          Text(
+            value,
+            style: theme.textTheme.titleLarge?.copyWith(
+              fontWeight: FontWeight.bold,
+              color: color,
+            ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            title,
+            style: theme.textTheme.bodySmall?.copyWith(
+              color: color.withOpacity(0.8),
+              fontWeight: FontWeight.w500,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildJobCard(dynamic job, ThemeData theme) {
+    final priority = job['priority'] as String? ?? 'medium';
+    final status = job['status'] as String? ?? 'assigned';
+    final dueDate = job['dueDate'] as String?;
+
+    Color priorityColor = Colors.blue;
+    switch (priority) {
+      case 'high':
+        priorityColor = Colors.red.shade600;
+        break;
+      case 'medium':
+        priorityColor = Colors.orange.shade600;
+        break;
+      case 'low':
+        priorityColor = Colors.green.shade600;
+        break;
+    }
+
+    Color statusColor = Colors.blue;
+    switch (status) {
+      case 'assigned':
+        statusColor = Colors.blue.shade600;
+        break;
+      case 'accepted':
+        statusColor = Colors.purple.shade600;
+        break;
+      case 'inProgress':
+        statusColor = Colors.orange.shade600;
+        break;
+    }
+
+    return Container(
+      margin: const EdgeInsets.only(bottom: 8),
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Colors.grey.shade50,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.grey.shade200),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  job['title'] ?? 'Untitled Job',
+                  style: theme.textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                decoration: BoxDecoration(
+                  color: priorityColor.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: priorityColor.withOpacity(0.3)),
+                ),
+                child: Text(
+                  priority.toUpperCase(),
+                  style: TextStyle(
+                    color: priorityColor,
+                    fontSize: 10,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Row(
+            children: [
+              Icon(Icons.person_outline, size: 14, color: Colors.grey.shade600),
+              const SizedBox(width: 4),
+              Expanded(
+                child: Text(
+                  job['customerName'] ?? 'Unknown Customer',
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: Colors.grey.shade600,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                decoration: BoxDecoration(
+                  color: statusColor.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(6),
+                ),
+                child: Text(
+                  status.toUpperCase(),
+                  style: TextStyle(
+                    color: statusColor,
+                    fontSize: 9,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          if (dueDate != null) ...[
+            const SizedBox(height: 4),
+            Row(
+              children: [
+                Icon(
+                  Icons.schedule_outlined,
+                  size: 14,
+                  color: Colors.grey.shade600,
+                ),
+                const SizedBox(width: 4),
+                Text(
+                  'Due: ${_formatDate(DateTime.parse(dueDate))}',
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: Colors.grey.shade600,
+                    fontSize: 11,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+
+  String _formatDate(DateTime date) {
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    final tomorrow = today.add(const Duration(days: 1));
+    final dateOnly = DateTime(date.year, date.month, date.day);
+
+    if (dateOnly.isAtSameMomentAs(today)) {
+      return 'Today';
+    } else if (dateOnly.isAtSameMomentAs(tomorrow)) {
+      return 'Tomorrow';
+    } else {
+      return '${date.day}/${date.month}/${date.year}';
+    }
   }
 }
 

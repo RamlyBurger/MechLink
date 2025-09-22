@@ -1150,6 +1150,151 @@ class DashboardService {
   }
 
   // ============================================================================
+  // ASSIGNED JOBS/WORK ORDERS
+  // ============================================================================
+
+  /// Get assigned jobs/work orders for today and this week
+  Future<Map<String, dynamic>> getAssignedJobsOverview({
+    String? mechanicId,
+  }) async {
+    try {
+      Query query = _firestore.collection('jobs');
+
+      // Filter by mechanic ID if provided
+      if (mechanicId != null && mechanicId.isNotEmpty) {
+        query = query.where('mechanicId', isEqualTo: mechanicId);
+      }
+
+      // Only get assigned and in-progress jobs
+      query = query.where(
+        'status',
+        whereIn: ['assigned', 'accepted', 'inProgress'],
+      );
+
+      final QuerySnapshot snapshot = await query.get();
+
+      final now = DateTime.now();
+      final today = DateTime(now.year, now.month, now.day);
+      final tomorrow = today.add(const Duration(days: 1));
+      final thisWeekStart = today.subtract(Duration(days: today.weekday - 1));
+      final nextWeekStart = thisWeekStart.add(const Duration(days: 7));
+
+      List<Map<String, dynamic>> todayJobs = [];
+      List<Map<String, dynamic>> thisWeekJobs = [];
+      List<Map<String, dynamic>> upcomingJobs = [];
+
+      int totalAssigned = 0;
+      int highPriorityJobs = 0;
+      int overdueJobs = 0;
+
+      for (var doc in snapshot.docs) {
+        final data = doc.data() as Map<String, dynamic>;
+        final assignedAt = data['assignedAt'] != null
+            ? DateTime.parse(data['assignedAt'])
+            : null;
+        final dueDate = data['dueDate'] != null
+            ? DateTime.parse(data['dueDate'])
+            : null;
+        final priority = data['priority'] as String? ?? 'medium';
+        final status = data['status'] as String? ?? 'assigned';
+
+        totalAssigned++;
+
+        if (priority == 'high') {
+          highPriorityJobs++;
+        }
+
+        // Check if job is overdue
+        if (dueDate != null &&
+            dueDate.isBefore(today) &&
+            status != 'completed') {
+          overdueJobs++;
+        }
+
+        final jobInfo = {
+          'id': doc.id,
+          'title': data['title'] ?? 'Untitled Job',
+          'status': status,
+          'priority': priority,
+          'customerName': data['customerName'] ?? 'Unknown Customer',
+          'vehicleInfo': data['vehicleInfo'] ?? 'N/A',
+          'estimatedDuration': data['estimatedDuration'] ?? 0,
+          'assignedAt': assignedAt?.toIso8601String(),
+          'dueDate': dueDate?.toIso8601String(),
+          'description': data['description'] ?? '',
+        };
+
+        // Categorize jobs by time period
+        if (assignedAt != null) {
+          final assignedDate = DateTime(
+            assignedAt.year,
+            assignedAt.month,
+            assignedAt.day,
+          );
+
+          if (assignedDate.isAtSameMomentAs(today)) {
+            todayJobs.add(jobInfo);
+          } else if (assignedDate.isAfter(thisWeekStart) &&
+              assignedDate.isBefore(nextWeekStart)) {
+            thisWeekJobs.add(jobInfo);
+          } else if (assignedDate.isAfter(today)) {
+            upcomingJobs.add(jobInfo);
+          }
+        } else {
+          // If no assigned date, consider it for today
+          todayJobs.add(jobInfo);
+        }
+      }
+
+      // Sort jobs by priority and due date
+      final priorityOrder = {'high': 3, 'medium': 2, 'low': 1};
+
+      void sortJobs(List<Map<String, dynamic>> jobs) {
+        jobs.sort((a, b) {
+          // First sort by priority
+          final aPriority = priorityOrder[a['priority']] ?? 1;
+          final bPriority = priorityOrder[b['priority']] ?? 1;
+          final priorityComparison = bPriority.compareTo(aPriority);
+
+          if (priorityComparison != 0) return priorityComparison;
+
+          // Then sort by due date
+          final aDueDate = a['dueDate'] != null
+              ? DateTime.parse(a['dueDate'])
+              : DateTime.now().add(const Duration(days: 365));
+          final bDueDate = b['dueDate'] != null
+              ? DateTime.parse(b['dueDate'])
+              : DateTime.now().add(const Duration(days: 365));
+
+          return aDueDate.compareTo(bDueDate);
+        });
+      }
+
+      sortJobs(todayJobs);
+      sortJobs(thisWeekJobs);
+      sortJobs(upcomingJobs);
+
+      return {
+        'totalAssigned': totalAssigned,
+        'highPriorityJobs': highPriorityJobs,
+        'overdueJobs': overdueJobs,
+        'todayJobs': todayJobs.take(10).toList(), // Limit to 10 for performance
+        'thisWeekJobs': thisWeekJobs
+            .take(20)
+            .toList(), // Limit to 20 for performance
+        'upcomingJobs': upcomingJobs
+            .take(10)
+            .toList(), // Limit to 10 for performance
+        'todayJobsCount': todayJobs.length,
+        'thisWeekJobsCount': thisWeekJobs.length,
+        'upcomingJobsCount': upcomingJobs.length,
+      };
+    } catch (e) {
+      throw Exception('Failed to get assigned jobs overview: $e');
+    }
+  }
+
+  // ============================================================================
   // HELPER METHODS
   // ============================================================================
 
@@ -1183,15 +1328,16 @@ class DashboardService {
         getCustomerSatisfactionAnalytics(mechanicId: mechanicId),
         getFinancialAnalytics(mechanicId: mechanicId),
         getJobsByDate(mechanicId: mechanicId),
+        getAssignedJobsOverview(mechanicId: mechanicId),
       ];
-      
+
       // Add mechanic performance if mechanicId is provided
       if (mechanicId != null) {
         futuresList.add(getMechanicPerformance(mechanicId));
       }
 
       final futures = await Future.wait(futuresList);
-      
+
       // Build result map with proper indexing
       Map<String, dynamic> result = {
         'jobStatistics': futures[0],
@@ -1210,13 +1356,14 @@ class DashboardService {
         'customerSatisfactionAnalytics': futures[13],
         'financialAnalytics': futures[14],
         'jobsByDate': futures[15],
+        'assignedJobsOverview': futures[16],
       };
-      
+
       // Add mechanic performance if it was included
-      if (mechanicId != null && futures.length > 16) {
-        result['mechanicPerformance'] = futures[16];
+      if (mechanicId != null && futures.length > 17) {
+        result['mechanicPerformance'] = futures[17];
       }
-      
+
       return result;
     } catch (e) {
       throw Exception('Failed to get comprehensive dashboard data: $e');
