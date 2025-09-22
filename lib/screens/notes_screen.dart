@@ -258,95 +258,115 @@ class _NotesScreenState extends State<NotesScreen> {
           ),
         ],
       ),
-      body: Column(
+      body: Stack(
         children: [
-          // Search Bar and Quick Filters
-          Container(
-            padding: const EdgeInsets.all(16),
-            color: Colors.white,
-            child: Column(
+          // Background image with dark overlay
+          Positioned.fill(
+            child: Stack(
+              fit: StackFit.expand,
               children: [
-                // Compact Search Bar
-                SizedBox(
-                  height: 40,
-                  child: TextField(
-                    controller: _searchController,
-                    decoration: InputDecoration(
-                      hintText: 'Search notes...',
-                      prefixIcon: const Icon(Icons.search, size: 20),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide.none,
-                      ),
-                      filled: true,
-                      fillColor: Colors.grey.shade100,
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 8,
-                      ),
-                    ),
-                    style: const TextStyle(fontSize: 14),
-                  ),
-                ),
-                const SizedBox(height: 12),
-                // Quick Filter Chips
-                SizedBox(
-                  height: 32,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: _quickFilters.length,
-                    itemBuilder: (context, index) {
-                      final filter = _quickFilters[index];
-                      final isSelected = _selectedQuickFilter == index;
-                      return Padding(
-                        padding: const EdgeInsets.only(right: 8),
-                        child: FilterChip(
-                          label: Text(
-                            filter['label'],
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: isSelected
-                                  ? Colors.white
-                                  : Colors.grey.shade700,
-                            ),
-                          ),
-                          selected: isSelected,
-                          onSelected: (_) => _applyQuickFilter(index),
-                          backgroundColor: Colors.grey.shade200,
-                          selectedColor: Colors.orange.shade600,
-                          checkmarkColor: Colors.white,
-                          elevation: 0,
-                          pressElevation: 2,
-                        ),
-                      );
-                    },
-                  ),
+                Image.asset('assets/notes/notes_bg.webp', fit: BoxFit.cover),
+                Container(
+                  color: Colors.black.withOpacity(
+                    0.75,
+                  ), // 👈 dark overlay (adjust opacity)
                 ),
               ],
             ),
           ),
 
-          // Notes Grid
-          Expanded(
-            child: _isLoading
-                ? const Center(child: CircularProgressIndicator())
-                : _filteredNotes.isEmpty
-                ? _buildEmptyState()
-                : Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: GridView.builder(
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            childAspectRatio: 0.8,
-                            crossAxisSpacing: 12,
-                            mainAxisSpacing: 12,
+          // Foreground content with slight overlay
+          Column(
+            children: [
+              // Search Bar and Quick Filters
+              Container(
+                padding: const EdgeInsets.all(16),
+                color: Colors.white.withOpacity(
+                  0.85,
+                ), // overlay for readability
+                child: Column(
+                  children: [
+                    // Compact Search Bar
+                    SizedBox(
+                      height: 40,
+                      child: TextField(
+                        controller: _searchController,
+                        decoration: InputDecoration(
+                          hintText: 'Search notes...',
+                          prefixIcon: const Icon(Icons.search, size: 20),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: BorderSide.none,
                           ),
-                      itemCount: _filteredNotes.length,
-                      itemBuilder: (context, index) =>
-                          _buildNoteCard(_filteredNotes[index]),
+                          filled: true,
+                          fillColor: Colors.grey.shade100,
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 8,
+                          ),
+                        ),
+                        style: const TextStyle(fontSize: 14),
+                      ),
                     ),
-                  ),
+                    const SizedBox(height: 12),
+                    // Quick Filter Chips
+                    SizedBox(
+                      height: 32,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: _quickFilters.length,
+                        itemBuilder: (context, index) {
+                          final filter = _quickFilters[index];
+                          final isSelected = _selectedQuickFilter == index;
+                          return Padding(
+                            padding: const EdgeInsets.only(right: 8),
+                            child: FilterChip(
+                              label: Text(
+                                filter['label'],
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: isSelected
+                                      ? Colors.white
+                                      : Colors.grey.shade700,
+                                ),
+                              ),
+                              selected: isSelected,
+                              onSelected: (_) => _applyQuickFilter(index),
+                              backgroundColor: Colors.grey.shade200,
+                              selectedColor: Colors.orange.shade600,
+                              checkmarkColor: Colors.white,
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              // Notes Grid
+              Expanded(
+                child: _isLoading
+                    ? const Center(child: CircularProgressIndicator())
+                    : _filteredNotes.isEmpty
+                    ? _buildEmptyState()
+                    : Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: GridView.builder(
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                childAspectRatio: 0.8,
+                                crossAxisSpacing: 12,
+                                mainAxisSpacing: 12,
+                              ),
+                          itemCount: _filteredNotes.length,
+                          itemBuilder: (context, index) =>
+                              _buildNoteCard(_filteredNotes[index]),
+                        ),
+                      ),
+              ),
+            ],
           ),
         ],
       ),

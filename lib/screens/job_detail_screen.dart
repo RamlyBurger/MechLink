@@ -71,6 +71,7 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
   }
 
   @override
+  @override
   Widget build(BuildContext context) {
     if (_isLoading) {
       return Scaffold(
@@ -108,28 +109,55 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
         backgroundColor: const Color(0xFF5B5BF7),
         foregroundColor: Colors.white,
       ),
-      body: SingleChildScrollView(
-        controller: _scrollController,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Photo Section as normal content
-            _buildPhotoSection(),
-            // Job Info Section
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: _buildJobInfoSection(customer, vehicle, equipment, tasks),
+      body: Stack(
+        children: [
+          // Background image with dark overlay
+          Positioned.fill(
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                Image.asset(
+                  'assets/jobs/jobs_bg.webp', // Replace with your image path
+                  fit: BoxFit.cover,
+                ),
+                Container(
+                  color: Colors.black.withValues(alpha: 0.75), // dark overlay
+                ),
+              ],
             ),
-            // Digital Signature Section
-            if (_jobDetails!['digitalSignOff'] != null)
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: _buildDigitalSignOffSection(),
+          ),
+
+          // Foreground content with slight transparent layer for readability
+          SingleChildScrollView(
+            controller: _scrollController,
+            child: Container(
+              color: Colors.white.withOpacity(
+                0.85,
+              ), // optional readability layer on top of overlay
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildPhotoSection(),
+                  Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: _buildJobInfoSection(
+                      customer,
+                      vehicle,
+                      equipment,
+                      tasks,
+                    ),
+                  ),
+                  if (_jobDetails!['digitalSignOff'] != null)
+                    Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: _buildDigitalSignOffSection(),
+                    ),
+                ],
               ),
-          ],
-        ),
+            ),
+          ),
+        ],
       ),
-      // Floating Action Button for Job Actions
       floatingActionButton: _buildJobActionButton(allTasksCompleted),
     );
   }
@@ -163,7 +191,7 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
             child: Icon(
               vehicle != null ? Icons.directions_car : Icons.build,
               size: 80,
-              color: Colors.white.withOpacity(0.7),
+              color: Colors.white.withValues(alpha: 0.7),
             ),
           ),
         ),
@@ -240,7 +268,7 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
               child: Center(
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.5),
+                    color: Colors.black.withValues(alpha: 0.5),
                     shape: BoxShape.circle,
                   ),
                   child: IconButton(
@@ -265,7 +293,7 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
               child: Center(
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.5),
+                    color: Colors.black.withValues(alpha: 0.5),
                     shape: BoxShape.circle,
                   ),
                   child: IconButton(
@@ -295,7 +323,7 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
                       vertical: 6,
                     ),
                     decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.5),
+                      color: Colors.black.withValues(alpha: 0.5),
                       borderRadius: BorderRadius.circular(16),
                     ),
                     child: Text(
@@ -311,7 +339,7 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
                   // Carousel toggle button
                   Container(
                     decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.5),
+                      color: Colors.black.withValues(alpha: 0.5),
                       shape: BoxShape.circle,
                     ),
                     child: IconButton(
@@ -340,7 +368,7 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
               child: Container(
                 height: 80,
                 decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.7),
+                  color: Colors.black.withValues(alpha: 0.7),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: ListView.builder(
@@ -938,7 +966,7 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withOpacity(0.1),
+                    color: Colors.grey.withValues(alpha: 0.1),
                     spreadRadius: 1,
                     blurRadius: 6,
                     offset: const Offset(0, 2),
@@ -1111,7 +1139,7 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: color),
       ),
@@ -1150,7 +1178,7 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: color),
       ),
@@ -1630,7 +1658,7 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
             border: Border.all(color: Colors.grey.shade300),
             boxShadow: [
               BoxShadow(
-                color: Colors.grey.withOpacity(0.1),
+                color: Colors.grey.withValues(alpha: 0.1),
                 spreadRadius: 1,
                 blurRadius: 3,
                 offset: const Offset(0, 1),

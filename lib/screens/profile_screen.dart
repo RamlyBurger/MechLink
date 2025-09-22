@@ -154,73 +154,117 @@ class _ProfileScreenState extends State<ProfileScreen>
   @override
   Widget build(BuildContext context) {
     if (_isLoading) {
-      return const Scaffold(
-        backgroundColor: Color(0xFFF8FAFC),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF3B82F6)),
+      return Scaffold(
+        body: Stack(
+          children: [
+            // Background image
+            Positioned.fill(
+              child: Image.asset(
+                'assets/profile/profile_bg.webp',
+                fit: BoxFit.cover,
               ),
-              SizedBox(height: 16),
-              Text(
-                'Loading profile...',
-                style: TextStyle(color: Color(0xFF64748B), fontSize: 16),
+            ),
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      Color(0xFF3B82F6),
+                    ),
+                  ),
+                  SizedBox(height: 16),
+                  Text(
+                    'Loading profile...',
+                    style: TextStyle(color: Color(0xFF64748B), fontSize: 16),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       );
     }
 
     if (_mechanic == null) {
-      return const Scaffold(
-        backgroundColor: Color(0xFFF8FAFC),
-        body: Center(
-          child: Text(
-            'No profile data available',
-            style: TextStyle(color: Color(0xFF64748B), fontSize: 16),
-          ),
+      return Scaffold(
+        body: Stack(
+          children: [
+            // Background image
+            Positioned.fill(
+              child: Image.asset(
+                'assets/profile/profile_bg.webp', // 👈 replace with your image
+                fit: BoxFit.cover,
+              ),
+            ),
+            Center(
+              child: Text(
+                'No profile data available',
+                style: TextStyle(color: Color(0xFF64748B), fontSize: 16),
+              ),
+            ),
+          ],
         ),
       );
     }
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF8FAFC),
-      body: CustomScrollView(
-        slivers: [
-          _buildSliverAppBar(),
-          SliverToBoxAdapter(
-            child: AnimatedBuilder(
-              animation: _animationController,
-              builder: (context, child) {
-                return FadeTransition(
-                  opacity: _fadeAnimation,
-                  child: SlideTransition(
-                    position: _slideAnimation,
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                        top: 16,
-                        left: 16,
-                        right: 16,
-                        bottom: 125,
-                      ),
-                      child: Column(
-                        children: [
-                          _buildPersonalInfoCard(),
-                          const SizedBox(height: 20),
-                          _buildProfessionalInfoCard(),
-                          const SizedBox(height: 20),
-                          _buildActionsCard(),
-                          const SizedBox(height: 40),
-                        ],
-                      ),
-                    ),
-                  ),
-                );
-              },
+      body: Stack(
+        children: [
+          // Background image with dark overlay
+          Positioned.fill(
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                Image.asset(
+                  'assets/profile/profile_bg.webp',
+                  fit: BoxFit.cover,
+                ),
+                Container(
+                  color: Colors.black.withOpacity(
+                    0.35,
+                  ), // 👈 dark overlay (adjust 0.3–0.6 as needed)
+                ),
+              ],
             ),
+          ),
+
+          // Foreground scroll content
+          CustomScrollView(
+            slivers: [
+              _buildSliverAppBar(),
+              SliverToBoxAdapter(
+                child: AnimatedBuilder(
+                  animation: _animationController,
+                  builder: (context, child) {
+                    return FadeTransition(
+                      opacity: _fadeAnimation,
+                      child: SlideTransition(
+                        position: _slideAnimation,
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                            top: 16,
+                            left: 16,
+                            right: 16,
+                            bottom: 125,
+                          ),
+                          child: Column(
+                            children: [
+                              _buildPersonalInfoCard(),
+                              const SizedBox(height: 20),
+                              _buildProfessionalInfoCard(),
+                              const SizedBox(height: 20),
+                              _buildActionsCard(),
+                              const SizedBox(height: 40),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
           ),
         ],
       ),

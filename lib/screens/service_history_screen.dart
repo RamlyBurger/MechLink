@@ -90,123 +90,150 @@ class _ServiceHistoryScreenState extends State<ServiceHistoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade50,
-      body: CustomScrollView(
-        slivers: [
-          // App Bar with Vehicle Info
-          SliverAppBar(
-            expandedHeight:
-                320, // Increased from 280 to accommodate asset attributes
-            pinned: true,
-            backgroundColor: const Color(0xFF5B5BF7),
-            foregroundColor: Colors.white,
-            elevation: 0,
-            flexibleSpace: FlexibleSpaceBar(
-              background: Container(
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [Color(0xFF5B5BF7), Color(0xFF4338CA)],
-                  ),
+      backgroundColor: Colors.transparent, // let image show through
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          // Background image with dark overlay
+          Positioned.fill(
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                Image.asset(
+                  'assets/service_request/service_request_bg.webp',
+                  fit: BoxFit.cover,
                 ),
-                child: SafeArea(
-                  child: Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(height: 60),
-                        // Asset Info (Vehicle or Equipment)
-                        Flexible(
-                          child: Row(
-                            children: [
-                              Container(
-                                width: 60,
-                                height: 60,
-                                decoration: BoxDecoration(
-                                  color: Colors.white.withValues(alpha: 0.2),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                child: _buildAssetImage(),
-                              ),
-                              const SizedBox(width: 16),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Text(
-                                      _buildAssetTitle(),
-                                      style: const TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                      ),
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    const SizedBox(height: 4),
-                                    ..._buildAssetAttributes(),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-                        // Service Statistics
-                        if (_statistics.isNotEmpty) _buildServiceStats(),
-                      ],
-                    ),
-                  ),
+                Container(
+                  color: Colors.black.withValues(alpha: 0.4), // dark overlay
                 ),
-              ),
+              ],
             ),
           ),
 
-          // Service History Content
-          if (_isLoading)
-            const SliverFillRemaining(
-              child: Center(child: CircularProgressIndicator()),
-            )
-          else if (_serviceHistory.isEmpty)
-            SliverFillRemaining(
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.history, size: 64, color: Colors.grey.shade400),
-                    const SizedBox(height: 16),
-                    Text(
-                      'No service history found',
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.grey.shade600,
+          // Foreground content (your existing scroll view)
+          CustomScrollView(
+            slivers: [
+              // App Bar with Vehicle Info
+              SliverAppBar(
+                expandedHeight: 320,
+                pinned: true,
+                backgroundColor: const Color(0xFF5B5BF7),
+                foregroundColor: Colors.white,
+                elevation: 0,
+                flexibleSpace: FlexibleSpaceBar(
+                  background: Container(
+                    decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [Color(0xFF5B5BF7), Color(0xFF4338CA)],
                       ),
                     ),
-                    const SizedBox(height: 8),
-                    Text(
-                      'This vehicle has no recorded service jobs yet.',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey.shade500,
+                    child: SafeArea(
+                      child: Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(height: 60),
+                            // Asset Info
+                            Flexible(
+                              child: Row(
+                                children: [
+                                  Container(
+                                    width: 60,
+                                    height: 60,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white.withValues(
+                                        alpha: 0.2,
+                                      ),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    child: _buildAssetImage(),
+                                  ),
+                                  const SizedBox(width: 16),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text(
+                                          _buildAssetTitle(),
+                                          style: const TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                          ),
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                        const SizedBox(height: 4),
+                                        ..._buildAssetAttributes(),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+                            if (_statistics.isNotEmpty) _buildServiceStats(),
+                          ],
+                        ),
                       ),
                     ),
-                  ],
+                  ),
                 ),
               ),
-            )
-          else
-            SliverPadding(
-              padding: const EdgeInsets.all(16),
-              sliver: SliverList(
-                delegate: SliverChildBuilderDelegate((context, index) {
-                  final job = _serviceHistory[index];
-                  return _buildJobCard(job);
-                }, childCount: _serviceHistory.length),
-              ),
-            ),
+
+              // Service History Content
+              if (_isLoading)
+                const SliverFillRemaining(
+                  child: Center(child: CircularProgressIndicator()),
+                )
+              else if (_serviceHistory.isEmpty)
+                SliverFillRemaining(
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.history,
+                          size: 64,
+                          color: Colors.grey.shade400,
+                        ),
+                        const SizedBox(height: 16),
+                        Text(
+                          'No service history found',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.grey.shade600,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          'This vehicle has no recorded service jobs yet.',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.grey.shade500,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+              else
+                SliverPadding(
+                  padding: const EdgeInsets.all(16),
+                  sliver: SliverList(
+                    delegate: SliverChildBuilderDelegate((context, index) {
+                      final job = _serviceHistory[index];
+                      return _buildJobCard(job);
+                    }, childCount: _serviceHistory.length),
+                  ),
+                ),
+            ],
+          ),
         ],
       ),
     );

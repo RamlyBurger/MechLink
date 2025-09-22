@@ -48,50 +48,72 @@ class _TasksScreenState extends State<TasksScreen> {
         backgroundColor: Colors.orange.shade600,
         foregroundColor: Colors.white,
       ),
-      body: _isLoading
-          ? const Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CircularProgressIndicator(),
-                  SizedBox(height: 16),
-                  Text('Loading tasks...'),
-                ],
-              ),
-            )
-          : _tasks.isEmpty
-          ? const Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.task_alt, size: 64, color: Colors.grey),
-                  SizedBox(height: 16),
-                  Text(
-                    'No tasks available for this job',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    'Tasks will appear here once they are created',
-                    style: TextStyle(color: Colors.grey),
-                  ),
-                ],
-              ),
-            )
-          : RefreshIndicator(
-              onRefresh: _loadTasks,
-              child: ListView.builder(
-                padding: const EdgeInsets.all(16),
-                itemCount: _tasks.length,
-                itemBuilder: (context, index) {
-                  final task = _tasks[index];
-                  return _buildTaskCard(
-                    task,
-                    index + 1,
-                  ); // Pass task number (1-based)
-                },
-              ),
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          // Background image with dark overlay
+          Positioned.fill(
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                Image.asset('assets/task/task_bg.webp', fit: BoxFit.cover),
+                Container(
+                  color: Colors.black.withValues(alpha: 0.3), // dark overlay
+                ),
+              ],
             ),
+          ),
+
+          // Foreground content
+          _isLoading
+              ? const Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CircularProgressIndicator(),
+                      SizedBox(height: 16),
+                      Text('Loading tasks...'),
+                    ],
+                  ),
+                )
+              : _tasks.isEmpty
+              ? const Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.task_alt, size: 64, color: Colors.grey),
+                      SizedBox(height: 16),
+                      Text(
+                        'No tasks available for this job',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      SizedBox(height: 8),
+                      Text(
+                        'Tasks will appear here once they are created',
+                        style: TextStyle(color: Colors.grey),
+                      ),
+                    ],
+                  ),
+                )
+              : RefreshIndicator(
+                  onRefresh: _loadTasks,
+                  child: ListView.builder(
+                    padding: const EdgeInsets.all(16),
+                    itemCount: _tasks.length,
+                    itemBuilder: (context, index) {
+                      final task = _tasks[index];
+                      return _buildTaskCard(
+                        task,
+                        index + 1, // Pass task number (1-based)
+                      );
+                    },
+                  ),
+                ),
+        ],
+      ),
     );
   }
 

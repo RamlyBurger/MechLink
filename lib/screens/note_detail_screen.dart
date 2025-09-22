@@ -172,7 +172,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen>
                     children: [
                       Container(
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.2),
+                          color: Colors.white.withValues(alpha: 0.2),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: IconButton(
@@ -206,7 +206,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen>
                         Container(
                           padding: const EdgeInsets.all(20),
                           decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.1),
+                            color: Colors.white.withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: const CircularProgressIndicator(
@@ -220,7 +220,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen>
                         Text(
                           'Loading note details...',
                           style: TextStyle(
-                            color: Colors.white.withOpacity(0.9),
+                            color: Colors.white.withValues(alpha: 0.9),
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
                           ),
@@ -257,7 +257,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen>
                     children: [
                       Container(
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.2),
+                          color: Colors.white.withValues(alpha: 0.2),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: IconButton(
@@ -291,7 +291,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen>
                         Container(
                           padding: const EdgeInsets.all(20),
                           decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.1),
+                            color: Colors.white.withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: const Icon(
@@ -304,7 +304,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen>
                         Text(
                           'Note not found',
                           style: TextStyle(
-                            color: Colors.white.withOpacity(0.9),
+                            color: Colors.white.withValues(alpha: 0.9),
                             fontSize: 18,
                             fontWeight: FontWeight.w600,
                           ),
@@ -313,7 +313,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen>
                         Text(
                           'The requested note could not be loaded',
                           style: TextStyle(
-                            color: Colors.white.withOpacity(0.7),
+                            color: Colors.white.withValues(alpha: 0.7),
                             fontSize: 14,
                           ),
                         ),
@@ -368,7 +368,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen>
                           width: 40,
                           height: 4,
                           decoration: BoxDecoration(
-                            color: colorScheme.onSurface.withOpacity(0.2),
+                            color: colorScheme.onSurface.withValues(alpha: 0.2),
                             borderRadius: BorderRadius.circular(2),
                           ),
                         ),
@@ -414,9 +414,9 @@ class _NoteDetailScreenState extends State<NoteDetailScreen>
       leading: Container(
         margin: const EdgeInsets.all(8),
         decoration: BoxDecoration(
-          color: Colors.black.withOpacity(0.3),
+          color: Colors.black.withValues(alpha: 0.3),
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: Colors.white.withOpacity(0.2)),
+          border: Border.all(color: Colors.white.withValues(alpha: 0.2)),
         ),
         child: IconButton(
           icon: const Icon(
@@ -431,9 +431,9 @@ class _NoteDetailScreenState extends State<NoteDetailScreen>
         Container(
           margin: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: Colors.black.withOpacity(0.3),
+            color: Colors.black.withValues(alpha: 0.3),
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: Colors.white.withOpacity(0.2)),
+            border: Border.all(color: Colors.white.withValues(alpha: 0.2)),
           ),
           child: IconButton(
             icon: const Icon(Icons.edit, color: Colors.white, size: 20),
@@ -443,9 +443,9 @@ class _NoteDetailScreenState extends State<NoteDetailScreen>
         Container(
           margin: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: Colors.black.withOpacity(0.3),
+            color: Colors.black.withValues(alpha: 0.3),
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: Colors.white.withOpacity(0.2)),
+            border: Border.all(color: Colors.white.withValues(alpha: 0.2)),
           ),
           child: PopupMenuButton<String>(
             icon: const Icon(Icons.more_vert, color: Colors.white, size: 20),
@@ -488,9 +488,9 @@ class _NoteDetailScreenState extends State<NoteDetailScreen>
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
-                      Colors.black.withOpacity(0.3),
+                      Colors.black.withValues(alpha: 0.3),
                       Colors.transparent,
-                      Colors.black.withOpacity(0.7),
+                      Colors.black.withValues(alpha: 0.7),
                     ],
                     stops: const [0.0, 0.5, 1.0],
                   ),
@@ -537,7 +537,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen>
                   Text(
                     'Created ${DateTimeHelper.formatDateWithTime(_noteDetails!['createdAt'])}',
                     style: TextStyle(
-                      color: Colors.white.withOpacity(0.9),
+                      color: Colors.white.withValues(alpha: 0.9),
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
                       shadows: const [
@@ -616,7 +616,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen>
           child: Center(
             child: IconButton(
               style: IconButton.styleFrom(
-                backgroundColor: Colors.black.withOpacity(0.3),
+                backgroundColor: Colors.black.withValues(alpha: 0.3),
                 shape: const CircleBorder(),
               ),
               icon: const Icon(
@@ -644,7 +644,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen>
           child: Center(
             child: IconButton(
               style: IconButton.styleFrom(
-                backgroundColor: Colors.black.withOpacity(0.3),
+                backgroundColor: Colors.black.withValues(alpha: 0.3),
                 shape: const CircleBorder(),
               ),
               icon: const Icon(
@@ -682,10 +682,10 @@ class _NoteDetailScreenState extends State<NoteDetailScreen>
                     borderRadius: BorderRadius.circular(4),
                     color: _currentPhotoIndex == entry.key
                         ? Colors.white
-                        : Colors.white.withOpacity(0.5),
+                        : Colors.white.withValues(alpha: 0.5),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.3),
+                        color: Colors.black.withValues(alpha: 0.3),
                         blurRadius: 4,
                         offset: const Offset(0, 2),
                       ),
@@ -716,14 +716,14 @@ class _NoteDetailScreenState extends State<NoteDetailScreen>
         child: Container(
           padding: const EdgeInsets.all(24),
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.1),
+            color: Colors.white.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: Colors.white.withOpacity(0.2)),
+            border: Border.all(color: Colors.white.withValues(alpha: 0.2)),
           ),
           child: Icon(
             Icons.note_outlined,
             size: 80,
-            color: Colors.white.withOpacity(0.9),
+            color: Colors.white.withValues(alpha: 0.9),
           ),
         ),
       ),
@@ -870,7 +870,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen>
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: backgroundColor.withOpacity(0.3),
+            color: backgroundColor.withValues(alpha: 0.3),
             blurRadius: 8,
             offset: const Offset(0, 4),
           ),
@@ -927,7 +927,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen>
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: backgroundColor.withOpacity(0.3),
+            color: backgroundColor.withValues(alpha: 0.3),
             blurRadius: 8,
             offset: const Offset(0, 4),
           ),
@@ -1078,12 +1078,12 @@ class _NoteDetailScreenState extends State<NoteDetailScreen>
         color: colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: colorScheme.outline.withOpacity(0.2),
+          color: colorScheme.outline.withValues(alpha: 0.2),
           width: 1,
         ),
         boxShadow: [
           BoxShadow(
-            color: colorScheme.shadow.withOpacity(0.05),
+            color: colorScheme.shadow.withValues(alpha: 0.05),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -1098,7 +1098,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen>
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: iconColor.withOpacity(0.1),
+                  color: iconColor.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Icon(icon, color: iconColor, size: compact ? 20 : 24),
@@ -1111,7 +1111,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen>
                     Text(
                       title,
                       style: theme.textTheme.labelLarge?.copyWith(
-                        color: colorScheme.onSurface.withOpacity(0.7),
+                        color: colorScheme.onSurface.withValues(alpha: 0.7),
                         fontWeight: FontWeight.w600,
                         fontSize: compact ? 12 : 14,
                       ),
@@ -1130,7 +1130,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen>
                       Text(
                         subtitle,
                         style: theme.textTheme.bodyMedium?.copyWith(
-                          color: colorScheme.onSurface.withOpacity(0.6),
+                          color: colorScheme.onSurface.withValues(alpha: 0.6),
                           fontSize: compact ? 11 : 13,
                         ),
                         maxLines: 2,
@@ -1162,7 +1162,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen>
                     horizontal: 12,
                     vertical: 8,
                   ),
-                  backgroundColor: iconColor.withOpacity(0.1),
+                  backgroundColor: iconColor.withValues(alpha: 0.1),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
@@ -1187,7 +1187,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen>
             Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: Colors.blue.shade600.withOpacity(0.1),
+                color: Colors.blue.shade600.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Icon(Icons.link, color: Colors.blue.shade600, size: 20),
@@ -1216,10 +1216,12 @@ class _NoteDetailScreenState extends State<NoteDetailScreen>
               decoration: BoxDecoration(
                 color: colorScheme.surface,
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: colorScheme.outline.withOpacity(0.2)),
+                border: Border.all(
+                  color: colorScheme.outline.withValues(alpha: 0.2),
+                ),
                 boxShadow: [
                   BoxShadow(
-                    color: colorScheme.shadow.withOpacity(0.05),
+                    color: colorScheme.shadow.withValues(alpha: 0.05),
                     blurRadius: 8,
                     offset: const Offset(0, 2),
                   ),
@@ -1230,7 +1232,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen>
                 leading: Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: noteTypeColor.withOpacity(0.1),
+                    color: noteTypeColor.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Icon(
@@ -1257,7 +1259,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen>
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: theme.textTheme.bodyMedium?.copyWith(
-                        color: colorScheme.onSurface.withOpacity(0.7),
+                        color: colorScheme.onSurface.withValues(alpha: 0.7),
                       ),
                     ),
                     const SizedBox(height: 8),
@@ -1266,13 +1268,13 @@ class _NoteDetailScreenState extends State<NoteDetailScreen>
                         Icon(
                           Icons.access_time,
                           size: 14,
-                          color: colorScheme.onSurface.withOpacity(0.5),
+                          color: colorScheme.onSurface.withValues(alpha: 0.5),
                         ),
                         const SizedBox(width: 4),
                         Text(
                           DateTimeHelper.formatDateWithTime(note['createdAt']),
                           style: theme.textTheme.bodySmall?.copyWith(
-                            color: colorScheme.onSurface.withOpacity(0.5),
+                            color: colorScheme.onSurface.withValues(alpha: 0.5),
                             fontSize: 12,
                           ),
                         ),
@@ -1283,7 +1285,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen>
                 trailing: Icon(
                   Icons.arrow_forward_ios,
                   size: 16,
-                  color: colorScheme.onSurface.withOpacity(0.4),
+                  color: colorScheme.onSurface.withValues(alpha: 0.4),
                 ),
                 onTap: () {
                   Navigator.pushReplacement(

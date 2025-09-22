@@ -82,176 +82,218 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen>
   Widget build(BuildContext context) {
     if (_isLoading) {
       return Scaffold(
-        backgroundColor: Colors.grey.shade50,
+        backgroundColor: Colors.transparent,
         appBar: AppBar(
           title: Text(widget.customerName ?? 'Customer Details'),
           backgroundColor: const Color(0xFF5B5BF7),
           foregroundColor: Colors.white,
           elevation: 0,
         ),
-        body: const Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              CircularProgressIndicator(color: Color(0xFF5B5BF7)),
-              SizedBox(height: 16),
-              Text(
-                'Loading customer details...',
-                style: TextStyle(color: Colors.grey),
+        body: Stack(
+          fit: StackFit.expand,
+          children: [
+            Image.asset('assets/customer/customer_bg.webp', fit: BoxFit.cover),
+            const Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircularProgressIndicator(color: Color(0xFF5B5BF7)),
+                  SizedBox(height: 16),
+                  Text(
+                    'Loading customer details...',
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       );
     }
 
     if (_customerDetails == null) {
       return Scaffold(
-        backgroundColor: Colors.grey.shade50,
+        backgroundColor: Colors.transparent,
         appBar: AppBar(
           title: const Text('Customer Details'),
           backgroundColor: const Color(0xFF5B5BF7),
           foregroundColor: Colors.white,
           elevation: 0,
         ),
-        body: const Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Icons.person_off, size: 64, color: Colors.grey),
-              SizedBox(height: 16),
-              Text('Customer not found', style: TextStyle(color: Colors.grey)),
-            ],
-          ),
+        body: Stack(
+          fit: StackFit.expand,
+          children: [
+            Image.asset('assets/customer/customer_bg.webp', fit: BoxFit.cover),
+            const Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.person_off, size: 64, color: Colors.grey),
+                  SizedBox(height: 16),
+                  Text(
+                    'Customer not found',
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       );
     }
 
     return Scaffold(
-      backgroundColor: Colors.grey.shade50,
-      body: CustomScrollView(
-        slivers: [
-          // Modern Header with Customer Info
-          SliverAppBar(
-            expandedHeight: 280,
-            floating: false,
-            pinned: true,
-            backgroundColor: const Color(0xFF5B5BF7),
-            foregroundColor: Colors.white,
-            elevation: 0,
-            flexibleSpace: FlexibleSpaceBar(
-              background: Container(
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [Color(0xFF5B5BF7), Color(0xFF4338CA)],
-                  ),
+      backgroundColor: Colors.transparent,
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          // Background image with dark overlay
+          Positioned.fill(
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                Image.asset(
+                  'assets/customer/customer_bg.webp',
+                  fit: BoxFit.cover,
                 ),
-                child: SafeArea(
-                  child: Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(height: 60),
-                        // Customer Name and Avatar
-                        Row(
+                Container(
+                  color: Colors.black.withValues(alpha: 0.4), // dark overlay
+                ),
+              ],
+            ),
+          ),
+
+          // Foreground scrollable content
+          CustomScrollView(
+            slivers: [
+              // Modern Header with Customer Info
+              SliverAppBar(
+                expandedHeight: 280,
+                floating: false,
+                pinned: true,
+                backgroundColor: const Color(0xFF5B5BF7),
+                foregroundColor: Colors.white,
+                elevation: 0,
+                flexibleSpace: FlexibleSpaceBar(
+                  background: Container(
+                    decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [Color(0xFF5B5BF7), Color(0xFF4338CA)],
+                      ),
+                    ),
+                    child: SafeArea(
+                      child: Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            CircleAvatar(
-                              radius: 30,
-                              backgroundColor: Colors.white.withValues(
-                                alpha: 0.2,
-                              ),
-                              backgroundImage:
-                                  _customerDetails!['avatar'] != null
-                                  ? NetworkImage(_customerDetails!['avatar'])
-                                  : null,
-                              child: _customerDetails!['avatar'] == null
-                                  ? Text(
-                                      (_customerDetails!['name'] ?? 'U')
-                                          .substring(0, 1)
-                                          .toUpperCase(),
-                                      style: const TextStyle(
-                                        fontSize: 24,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                      ),
-                                    )
-                                  : null,
-                            ),
-                            const SizedBox(width: 16),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    _customerDetails!['name'] ?? 'Customer',
-                                    style: const TextStyle(
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                    ),
+                            const SizedBox(height: 60),
+                            Row(
+                              children: [
+                                CircleAvatar(
+                                  radius: 30,
+                                  backgroundColor: Colors.white.withValues(
+                                    alpha: 0.2,
                                   ),
-                                  const SizedBox(height: 4),
-                                  Text(
-                                    'Customer since ${DateTimeHelper.formatJoinDate(_customerDetails!['createdAt'])}',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.white.withValues(
-                                        alpha: 0.8,
+                                  backgroundImage:
+                                      _customerDetails!['avatar'] != null
+                                      ? NetworkImage(
+                                          _customerDetails!['avatar'],
+                                        )
+                                      : null,
+                                  child: _customerDetails!['avatar'] == null
+                                      ? Text(
+                                          (_customerDetails!['name'] ?? 'U')
+                                              .substring(0, 1)
+                                              .toUpperCase(),
+                                          style: const TextStyle(
+                                            fontSize: 24,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                          ),
+                                        )
+                                      : null,
+                                ),
+                                const SizedBox(width: 16),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        _customerDetails!['name'] ?? 'Customer',
+                                        style: const TextStyle(
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
                                       ),
-                                    ),
+                                      const SizedBox(height: 4),
+                                      Text(
+                                        'Customer since ${DateTimeHelper.formatJoinDate(_customerDetails!['createdAt'])}',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.white.withValues(
+                                            alpha: 0.8,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
+                            const SizedBox(height: 24),
+                            _buildCustomerStats(),
                           ],
                         ),
-                        const SizedBox(height: 24),
-                        // Stats Cards
-                        _buildCustomerStats(),
-                      ],
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ),
-          // Tab Bar
-          SliverPersistentHeader(
-            pinned: true,
-            delegate: _SliverTabBarDelegate(
-              TabBar(
-                controller: _tabController,
-                isScrollable: true, // Make tab bar scrollable
-                labelColor: const Color(0xFF5B5BF7),
-                unselectedLabelColor: Colors.grey.shade600,
-                indicatorColor: const Color(0xFF5B5BF7),
-                indicatorWeight: 3,
-                labelStyle: const TextStyle(fontWeight: FontWeight.w600),
-                tabs: [
-                  const Tab(text: 'Info'),
-                  Tab(text: 'Service Requests (${_serviceRequests.length})'),
-                  Tab(text: 'Jobs (${_jobHistory.length})'),
-                  Tab(text: 'Vehicles (${_vehicles.length})'),
-                  Tab(text: 'Equipment (${_equipment.length})'),
-                ],
+
+              // Tab Bar
+              SliverPersistentHeader(
+                pinned: true,
+                delegate: _SliverTabBarDelegate(
+                  TabBar(
+                    controller: _tabController,
+                    isScrollable: true,
+                    labelColor: const Color(0xFF5B5BF7),
+                    unselectedLabelColor: Colors.grey.shade600,
+                    indicatorColor: const Color(0xFF5B5BF7),
+                    indicatorWeight: 3,
+                    labelStyle: const TextStyle(fontWeight: FontWeight.w600),
+                    tabs: [
+                      const Tab(text: 'Info'),
+                      Tab(
+                        text: 'Service Requests (${_serviceRequests.length})',
+                      ),
+                      Tab(text: 'Jobs (${_jobHistory.length})'),
+                      Tab(text: 'Vehicles (${_vehicles.length})'),
+                      Tab(text: 'Equipment (${_equipment.length})'),
+                    ],
+                  ),
+                ),
               ),
-            ),
-          ),
-          // Tab Content
-          SliverFillRemaining(
-            child: TabBarView(
-              controller: _tabController,
-              children: [
-                _buildInfoTab(),
-                _buildServiceRequestsTab(),
-                _buildJobsTab(),
-                _buildVehiclesTab(),
-                _buildEquipmentTab(),
-              ],
-            ),
+
+              // Tab Content
+              SliverFillRemaining(
+                child: TabBarView(
+                  controller: _tabController,
+                  children: [
+                    _buildInfoTab(),
+                    _buildServiceRequestsTab(),
+                    _buildJobsTab(),
+                    _buildVehiclesTab(),
+                    _buildEquipmentTab(),
+                  ],
+                ),
+              ),
+            ],
           ),
         ],
       ),

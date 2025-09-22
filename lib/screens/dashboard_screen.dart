@@ -138,7 +138,7 @@ class _DashboardScreenState extends State<DashboardScreen>
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Colors.blue.shade600.withOpacity(0.1),
+              Colors.blue.shade600.withValues(alpha: 0.1),
               colorScheme.surface,
               colorScheme.surface,
             ],
@@ -152,11 +152,11 @@ class _DashboardScreenState extends State<DashboardScreen>
                 Container(
                   padding: const EdgeInsets.all(32),
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.9),
+                    color: Colors.white.withValues(alpha: 0.9),
                     borderRadius: BorderRadius.circular(24),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.blue.shade200.withOpacity(0.3),
+                        color: Colors.blue.shade200.withValues(alpha: 0.3),
                         blurRadius: 20,
                         offset: const Offset(0, 10),
                       ),
@@ -197,7 +197,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                       Text(
                         'Preparing your personalized insights...',
                         style: theme.textTheme.bodyMedium?.copyWith(
-                          color: colorScheme.onSurface.withOpacity(0.7),
+                          color: colorScheme.onSurface.withValues(alpha: 0.7),
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -216,7 +216,10 @@ class _DashboardScreenState extends State<DashboardScreen>
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: [Colors.blue.shade600.withOpacity(0.05), colorScheme.surface],
+          colors: [
+            Colors.blue.shade600.withValues(alpha: 0.05),
+            colorScheme.surface,
+          ],
         ),
       ),
       child: RefreshIndicator(
@@ -385,12 +388,12 @@ class _DashboardScreenState extends State<DashboardScreen>
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [Colors.white, Colors.green.shade50.withOpacity(0.3)],
+          colors: [Colors.white, Colors.green.shade50.withValues(alpha: 0.3)],
         ),
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: Colors.green.shade100.withOpacity(0.3),
+            color: Colors.green.shade100.withValues(alpha: 0.3),
             blurRadius: 20,
             offset: const Offset(0, 8),
           ),
@@ -430,7 +433,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                     Text(
                       'Current workload breakdown',
                       style: theme.textTheme.bodyMedium?.copyWith(
-                        color: colorScheme.onSurface.withOpacity(0.7),
+                        color: colorScheme.onSurface.withValues(alpha: 0.7),
                       ),
                     ),
                   ],
@@ -600,12 +603,12 @@ class _DashboardScreenState extends State<DashboardScreen>
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [Colors.white, Colors.purple.shade50.withOpacity(0.3)],
+          colors: [Colors.white, Colors.purple.shade50.withValues(alpha: 0.3)],
         ),
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: Colors.purple.shade100.withOpacity(0.3),
+            color: Colors.purple.shade100.withValues(alpha: 0.3),
             blurRadius: 20,
             offset: const Offset(0, 8),
           ),
@@ -645,7 +648,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                     Text(
                       'Priority levels breakdown',
                       style: theme.textTheme.bodyMedium?.copyWith(
-                        color: colorScheme.onSurface.withOpacity(0.7),
+                        color: colorScheme.onSurface.withValues(alpha: 0.7),
                       ),
                     ),
                   ],
@@ -674,7 +677,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                     isVisible: true,
                     textStyle: TextStyle(
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      color: Colors.black,
                     ),
                   ),
                   borderRadius: const BorderRadius.all(Radius.circular(8)),
@@ -716,12 +719,15 @@ class _DashboardScreenState extends State<DashboardScreen>
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [Colors.white, Colors.deepPurple.shade50.withOpacity(0.3)],
+          colors: [
+            const Color.fromARGB(255, 249, 217, 255),
+            Colors.deepPurple.shade50.withValues(alpha: 0.3),
+          ],
         ),
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: Colors.deepPurple.shade100.withOpacity(0.3),
+            color: Colors.deepPurple.shade100.withValues(alpha: 0.3),
             blurRadius: 20,
             offset: const Offset(0, 8),
           ),
@@ -796,7 +802,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                     isVisible: true,
                     textStyle: TextStyle(
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      color: Colors.black,
                     ),
                   ),
                   borderRadius: const BorderRadius.all(Radius.circular(8)),
@@ -822,12 +828,12 @@ class _DashboardScreenState extends State<DashboardScreen>
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [Colors.white, Colors.teal.shade50.withOpacity(0.3)],
+          colors: [Colors.white, Colors.teal.shade50.withValues(alpha: 0.3)],
         ),
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: Colors.teal.shade100.withOpacity(0.3),
+            color: Colors.teal.shade100.withValues(alpha: 0.3),
             blurRadius: 20,
             offset: const Offset(0, 8),
           ),
@@ -867,7 +873,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                     Text(
                       'Financial performance overview',
                       style: theme.textTheme.bodyMedium?.copyWith(
-                        color: colorScheme.onSurface.withOpacity(0.7),
+                        color: colorScheme.onSurface.withValues(alpha: 0.7),
                       ),
                     ),
                   ],
@@ -937,7 +943,10 @@ class _DashboardScreenState extends State<DashboardScreen>
       decoration: BoxDecoration(
         color: backgroundColor,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: primaryColor.withOpacity(0.2), width: 1),
+        border: Border.all(
+          color: primaryColor.withValues(alpha: 0.2),
+          width: 1,
+        ),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -956,7 +965,7 @@ class _DashboardScreenState extends State<DashboardScreen>
           Text(
             title,
             style: theme.textTheme.bodySmall?.copyWith(
-              color: primaryColor.withOpacity(0.8),
+              color: primaryColor.withValues(alpha: 0.8),
               fontWeight: FontWeight.w600,
             ),
             textAlign: TextAlign.center,
@@ -977,12 +986,12 @@ class _DashboardScreenState extends State<DashboardScreen>
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [Colors.white, Colors.indigo.shade50.withOpacity(0.3)],
+          colors: [Colors.white, Colors.indigo.shade50.withValues(alpha: 0.3)],
         ),
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: Colors.indigo.shade100.withOpacity(0.3),
+            color: Colors.indigo.shade100.withValues(alpha: 0.3),
             blurRadius: 20,
             offset: const Offset(0, 8),
           ),
@@ -1022,7 +1031,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                     Text(
                       'Schedule and timeline view',
                       style: theme.textTheme.bodyMedium?.copyWith(
-                        color: colorScheme.onSurface.withOpacity(0.7),
+                        color: colorScheme.onSurface.withValues(alpha: 0.7),
                       ),
                     ),
                   ],
@@ -1077,7 +1086,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                   color: colorScheme.surface,
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(
-                    color: colorScheme.outline.withOpacity(0.2),
+                    color: colorScheme.outline.withValues(alpha: 0.2),
                   ),
                 ),
                 child: TableCalendar<Map<String, dynamic>>(
@@ -1219,7 +1228,7 @@ class _DashboardScreenState extends State<DashboardScreen>
           boxShadow: isSelected
               ? [
                   BoxShadow(
-                    color: Colors.indigo.shade200.withOpacity(0.4),
+                    color: Colors.indigo.shade200.withValues(alpha: 0.4),
                     blurRadius: 8,
                     offset: const Offset(0, 4),
                   ),
@@ -1346,12 +1355,12 @@ class _DashboardScreenState extends State<DashboardScreen>
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [Colors.white, Colors.amber.shade50.withOpacity(0.3)],
+          colors: [Colors.white, Colors.amber.shade50.withValues(alpha: 0.3)],
         ),
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: Colors.amber.shade100.withOpacity(0.3),
+            color: Colors.amber.shade100.withValues(alpha: 0.3),
             blurRadius: 20,
             offset: const Offset(0, 8),
           ),
@@ -1391,7 +1400,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                     Text(
                       '${(satisfactionData['averageRating'] ?? 0.0).toStringAsFixed(1)}⭐ average rating',
                       style: theme.textTheme.bodyMedium?.copyWith(
-                        color: colorScheme.onSurface.withOpacity(0.7),
+                        color: colorScheme.onSurface.withValues(alpha: 0.7),
                       ),
                     ),
                   ],
@@ -1420,7 +1429,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                     isVisible: true,
                     textStyle: TextStyle(
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      color: Colors.black,
                     ),
                   ),
                   borderRadius: const BorderRadius.all(Radius.circular(8)),
@@ -1463,12 +1472,12 @@ class _DashboardScreenState extends State<DashboardScreen>
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [Colors.white, Colors.cyan.shade50.withOpacity(0.3)],
+          colors: [Colors.white, Colors.cyan.shade50.withValues(alpha: 0.3)],
         ),
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: Colors.cyan.shade100.withOpacity(0.3),
+            color: Colors.cyan.shade100.withValues(alpha: 0.3),
             blurRadius: 20,
             offset: const Offset(0, 8),
           ),
@@ -1508,7 +1517,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                     Text(
                       '${taskData['totalTasks'] ?? 0} total tasks',
                       style: theme.textTheme.bodyMedium?.copyWith(
-                        color: colorScheme.onSurface.withOpacity(0.7),
+                        color: colorScheme.onSurface.withValues(alpha: 0.7),
                       ),
                     ),
                   ],
@@ -1613,12 +1622,12 @@ class _DashboardScreenState extends State<DashboardScreen>
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [Colors.white, Colors.lime.shade50.withOpacity(0.3)],
+          colors: [Colors.white, Colors.lime.shade50.withValues(alpha: 0.3)],
         ),
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: Colors.lime.shade100.withOpacity(0.3),
+            color: Colors.lime.shade100.withValues(alpha: 0.3),
             blurRadius: 20,
             offset: const Offset(0, 8),
           ),
@@ -1658,7 +1667,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                     Text(
                       'Most frequently used parts',
                       style: theme.textTheme.bodyMedium?.copyWith(
-                        color: colorScheme.onSurface.withOpacity(0.7),
+                        color: colorScheme.onSurface.withValues(alpha: 0.7),
                       ),
                     ),
                   ],
@@ -1739,12 +1748,12 @@ class _DashboardScreenState extends State<DashboardScreen>
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: color.withOpacity(0.2)),
+        border: Border.all(color: color.withValues(alpha: 0.2)),
         boxShadow: [
           BoxShadow(
-            color: color.withOpacity(0.1),
+            color: color.withValues(alpha: 0.1),
             blurRadius: 4,
             offset: const Offset(0, 2),
           ),
@@ -1755,7 +1764,7 @@ class _DashboardScreenState extends State<DashboardScreen>
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: color.withOpacity(0.2),
+              color: color.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Icon(icon, color: color, size: 20),
@@ -1772,7 +1781,7 @@ class _DashboardScreenState extends State<DashboardScreen>
           Text(
             title,
             style: theme.textTheme.bodySmall?.copyWith(
-              color: color.withOpacity(0.8),
+              color: color.withValues(alpha: 0.8),
               fontWeight: FontWeight.w500,
             ),
             textAlign: TextAlign.center,
@@ -1854,12 +1863,12 @@ class _DashboardScreenState extends State<DashboardScreen>
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [Colors.white, Colors.brown.shade50.withOpacity(0.3)],
+          colors: [Colors.white, Colors.brown.shade50.withValues(alpha: 0.3)],
         ),
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: Colors.brown.shade100.withOpacity(0.3),
+            color: Colors.brown.shade100.withValues(alpha: 0.3),
             blurRadius: 20,
             offset: const Offset(0, 8),
           ),
@@ -1899,7 +1908,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                     Text(
                       'Job progression insights',
                       style: theme.textTheme.bodyMedium?.copyWith(
-                        color: colorScheme.onSurface.withOpacity(0.7),
+                        color: colorScheme.onSurface.withValues(alpha: 0.7),
                       ),
                     ),
                   ],
@@ -2065,12 +2074,12 @@ class _DashboardScreenState extends State<DashboardScreen>
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [Colors.white, Colors.grey.shade50.withOpacity(0.3)],
+          colors: [Colors.white, Colors.grey.shade50.withValues(alpha: 0.3)],
         ),
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.shade100.withOpacity(0.3),
+            color: Colors.grey.shade100.withValues(alpha: 0.3),
             blurRadius: 20,
             offset: const Offset(0, 8),
           ),
@@ -2110,7 +2119,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                     Text(
                       '${notesData['totalNotes'] ?? 0} total, ${notesData['resolutionRate'] ?? 0}% resolved',
                       style: theme.textTheme.bodyMedium?.copyWith(
-                        color: colorScheme.onSurface.withOpacity(0.7),
+                        color: colorScheme.onSurface.withValues(alpha: 0.7),
                       ),
                     ),
                   ],
@@ -2272,12 +2281,12 @@ class _DashboardScreenState extends State<DashboardScreen>
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [Colors.white, Colors.red.shade50.withOpacity(0.3)],
+          colors: [Colors.white, Colors.red.shade50.withValues(alpha: 0.3)],
         ),
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: Colors.red.shade100.withOpacity(0.3),
+            color: Colors.red.shade100.withValues(alpha: 0.3),
             blurRadius: 20,
             offset: const Offset(0, 8),
           ),
@@ -2319,7 +2328,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                       '${vehicleData['totalVehicles'] ?? 0} vehicles tracked',
                       style: theme.textTheme.bodyMedium?.copyWith(
                         fontSize: 16, // bump up body text
-                        color: colorScheme.onSurface.withOpacity(0.7),
+                        color: colorScheme.onSurface.withValues(alpha: 0.7),
                       ),
                     ),
                   ],
@@ -3164,12 +3173,12 @@ class _DashboardScreenState extends State<DashboardScreen>
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [Colors.white, Colors.blue.shade50.withOpacity(0.3)],
+          colors: [Colors.white, Colors.blue.shade50.withValues(alpha: 0.3)],
         ),
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: Colors.blue.shade100.withOpacity(0.3),
+            color: Colors.blue.shade100.withValues(alpha: 0.3),
             blurRadius: 20,
             offset: const Offset(0, 8),
           ),
@@ -3209,7 +3218,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                     Text(
                       'Your current workload and upcoming tasks',
                       style: theme.textTheme.bodyMedium?.copyWith(
-                        color: colorScheme.onSurface.withOpacity(0.7),
+                        color: colorScheme.onSurface.withValues(alpha: 0.7),
                       ),
                     ),
                   ],
@@ -3397,12 +3406,12 @@ class _DashboardScreenState extends State<DashboardScreen>
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: color.withOpacity(0.2)),
+        border: Border.all(color: color.withValues(alpha: 0.2)),
         boxShadow: [
           BoxShadow(
-            color: color.withOpacity(0.1),
+            color: color.withValues(alpha: 0.1),
             blurRadius: 4,
             offset: const Offset(0, 2),
           ),
@@ -3413,7 +3422,7 @@ class _DashboardScreenState extends State<DashboardScreen>
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: color.withOpacity(0.2),
+              color: color.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Icon(icon, color: color, size: 20),
@@ -3430,7 +3439,7 @@ class _DashboardScreenState extends State<DashboardScreen>
           Text(
             title,
             style: theme.textTheme.bodySmall?.copyWith(
-              color: color.withOpacity(0.8),
+              color: color.withValues(alpha: 0.8),
               fontWeight: FontWeight.w500,
             ),
             textAlign: TextAlign.center,
@@ -3497,9 +3506,11 @@ class _DashboardScreenState extends State<DashboardScreen>
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
-                  color: priorityColor.withOpacity(0.1),
+                  color: priorityColor.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: priorityColor.withOpacity(0.3)),
+                  border: Border.all(
+                    color: priorityColor.withValues(alpha: 0.3),
+                  ),
                 ),
                 child: Text(
                   priority.toUpperCase(),
@@ -3530,7 +3541,7 @@ class _DashboardScreenState extends State<DashboardScreen>
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                 decoration: BoxDecoration(
-                  color: statusColor.withOpacity(0.1),
+                  color: statusColor.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(6),
                 ),
                 child: Text(

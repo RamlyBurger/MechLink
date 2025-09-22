@@ -90,6 +90,14 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/
+    - assets/MechLink.png
+    - assets/chat/chat_bg.webp
+    - assets/customer/customer_bg.webp
+    - assets/jobs/jobs_bg.webp
+    - assets/service_request/service_request_bg.webp
+    - assets/task/task_bg.webp
+    - assets/notes/notes_bg.webp
+    - assets/profile/profile_bg.webp
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

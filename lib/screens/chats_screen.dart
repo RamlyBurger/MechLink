@@ -70,7 +70,7 @@ class _ChatsScreenState extends State<ChatsScreen>
 
     // Precache the background image to prevent flickering
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      precacheImage(const AssetImage('assets/chat_bg.webp'), context);
+      precacheImage(const AssetImage('assets/chat/chat_bg.webp'), context);
     });
 
     _loadChatHistories();
@@ -682,7 +682,7 @@ class _ChatsScreenState extends State<ChatsScreen>
                           child: Container(
                             decoration: const BoxDecoration(
                               image: DecorationImage(
-                                image: AssetImage('assets/chat_bg.webp'),
+                                image: AssetImage('assets/chat/chat_bg.webp'),
                                 fit: BoxFit.cover,
                                 opacity: 0.1, // Make it subtle
                               ),
