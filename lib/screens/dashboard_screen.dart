@@ -2299,7 +2299,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                 child: const Icon(
                   Icons.directions_car_rounded,
                   color: Colors.white,
-                  size: 24,
+                  size: 28,
                 ),
               ),
               const SizedBox(width: 16),
@@ -2310,6 +2310,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                     Text(
                       'Vehicle Analytics',
                       style: theme.textTheme.headlineSmall?.copyWith(
+                        fontSize: 22, // bigger title
                         fontWeight: FontWeight.bold,
                         color: colorScheme.onSurface,
                       ),
@@ -2317,6 +2318,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                     Text(
                       '${vehicleData['totalVehicles'] ?? 0} vehicles tracked',
                       style: theme.textTheme.bodyMedium?.copyWith(
+                        fontSize: 16, // bump up body text
                         color: colorScheme.onSurface.withOpacity(0.7),
                       ),
                     ),
@@ -2375,6 +2377,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                   Text(
                     'Top Vehicle Makes',
                     style: theme.textTheme.titleMedium?.copyWith(
+                      fontSize: 18, // section title bigger
                       fontWeight: FontWeight.bold,
                       color: colorScheme.onSurface,
                     ),
@@ -2396,6 +2399,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                           Text(
                             makeData['make'] ?? 'Unknown',
                             style: theme.textTheme.bodyMedium?.copyWith(
+                              fontSize: 16,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
@@ -2413,7 +2417,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                               style: const TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
-                                fontSize: 12,
+                                fontSize: 14, // count text larger
                               ),
                             ),
                           ),
@@ -3515,7 +3519,7 @@ class _DashboardScreenState extends State<DashboardScreen>
               const SizedBox(width: 4),
               Expanded(
                 child: Text(
-                  job['customerName'] ?? 'Unknown Customer',
+                  job['customerName'] ?? 'Customer',
                   style: theme.textTheme.bodySmall?.copyWith(
                     color: Colors.grey.shade600,
                   ),

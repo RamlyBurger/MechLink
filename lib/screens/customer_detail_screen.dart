@@ -186,8 +186,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen>
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    _customerDetails!['name'] ??
-                                        'Unknown Customer',
+                                    _customerDetails!['name'] ?? 'Customer',
                                     style: const TextStyle(
                                       fontSize: 24,
                                       fontWeight: FontWeight.bold,

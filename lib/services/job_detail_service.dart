@@ -68,7 +68,7 @@ class JobDetailService {
         'assetName': vehicle?['make'] != null && vehicle?['model'] != null
             ? '${vehicle!['make']} ${vehicle!['model']}'
             : equipment?['name'] ?? 'Unknown Asset',
-        'customerName': customer?['name'] ?? 'Unknown Customer',
+        'customerName': customer?['name'] ?? 'Customer',
       };
     } catch (e) {
       print('Error getting job with complete details: $e');

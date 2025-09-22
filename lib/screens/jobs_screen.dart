@@ -1040,7 +1040,7 @@ class _JobsScreenState extends State<JobsScreen> {
                         const SizedBox(width: 4),
                         Expanded(
                           child: Text(
-                            job['customerName'] ?? 'Unknown Customer',
+                            job['customerName'] ?? 'Customer',
                             style: Theme.of(context).textTheme.bodyMedium,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
@@ -1470,7 +1470,7 @@ class _JobsScreenState extends State<JobsScreen> {
                         const SizedBox(width: 4),
                         Expanded(
                           child: Text(
-                            job['customerName'] ?? 'Unknown Customer',
+                            job['customerName'] ?? 'Customer',
                             style: TextStyle(
                               color: Colors.grey.shade600,
                               fontSize: 10,

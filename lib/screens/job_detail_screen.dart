@@ -713,7 +713,7 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    customer['name'] ?? 'Unknown Customer',
+                    customer['name'] ?? 'Customer',
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,

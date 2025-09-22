@@ -126,7 +126,7 @@ class JobsService {
           'taskCount': taskCount,
           'completedTaskCount': completedTaskCount,
           // Computed fields for display
-          'customerName': customerData?['name'] ?? 'Unknown Customer',
+          'customerName': customerData?['name'] ?? 'Customer',
           'vehicleName': vehicleData != null
               ? '${vehicleData['year']} ${vehicleData['make']} ${vehicleData['model']}'
               : null,

@@ -998,7 +998,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen>
         if (customer != null) ...[
           _buildModernInfoCard(
             title: 'Customer',
-            content: customer['name'] ?? 'Unknown Customer',
+            content: customer['name'] ?? 'Customer',
             subtitle: customer['email'] ?? customer['phone'],
             icon: Icons.person_outline,
             iconColor: Colors.green.shade600,

@@ -1138,7 +1138,7 @@ class DashboardService {
           'title': data['title'] ?? 'Untitled Job',
           'status': data['status'] ?? 'assigned',
           'priority': data['priority'] ?? 'medium',
-          'customerName': data['customerName'] ?? 'Unknown Customer',
+          'customerName': data['customerName'] ?? 'Customer',
           'mechanicId': data['mechanicId'] ?? '',
         });
       }
@@ -1216,7 +1216,7 @@ class DashboardService {
           'title': data['title'] ?? 'Untitled Job',
           'status': status,
           'priority': priority,
-          'customerName': data['customerName'] ?? 'Unknown Customer',
+          'customerName': data['customerName'] ?? 'Customer',
           'vehicleInfo': data['vehicleInfo'] ?? 'N/A',
           'estimatedDuration': data['estimatedDuration'] ?? 0,
           'assignedAt': assignedAt?.toIso8601String(),
